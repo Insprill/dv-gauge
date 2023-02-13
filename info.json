@@ -1,0 +1,7 @@
+{
+  "Id": "Gauge",
+  "Author": "Insprill",
+  "DisplayName": "Gauge",
+  "Version": "0.1.0",
+  "EntryMethod": "Gauge.Main.Load"
+}
