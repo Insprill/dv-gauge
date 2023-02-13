@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Gauge.Utils;
+using HarmonyLib;
 using UnityEngine;
 
 namespace Gauge.Patches
@@ -14,17 +15,20 @@ namespace Gauge.Patches
             Main.Logger.Log($"Changing gauge to {Main.Settings.gauge}");
 
             RailTrack[] railTracks = Object.FindObjectsOfType<RailTrack>();
-            RailType baseRailType = railTracks[0].railType;
 
-            RailType railType = ScriptableObject.CreateInstance<RailType>();
-            railType.railShape = baseRailType.railShape;
-            railType.railMaterial = baseRailType.railMaterial;
+            RailType standardRailType = railTracks[0].railType;
+            RailType railType = standardRailType.Clone();
             railType.gauge = Main.Settings.gauge.GetGauge();
             railType.railEdgeOffset = Main.Settings.gauge.GetEdgeOffset();
+
+            BaseType standardBaseType = railTracks[0].baseType;
+            BaseType baseType = standardBaseType.Clone();
+            baseType.sleeperDistance = Main.Settings.gauge.GetSleeperDistance();
 
             foreach (RailTrack railTrack in railTracks)
             {
                 railTrack.railType = railType;
+                railTrack.baseType = baseType;
             }
 
             return true;

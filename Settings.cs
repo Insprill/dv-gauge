@@ -51,5 +51,17 @@ namespace Gauge
                     throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
             }
         }
+        public static float GetSleeperDistance(this Gauge gauge)
+        {
+            switch (gauge)
+            {
+                case Gauge.ThreeFootNarrow:
+                    return 0.9f;
+                case Gauge.Standard:
+                    throw new InvalidOperationException();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
+            }
+        }
     }
 }
