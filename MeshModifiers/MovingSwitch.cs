@@ -7,9 +7,8 @@ namespace Gauge.MeshModifiers
     {
         private const short VERT_COUNT = 2146;
 
-        public static void ModifyMesh(MeshFilter filter)
+        public static void ModifyMesh(Mesh mesh)
         {
-            Mesh mesh = filter.mesh;
             Vector3[] verts = mesh.vertices;
             if (verts.Length != VERT_COUNT)
             {

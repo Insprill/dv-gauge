@@ -17,9 +17,8 @@ namespace Gauge.MeshModifiers
             325, 328, 329, 331, 333, 336, 337, 335, 340, 339, 338, 343, 341, 342, 334, 332, 330, 326, 327
         };
 
-        public static void ModifyMesh(MeshFilter filter)
+        public static void ModifyMesh(Mesh mesh)
         {
-            Mesh mesh = filter.mesh;
             Vector3[] verts = mesh.vertices;
             if (verts.Length != VERT_COUNT)
             {

@@ -1,4 +1,5 @@
-﻿using Gauge.MeshModifiers;
+﻿using System.Collections.Generic;
+using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
@@ -33,25 +34,52 @@ namespace Gauge.Patches
                 if (railTrack.isJunctionTrack && Main.Settings.switchType == SwitchType.Dynamic) railTrack.generateMeshes = true;
             }
 
-            Main.Logger.Log("Modifying static asset meshes");
+            Main.Logger.Log("Modifying static meshes");
+
+            HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
             foreach (MeshFilter filter in Object.FindObjectsOfType<MeshFilter>())
-                switch (filter.name)
+            {
+                Mesh mesh = filter.sharedMesh;
+                if (modifiedMeshes.Contains(mesh))
+                    continue;
+                switch (mesh.name)
                 {
                     case "rails_static": {
                         if (Main.Settings.switchType == SwitchType.Modified)
-                            StaticSwitch.ModifyMesh(filter);
+                        {
+                            StaticSwitch.ModifyMesh(mesh);
+                            modifiedMeshes.Add(mesh);
+                        }
                         else
+                        {
                             filter.GetComponent<MeshRenderer>().enabled = false;
+                        }
+
                         break;
                     }
                     case "rails_moving": {
                         if (Main.Settings.switchType == SwitchType.Modified)
-                            MovingSwitch.ModifyMesh(filter);
+                        {
+                            MovingSwitch.ModifyMesh(mesh);
+                            modifiedMeshes.Add(mesh);
+                        }
                         else
+                        {
                             filter.GetComponent<MeshRenderer>().enabled = false;
+                        }
+
                         break;
                     }
+                    case "buffer_stop_sleeper_n_1":
+                    case "buffer_stop_rails":
+                    case "buffer_stop_rails_LOD1":
+                    case "buffer_stop_holders":
+                        modifiedMeshes.Add(mesh);
+                        // This is fine, right?
+                        Axle.ModifyMesh(mesh);
+                        break;
                 }
+            }
 
             return true;
         }
