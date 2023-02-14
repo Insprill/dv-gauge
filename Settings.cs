@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityModManagerNet;
+﻿using UnityModManagerNet;
 
 namespace Gauge
 {
@@ -9,8 +8,7 @@ namespace Gauge
         public Gauge gauge = Gauge.ThreeFootNarrow;
 
         [Draw("Switch Type (requires restart)")]
-        [Tooltip("Dynamic switches are smoother but don't have points or frogs.")]
-        public SwitchType switchType = SwitchType.Modified;
+        public SwitchType switchType = SwitchType.Dynamic;
 
         public void OnChange()
         {
@@ -26,6 +24,6 @@ namespace Gauge
     public enum SwitchType
     {
         Dynamic,
-        Modified,
+        Modified
     }
 }
