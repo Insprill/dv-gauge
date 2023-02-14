@@ -2,7 +2,7 @@
 
 namespace Gauge.Utils
 {
-    public static class CloneObjects
+    public static class Extensions
     {
         public static BaseType Clone(this BaseType standardBaseType)
         {
@@ -35,6 +35,13 @@ namespace Gauge.Utils
             railType.gauge = standardRailType.gauge;
             railType.railEdgeOffset = standardRailType.railEdgeOffset;
             return railType;
+        }
+
+        public static void ApplyVertsAndRecalculate(this Mesh mesh, Vector3[] verts)
+        {
+            mesh.vertices = verts;
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
         }
     }
 }

@@ -63,8 +63,11 @@ A rough roadmap of things that are done, and things that need to be done.
   - [ ] Turn Tables
   - [ ] Turn Table branches (e.g. roundhouse)
   - [ ] End-of-track buffers
-- [ ] Car bogies
-- [ ] Locomotive bogies (?)
+- [ ] Rolling stock
+  - [x] Cars
+  - [x] DE2
+  - [x] DE6
+  - [ ] SH282
 
 
 

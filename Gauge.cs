@@ -48,6 +48,7 @@ namespace Gauge
         }
         public static float GetDiffToStandard(this Gauge gauge)
         {
+            // TODO: Doesn't work with all gauges
             return (Gauge.Standard.GetGauge() - gauge.GetGauge()) / 2 + (Gauge.Standard.GetEdgeOffset() + gauge.GetEdgeOffset() + 0.005f);
         }
     }

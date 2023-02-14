@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gauge.Utils;
+using UnityEngine;
 
 namespace Gauge.MeshModifiers
 {
@@ -20,9 +21,7 @@ namespace Gauge.MeshModifiers
 
             // TODO: Modify mesh
 
-            mesh.vertices = verts;
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
+            mesh.ApplyVertsAndRecalculate(verts);
         }
     }
 }

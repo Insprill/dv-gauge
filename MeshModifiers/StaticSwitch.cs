@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gauge.Utils;
+using UnityEngine;
 
 namespace Gauge.MeshModifiers
 {
@@ -52,9 +53,7 @@ namespace Gauge.MeshModifiers
             // Left rail
             for (int i = 382 - 1; i < 1370; i++) verts[i].x -= gaugeDiff;
 
-            mesh.vertices = verts;
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
+            mesh.ApplyVertsAndRecalculate(verts);
         }
     }
 }
