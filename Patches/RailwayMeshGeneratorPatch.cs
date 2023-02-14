@@ -1,4 +1,5 @@
-﻿using Gauge.Utils;
+﻿using Gauge.MeshModifiers;
+using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -29,7 +30,28 @@ namespace Gauge.Patches
             {
                 railTrack.railType = railType;
                 railTrack.baseType = baseType;
+                if (railTrack.isJunctionTrack && Main.Settings.switchType == SwitchType.Dynamic) railTrack.generateMeshes = true;
             }
+
+            Main.Logger.Log("Modifying static asset meshes");
+            foreach (MeshFilter filter in Object.FindObjectsOfType<MeshFilter>())
+                switch (filter.name)
+                {
+                    case "rails_static": {
+                        if (Main.Settings.switchType == SwitchType.Modified)
+                            StaticSwitch.ModifyMesh(filter);
+                        else
+                            filter.GetComponent<MeshRenderer>().enabled = false;
+                        break;
+                    }
+                    case "rails_moving": {
+                        if (Main.Settings.switchType == SwitchType.Modified)
+                            MovingSwitch.ModifyMesh(filter);
+                        else
+                            filter.GetComponent<MeshRenderer>().enabled = false;
+                        break;
+                    }
+                }
 
             return true;
         }

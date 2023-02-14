@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine;
 using UnityModManagerNet;
 
 namespace Gauge
@@ -7,6 +7,10 @@ namespace Gauge
     {
         [Draw("Rail gauge (requires restart)")]
         public Gauge gauge = Gauge.ThreeFootNarrow;
+
+        [Draw("Switch Type (requires restart)")]
+        [Tooltip("Dynamic switches are smoother but don't have points or frogs.")]
+        public SwitchType switchType = SwitchType.Modified;
 
         public void OnChange()
         {
@@ -19,49 +23,9 @@ namespace Gauge
         }
     }
 
-    public enum Gauge
+    public enum SwitchType
     {
-        ThreeFootNarrow,
-        Standard
-    }
-
-    public static class GaugeExtensions
-    {
-        public static float GetGauge(this Gauge gauge)
-        {
-            switch (gauge)
-            {
-                case Gauge.ThreeFootNarrow:
-                    return 0.9144f;
-                case Gauge.Standard:
-                    throw new InvalidOperationException();
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
-            }
-        }
-        public static float GetEdgeOffset(this Gauge gauge)
-        {
-            switch (gauge)
-            {
-                case Gauge.ThreeFootNarrow:
-                    return 0.0144f;
-                case Gauge.Standard:
-                    throw new InvalidOperationException();
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
-            }
-        }
-        public static float GetSleeperDistance(this Gauge gauge)
-        {
-            switch (gauge)
-            {
-                case Gauge.ThreeFootNarrow:
-                    return 0.9f;
-                case Gauge.Standard:
-                    throw new InvalidOperationException();
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
-            }
-        }
+        Dynamic,
+        Modified,
     }
 }
