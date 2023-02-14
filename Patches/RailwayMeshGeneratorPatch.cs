@@ -70,6 +70,12 @@ namespace Gauge.Patches
 
                         break;
                     }
+                    // Turntable rails
+                    case "TurntableRail":
+                    case "TurntableRail_ShadowCaster":
+                    // Roundhouse rails
+                    // case "TurntableRail.002": // Not modifiable
+                    // Buffer stops
                     case "buffer_stop_sleeper_n_1":
                     case "buffer_stop_rails":
                     case "buffer_stop_rails_LOD1":
