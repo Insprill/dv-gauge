@@ -44,30 +44,20 @@ namespace Gauge.Patches
                     continue;
                 switch (mesh.name)
                 {
-                    case "rails_static": {
-                        if (Main.Settings.switchType == SwitchType.Modified)
-                        {
-                            StaticSwitch.ModifyMesh(mesh);
-                            modifiedMeshes.Add(mesh);
-                        }
-                        else
-                        {
-                            filter.GetComponent<MeshRenderer>().enabled = false;
-                        }
-
-                        break;
-                    }
+                    // Switches
+                    case "rails_static":
                     case "rails_moving": {
-                        if (Main.Settings.switchType == SwitchType.Modified)
-                        {
-                            MovingSwitch.ModifyMesh(mesh);
-                            modifiedMeshes.Add(mesh);
-                        }
-                        else
+                        if (Main.Settings.switchType == SwitchType.Dynamic)
                         {
                             filter.GetComponent<MeshRenderer>().enabled = false;
+                            break;
                         }
 
+                        if (mesh.name.Equals("rails_moving"))
+                            MovingSwitch.ModifyMesh(mesh);
+                        else
+                            StaticSwitch.ModifyMesh(mesh);
+                        modifiedMeshes.Add(mesh);
                         break;
                     }
                     // Turntable rails
