@@ -55,10 +55,10 @@ Currently, it only supports 3ft narrow gauge.
 A rough roadmap of things that are done, and things that need to be done.
 
 - [ ] Rails
-  - [ ] Regular splines
+  - [x] Regular splines
     - [x] Rails
-    - [ ] Anchors
-    - [ ] Ties
+    - [x] Anchors
+    - [x] Sleepers
   - [ ] Switches
   - [x] Turn Tables
   - [ ] Roundhouse tracks

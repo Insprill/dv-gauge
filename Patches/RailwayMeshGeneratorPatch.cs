@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
@@ -9,24 +10,36 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(RailwayMeshGenerator), "Start")]
     public static class RailwayMeshGenerator_Start_Patch
     {
-        private static bool Prefix()
+        private static bool Prefix(RailwayMeshGenerator __instance)
         {
             if (Main.Settings.gauge == Gauge.Standard)
                 return true;
 
             Main.Logger.Log($"Changing gauge to {Main.Settings.gauge}");
 
+            HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
             RailTrack[] railTracks = Object.FindObjectsOfType<RailTrack>();
 
-            RailType standardRailType = railTracks[0].railType;
-            RailType railType = standardRailType.Clone();
+            BaseType baseType = railTracks[0].baseType.Clone();
+            baseType.sleeperDistance = Main.Settings.gauge.GetSleeperDistance();
+            foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
+            {
+                Mesh mesh = filter.sharedMesh;
+                if (modifiedMeshes.Contains(mesh))
+                    continue;
+                Axle.ModifyMesh(mesh);
+                modifiedMeshes.Add(mesh);
+            }
+
+            if (__instance.anchorMesh != null)
+            {
+                Axle.ModifyMesh(__instance.anchorMesh);
+                modifiedMeshes.Add(__instance.anchorMesh);
+            }
+
+            RailType railType = railTracks[0].railType.Clone();
             railType.gauge = Main.Settings.gauge.GetGauge();
             railType.railEdgeOffset = Main.Settings.gauge.GetEdgeOffset();
-
-            BaseType standardBaseType = railTracks[0].baseType;
-            BaseType baseType = standardBaseType.Clone();
-            baseType.sleeperDistance = Main.Settings.gauge.GetSleeperDistance();
-
             foreach (RailTrack railTrack in railTracks)
             {
                 railTrack.railType = railType;
@@ -36,7 +49,6 @@ namespace Gauge.Patches
 
             Main.Logger.Log("Modifying static meshes");
 
-            HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
             foreach (MeshFilter filter in Object.FindObjectsOfType<MeshFilter>())
             {
                 Mesh mesh = filter.sharedMesh;
