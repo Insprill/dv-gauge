@@ -75,6 +75,9 @@ namespace Gauge.Patches
                     // Switch ballast
                     case "ballast":
                     case "ballast-outersign":
+                    // Switch sleepers
+                    case "sleepers":
+                    case "sleepers-outersign":
                     // Turntable rails
                     case "TurntableRail":
                     case "TurntableRail_ShadowCaster":
