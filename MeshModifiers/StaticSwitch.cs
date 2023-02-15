@@ -5,6 +5,7 @@ namespace Gauge.MeshModifiers
 {
     public static class StaticSwitch
     {
+        private const float GAUGE_DIFF_OFFSET = 0.01f; // No idea why we need this, but switches are misaligned without it.
         private const short VERT_COUNT = 1370;
 
         // Vertices going clockwise. All verts are duplicated for the edges of the rail, and the outline of the end
@@ -26,8 +27,8 @@ namespace Gauge.MeshModifiers
                 return;
             }
 
-            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard();
-            float frogZOffset = gaugeDiff * 16;
+            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard() + GAUGE_DIFF_OFFSET;
+            float zOffset = gaugeDiff * 16;
 
             // https://blender.stackexchange.com/a/3253
 
@@ -35,16 +36,16 @@ namespace Gauge.MeshModifiers
             for (int i = 0; i < 344; i++)
             {
                 verts[i].x -= gaugeDiff;
-                verts[i].z += frogZOffset;
+                verts[i].z += zOffset;
             }
 
             foreach (short idx in DIVERGING_EXTEND_VERTS)
             {
                 verts[idx].x += gaugeDiff * 2;
-                verts[idx].z -= frogZOffset;
+                verts[idx].z -= zOffset;
             }
 
-            foreach (short idx in STRAIGHT_EXTEND_VERTS) verts[idx].z -= frogZOffset;
+            foreach (short idx in STRAIGHT_EXTEND_VERTS) verts[idx].z -= zOffset;
 
             // Right rail
             for (int i = 344 - 1; i < 381; i++) verts[i].x += gaugeDiff;

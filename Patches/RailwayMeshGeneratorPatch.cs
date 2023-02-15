@@ -39,7 +39,6 @@ namespace Gauge.Patches
 
             RailType railType = railTracks[0].railType.Clone();
             railType.gauge = Main.Settings.gauge.GetGauge();
-            railType.railEdgeOffset = Main.Settings.gauge.GetEdgeOffset();
             foreach (RailTrack railTrack in railTracks)
             {
                 railTrack.railType = railType;
