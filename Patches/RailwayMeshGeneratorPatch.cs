@@ -22,7 +22,7 @@ namespace Gauge.Patches
 
             BaseType baseType = railTracks[0].baseType.Clone();
             baseType.sleeperDistance = Main.Settings.gauge.GetSleeperDistance();
-            Symmetrical.ScaleToGauge(baseType.baseShape);
+            if (Main.Settings.adjustBallastWidth) Symmetrical.ScaleToGauge(baseType.baseShape);
             foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
                 Mesh mesh = filter.sharedMesh;
@@ -73,8 +73,8 @@ namespace Gauge.Patches
                         break;
                     }
                     // Switch ballast
-                    case "ballast":
-                    case "ballast-outersign":
+                    case "ballast" when Main.Settings.adjustBallastWidth:
+                    case "ballast-outersign" when Main.Settings.adjustBallastWidth:
                     // Switch sleepers
                     case "sleepers":
                     case "sleepers-outersign":

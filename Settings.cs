@@ -10,6 +10,9 @@ namespace Gauge
         [Draw("Switch Type (requires restart)")]
         public SwitchType switchType = SwitchType.Dynamic;
 
+        [Draw("Adjust Ballast Width (requires restart)")]
+        public bool adjustBallastWidth = true;
+
         public void OnChange()
         {
             // yup
