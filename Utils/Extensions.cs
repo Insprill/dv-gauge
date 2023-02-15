@@ -40,8 +40,9 @@ namespace Gauge.Utils
         public static void ApplyVertsAndRecalculate(this Mesh mesh, Vector3[] verts)
         {
             mesh.vertices = verts;
-            mesh.RecalculateBounds();
+            mesh.RecalculateTangents();
             mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
         }
     }
 }
