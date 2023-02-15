@@ -19,7 +19,7 @@ namespace Gauge.Patches
             {
                 Mesh mesh = filter.sharedMesh;
                 if (!mesh.isReadable || modifiedMeshes.Contains(mesh)) continue;
-                Axle.ModifyMesh(mesh);
+                Symmetrical.ScaleToGauge(mesh);
                 modifiedMeshes.Add(mesh);
             }
         }

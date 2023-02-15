@@ -22,18 +22,19 @@ namespace Gauge.Patches
 
             BaseType baseType = railTracks[0].baseType.Clone();
             baseType.sleeperDistance = Main.Settings.gauge.GetSleeperDistance();
+            Symmetrical.ScaleToGauge(baseType.baseShape);
             foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
                 Mesh mesh = filter.sharedMesh;
                 if (modifiedMeshes.Contains(mesh))
                     continue;
-                Axle.ModifyMesh(mesh);
+                Symmetrical.ScaleToGauge(mesh);
                 modifiedMeshes.Add(mesh);
             }
 
             if (__instance.anchorMesh != null)
             {
-                Axle.ModifyMesh(__instance.anchorMesh);
+                Symmetrical.ScaleToGauge(__instance.anchorMesh);
                 modifiedMeshes.Add(__instance.anchorMesh);
             }
 
@@ -71,6 +72,9 @@ namespace Gauge.Patches
                         modifiedMeshes.Add(mesh);
                         break;
                     }
+                    // Switch ballast
+                    case "ballast":
+                    case "ballast-outersign":
                     // Turntable rails
                     case "TurntableRail":
                     case "TurntableRail_ShadowCaster":
@@ -81,9 +85,8 @@ namespace Gauge.Patches
                     case "buffer_stop_rails":
                     case "buffer_stop_rails_LOD1":
                     case "buffer_stop_holders":
+                        Symmetrical.ScaleToGauge(mesh);
                         modifiedMeshes.Add(mesh);
-                        // This is fine, right?
-                        Axle.ModifyMesh(mesh);
                         break;
                 }
             }
