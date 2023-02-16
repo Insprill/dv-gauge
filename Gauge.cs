@@ -29,7 +29,7 @@ namespace Gauge
                 case Gauge.Standard:
                     return 1.3451f;
                 case Gauge.Custom:
-                    return Main.Settings.width;
+                    return Main.Settings.width / 1000.0f;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
             }
@@ -48,7 +48,7 @@ namespace Gauge
                 case Gauge.Standard:
                     return 0.75f; // From RailType
                 case Gauge.Custom:
-                    return Main.Settings.sleeperSpacing;
+                    return Main.Settings.sleeperSpacing / 1000.0f;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
             }
