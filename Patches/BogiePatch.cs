@@ -29,8 +29,8 @@ namespace Gauge.Patches
         {
             if (!Main.IsCCLEnabled || !CarTypeInjector.IsInCustomRange(car.carType) || !CarTypeInjector.TryGetCustomCarByType(car.carType, out CustomCar customCar))
                 return Gauge.Standard.GetGauge();
-            float? gauge = customCar.FrontBogieConfig?.Gauge;
-            return gauge == null || gauge < 0.01 ? Gauge.Standard.GetGauge() : gauge / 1000.0f;
+            float gauge = customCar.Gauge;
+            return gauge < 1.0f ? Gauge.Standard.GetGauge() : gauge / 1000.0f;
         }
     }
 }
