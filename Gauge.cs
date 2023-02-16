@@ -7,7 +7,8 @@ namespace Gauge
         TwoFootNarrow,
         ThreeFootNarrow,
         Metre,
-        Standard
+        Standard,
+        Custom
     }
 
     public static class GaugeExtensions
@@ -27,6 +28,8 @@ namespace Gauge
                     return 1.0f;
                 case Gauge.Standard:
                     return 1.3451f;
+                case Gauge.Custom:
+                    return Main.Settings.width;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
             }
@@ -44,6 +47,8 @@ namespace Gauge
                     return 0.8f;
                 case Gauge.Standard:
                     return 0.75f; // From RailType
+                case Gauge.Custom:
+                    return Main.Settings.sleeperSpacing;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gauge), gauge, null);
             }
