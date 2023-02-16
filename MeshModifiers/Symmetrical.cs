@@ -27,8 +27,8 @@ namespace Gauge.MeshModifiers
 
         private static Vector3 ScaleToGauge(Vector3 vec)
         {
-            if (vec.x > CENTER_THRESHOLD) vec.x -= Main.Settings.gauge.GetDiffToStandard();
-            else if (vec.x < -CENTER_THRESHOLD) vec.x += Main.Settings.gauge.GetDiffToStandard();
+            if (vec.x > CENTER_THRESHOLD) vec.x = Mathf.Max(0, vec.x - Main.Settings.gauge.GetDiffToStandard());
+            else if (vec.x < -CENTER_THRESHOLD) vec.x = Mathf.Min(0, vec.x + Main.Settings.gauge.GetDiffToStandard());
             return vec;
         }
     }
