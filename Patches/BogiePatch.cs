@@ -20,7 +20,7 @@ namespace Gauge.Patches
             {
                 Mesh mesh = filter.sharedMesh;
                 if (!mesh.isReadable || modifiedMeshes.Contains(mesh)) continue;
-                Symmetrical.ScaleToGauge(mesh, GetGauge(__instance.Car));
+                Symmetrical.ScaleToGauge(mesh, true, GetGauge(__instance.Car));
                 modifiedMeshes.Add(mesh);
             }
         }
