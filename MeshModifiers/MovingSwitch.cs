@@ -86,7 +86,7 @@ namespace Gauge.MeshModifiers
         {
             Vector3[] verts = mesh.vertices;
 
-            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard() + StaticSwitch.GAUGE_DIFF_OFFSET;
+            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard();
             float zOffset = gaugeDiff * StaticSwitch.Z_OFFSET_FACTOR;
 
             foreach (ushort i in TOP_LEFT_VERTS)

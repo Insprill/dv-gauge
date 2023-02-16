@@ -5,7 +5,6 @@ namespace Gauge.MeshModifiers
 {
     public static class StaticSwitch
     {
-        public const float GAUGE_DIFF_OFFSET = 0.01f; // No idea why we need this, but switches are misaligned without it.
         public const float Z_OFFSET_FACTOR = 16;
         private const ushort VERT_COUNT = 1370;
 
@@ -28,7 +27,7 @@ namespace Gauge.MeshModifiers
                 return;
             }
 
-            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard() + GAUGE_DIFF_OFFSET;
+            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard();
             float zOffset = gaugeDiff * Z_OFFSET_FACTOR;
 
             // Split
