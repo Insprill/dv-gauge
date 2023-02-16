@@ -6,11 +6,11 @@ namespace Gauge.MeshModifiers
     public static class Symmetrical
     {
 
-        public static void ScaleToGauge(Mesh mesh)
+        public static void ScaleToGauge(Mesh mesh, float? baseGauge = null)
         {
             Vector3[] verts = mesh.vertices;
             for (int i = 0; i < verts.Length; i++)
-                verts[i] = ScaleToGauge(verts[i]);
+                verts[i] = ScaleToGauge(verts[i], baseGauge);
 
             mesh.ApplyVertsAndRecalculate(verts);
         }
@@ -24,11 +24,12 @@ namespace Gauge.MeshModifiers
             }
         }
 
-        private static Vector3 ScaleToGauge(Vector3 vec)
+        private static Vector3 ScaleToGauge(Vector3 vec, float? baseGauge = null)
         {
             float threshold = Main.Settings.gauge.GetGauge();
-            if (vec.x > threshold) vec.x = Mathf.Max(0, vec.x - Main.Settings.gauge.GetDiffToStandard());
-            else if (vec.x < -threshold) vec.x = Mathf.Min(0, vec.x + Main.Settings.gauge.GetDiffToStandard());
+            float gaugeDiff = baseGauge == null ? Main.Settings.gauge.GetDiffToStandard() : GaugeExtensions.GetDiffToStandard(baseGauge.Value);
+            if (vec.x > threshold) vec.x = Mathf.Max(0, vec.x - gaugeDiff);
+            else if (vec.x < -threshold) vec.x = Mathf.Min(0, vec.x + gaugeDiff);
             return vec;
         }
     }

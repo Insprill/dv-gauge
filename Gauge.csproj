@@ -18,5 +18,6 @@
         <Reference Include="UnityEngine.IMGUIModule" />
         <Reference Include="UnityEngine.PhysicsModule" />
         <Reference Include="UnityModManager" />
+        <Reference Include="DVCustomCarLoader" />
     </ItemGroup>
 </Project>

@@ -56,7 +56,12 @@ namespace Gauge
 
         public static float GetDiffToStandard(this Gauge gauge)
         {
-            return (Gauge.Standard.GetGauge() - gauge.GetGauge()) / 2 + railEdgeOffset;
+            return GetDiffToStandard(gauge.GetGauge());
+        }
+
+        public static float GetDiffToStandard(float gauge)
+        {
+            return (Gauge.Standard.GetGauge() - gauge) / 2 + railEdgeOffset;
         }
     }
 }
