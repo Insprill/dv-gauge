@@ -5,7 +5,6 @@ namespace Gauge.MeshModifiers
 {
     public static class Symmetrical
     {
-        private const float CENTER_THRESHOLD = 0.05f;
 
         public static void ScaleToGauge(Mesh mesh)
         {
@@ -27,8 +26,9 @@ namespace Gauge.MeshModifiers
 
         private static Vector3 ScaleToGauge(Vector3 vec)
         {
-            if (vec.x > CENTER_THRESHOLD) vec.x = Mathf.Max(0, vec.x - Main.Settings.gauge.GetDiffToStandard());
-            else if (vec.x < -CENTER_THRESHOLD) vec.x = Mathf.Min(0, vec.x + Main.Settings.gauge.GetDiffToStandard());
+            float threshold = Main.Settings.gauge.GetGauge();
+            if (vec.x > threshold) vec.x = Mathf.Max(0, vec.x - Main.Settings.gauge.GetDiffToStandard());
+            else if (vec.x < -threshold) vec.x = Mathf.Min(0, vec.x + Main.Settings.gauge.GetDiffToStandard());
             return vec;
         }
     }
