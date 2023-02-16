@@ -7,7 +7,7 @@ namespace Gauge
     {
         [Header("All settings require a restart")]
         [Draw("Rail gauge")]
-        public Gauge gauge = Gauge.ThreeFootNarrow;
+        public Gauge gauge = Gauge.ThreeFoot;
 
         [Draw("Width (meters)", Tooltip = "The track gauge, in meters. Anything less than 0.5 or greater than 2.0 may cause issues.", VisibleOn = "gauge|Custom", Precision = 3)]
         public float width = 1.345f;
