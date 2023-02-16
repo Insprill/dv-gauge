@@ -27,7 +27,7 @@ namespace Gauge.MeshModifiers
 
         private static Vector3 ScaleToGauge(Vector3 vec, bool useGaugeAsThreshold = false, float? baseGauge = null)
         {
-            float threshold = useGaugeAsThreshold ? Main.Settings.gauge.GetGauge() : BASE_THRESHOLD;
+            float threshold = useGaugeAsThreshold ? Main.Settings.gauge.GetGauge() / 2 : BASE_THRESHOLD;
             float gaugeDiff = baseGauge == null ? Main.Settings.gauge.GetDiffToStandard() : Main.Settings.gauge.GetDiffFrom(baseGauge.Value);
             if (vec.x > threshold) vec.x = Mathf.Max(0, vec.x - gaugeDiff);
             else if (vec.x < -threshold) vec.x = Mathf.Min(0, vec.x + gaugeDiff);
