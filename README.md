@@ -64,11 +64,12 @@ A rough roadmap of things that are done, and things that need to be done.
   - [x] Turn Tables
   - [ ] Roundhouse tracks
   - [x] End-of-track buffers
-- [ ] Rolling stock
+  - [ ] Service station markers
+- [x] Rolling stock
   - [x] Cars
   - [x] DE2
   - [x] DE6
-  - [ ] SH282
+  - [x] SH282
 
 
 
