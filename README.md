@@ -89,7 +89,8 @@ Note that shortcuts like `%ProgramFiles%` *cannot* be used.
     <PropertyGroup>
         <ReferencePath>
             C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\DerailValley_Data\Managed\;
-            C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityModManager\
+            C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityModManager\;
+            C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\Mods\DVCustomCarLoader\
         </ReferencePath>
         <AssemblySearchPaths>$(AssemblySearchPaths);$(ReferencePath);</AssemblySearchPaths>
     </PropertyGroup>
