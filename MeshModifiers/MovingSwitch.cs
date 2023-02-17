@@ -113,7 +113,7 @@ namespace Gauge.MeshModifiers
                 verts[MIDDLE_RIGHT_VERTS[i]].x += gaugeDiff;
             }
 
-            mesh.ApplyVertsAndRecalculate(verts);
+            mesh.ApplyVerts(verts);
         }
     }
 }

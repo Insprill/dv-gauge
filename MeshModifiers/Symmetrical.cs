@@ -18,7 +18,7 @@ namespace Gauge.MeshModifiers
                 verts[i] = ScaleToGauge(verts[i], useGaugeAsThreshold, baseGauge);
             }
 
-            mesh.ApplyVertsAndRecalculate(verts);
+            mesh.ApplyVerts(verts);
         }
 
         public static void ScaleToGauge(Shape shape)

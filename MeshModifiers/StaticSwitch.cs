@@ -51,7 +51,7 @@ namespace Gauge.MeshModifiers
             // Left rail
             for (int i = 382 - 1; i < 1370; i++) verts[i].x -= gaugeDiff;
 
-            mesh.ApplyVertsAndRecalculate(verts);
+            mesh.ApplyVerts(verts);
         }
     }
 }

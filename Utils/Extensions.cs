@@ -38,11 +38,9 @@ namespace Gauge.Utils
             return railType;
         }
 
-        public static void ApplyVertsAndRecalculate(this Mesh mesh, Vector3[] verts)
+        public static void ApplyVerts(this Mesh mesh, Vector3[] verts)
         {
             mesh.vertices = verts;
-            mesh.RecalculateTangents();
-            mesh.RecalculateNormals();
             mesh.RecalculateBounds();
         }
 
