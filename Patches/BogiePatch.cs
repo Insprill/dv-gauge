@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using DVCustomCarLoader;
 using Gauge.MeshModifiers;
+using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -20,17 +20,9 @@ namespace Gauge.Patches
             {
                 Mesh mesh = filter.sharedMesh;
                 if (!mesh.isReadable || modifiedMeshes.Contains(mesh)) continue;
-                Symmetrical.ScaleToGauge(mesh, true, GetGauge(__instance.Car));
+                Symmetrical.ScaleToGauge(mesh, true, __instance.Car.GetGauge());
                 modifiedMeshes.Add(mesh);
             }
-        }
-
-        private static float? GetGauge(TrainCar car)
-        {
-            if (!Main.IsCCLEnabled || !CarTypeInjector.IsInCustomRange(car.carType) || !CarTypeInjector.TryGetCustomCarByType(car.carType, out CustomCar customCar))
-                return Gauge.Standard.GetGauge();
-            float gauge = customCar.Gauge;
-            return gauge < 1.0f ? Gauge.Standard.GetGauge() : gauge / 1000.0f;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Gauge.Utils;
+﻿using System;
+using Gauge.Utils;
 using UnityEngine;
 
 namespace Gauge.MeshModifiers
@@ -7,11 +8,15 @@ namespace Gauge.MeshModifiers
     {
         private const float BASE_THRESHOLD = 0.05f;
 
-        public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null)
+        public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null, ushort[] skipVerts = null, ushort[] includeVerts = null)
         {
             Vector3[] verts = mesh.vertices;
-            for (int i = 0; i < verts.Length; i++)
+            for (ushort i = 0; i < verts.Length; i++)
+            {
+                if (skipVerts != null && Array.BinarySearch(skipVerts, i) >= 0) continue;
+                if (includeVerts != null && Array.BinarySearch(includeVerts, i) < 0) continue;
                 verts[i] = ScaleToGauge(verts[i], useGaugeAsThreshold, baseGauge);
+            }
 
             mesh.ApplyVertsAndRecalculate(verts);
         }
@@ -25,13 +30,13 @@ namespace Gauge.MeshModifiers
             }
         }
 
-        private static Vector3 ScaleToGauge(Vector3 vec, bool useGaugeAsThreshold = false, float? baseGauge = null)
+        private static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null)
         {
             float threshold = useGaugeAsThreshold ? Main.Settings.gauge.GetGauge() / 2 : BASE_THRESHOLD;
             float gaugeDiff = baseGauge == null ? Main.Settings.gauge.GetDiffToStandard() : Main.Settings.gauge.GetDiffFrom(baseGauge.Value);
-            if (vec.x > threshold) vec.x = Mathf.Max(0, vec.x - gaugeDiff);
-            else if (vec.x < -threshold) vec.x = Mathf.Min(0, vec.x + gaugeDiff);
-            return vec;
+            if (vert.x > threshold) vert.x = Mathf.Max(0, vert.x - gaugeDiff);
+            else if (vert.x < -threshold) vert.x = Mathf.Min(0, vert.x + gaugeDiff);
+            return vert;
         }
     }
 }
