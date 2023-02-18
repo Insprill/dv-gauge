@@ -5,7 +5,7 @@ namespace Gauge.MeshModifiers
 {
     public static class StaticSwitch
     {
-        public const float Z_OFFSET_FACTOR = 16;
+        public const float Z_OFFSET_FACTOR = 18;
         private const ushort VERT_COUNT = 1370;
 
         // Vertices going clockwise. All verts are duplicated for the edges of the rail, and the outline of the end
