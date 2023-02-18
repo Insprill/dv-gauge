@@ -101,6 +101,26 @@ Note that shortcuts like `%ProgramFiles%` *cannot* be used.
 To test your changes, `Gauge.dll` will need to be copied into the mod's install directory (e.g. `...Derail Valley/Mods/Gauge`).
 You can find it in `bin/Debug` or `bin/Release` depending on the selected build configuration.
 
+<details>
+<summary>Linux</summary>
+
+To build under Linux, you'll need to adjust the paths and add the path to your UnityModManager installation for Harmony.
+
+Here's an example file assuming Steam and Derail Valley are both installed in their default paths, and UnityModManger is installed next to Steam.
+```xml
+<Project>
+    <PropertyGroup>
+        <ReferencePath>
+            /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/;
+            /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/;
+            /home/username/.local/share/Steam/steamapps/common/Derail Valley/Mods/DVCustomCarLoader/;
+            /home/username/.local/share/UnityModManager/
+        </ReferencePath>
+        <AssemblySearchPaths>$(AssemblySearchPaths);$(ReferencePath);</AssemblySearchPaths>
+    </PropertyGroup>
+</Project>
+```
+</details>
 
 
 
