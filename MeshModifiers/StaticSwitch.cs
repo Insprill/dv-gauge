@@ -37,13 +37,13 @@ namespace Gauge.MeshModifiers
                 verts[i].z += zOffset;
             }
 
-            foreach (short idx in DIVERGING_EXTEND_VERTS)
+            foreach (ushort idx in DIVERGING_EXTEND_VERTS)
             {
                 verts[idx].x += gaugeDiff * 2;
                 verts[idx].z -= zOffset;
             }
 
-            foreach (short idx in STRAIGHT_EXTEND_VERTS) verts[idx].z -= zOffset;
+            foreach (ushort idx in STRAIGHT_EXTEND_VERTS) verts[idx].z -= zOffset;
 
             // Right rail
             for (int i = 344 - 1; i < 381; i++) verts[i].x += gaugeDiff;
