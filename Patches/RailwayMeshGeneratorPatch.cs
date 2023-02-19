@@ -72,6 +72,11 @@ namespace Gauge.Patches
                         modifiedMeshes.Add(mesh);
                         break;
                     }
+                    // Switch anchors
+                    case "anchors":
+                        SwitchAnchors.ModifyMesh(mesh);
+                        modifiedMeshes.Add(mesh);
+                        break;
                     // Switch ballast
                     case "ballast" when Main.Settings.adjustBallastWidth:
                     case "ballast-outersign" when Main.Settings.adjustBallastWidth:
