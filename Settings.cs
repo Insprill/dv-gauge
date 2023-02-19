@@ -10,7 +10,7 @@ namespace Gauge
         public Gauge gauge = Gauge.ThreeFoot;
 
         [Draw("Width (meters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
-        public int width = 1345;
+        public int width = 1435;
 
         [Draw("Sleeper Spacing (meters)", Tooltip = "The distance, in meters, between each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
         public int sleeperSpacing = 750;
@@ -27,7 +27,7 @@ namespace Gauge
         {
             // The normal min/max properties make it impossible to type, so we just do the validation here.
             if (width < 350) width = 350;
-            if (width > 2000) width = 2000;
+            if (width > 1435) width = 1435; // Things fall apart on broader gauges.
             if (sleeperSpacing < 350) sleeperSpacing = 300;
             if (sleeperSpacing > 2000) sleeperSpacing = 2000;
             Save(this, modEntry);
