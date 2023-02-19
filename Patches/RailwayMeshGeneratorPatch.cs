@@ -39,12 +39,11 @@ namespace Gauge.Patches
             }
 
             RailType railType = railTracks[0].railType.Clone();
-            railType.gauge = Main.Settings.gauge.GetGauge() - (GaugeExtensions.railEdgeOffset * 2);
+            railType.gauge = Main.Settings.gauge.GetGauge() - GaugeExtensions.railEdgeOffset * 2;
             foreach (RailTrack railTrack in railTracks)
             {
                 railTrack.railType = railType;
                 railTrack.baseType = baseType;
-                if (railTrack.isJunctionTrack && Main.Settings.switchType == SwitchType.Dynamic) railTrack.generateMeshes = true;
             }
 
             Main.Logger.Log("Modifying static meshes");
@@ -58,20 +57,13 @@ namespace Gauge.Patches
                 {
                     // Switches
                     case "rails_static":
-                    case "rails_moving": {
-                        if (Main.Settings.switchType == SwitchType.Dynamic)
-                        {
-                            filter.GetComponent<MeshRenderer>().enabled = false;
-                            break;
-                        }
-
-                        if (mesh.name.Equals("rails_moving"))
-                            MovingSwitch.ModifyMesh(mesh);
-                        else
-                            StaticSwitch.ModifyMesh(mesh);
+                        StaticSwitch.ModifyMesh(mesh);
                         modifiedMeshes.Add(mesh);
                         break;
-                    }
+                    case "rails_moving":
+                        MovingSwitch.ModifyMesh(mesh);
+                        modifiedMeshes.Add(mesh);
+                        break;
                     // Switch anchors
                     case "anchors":
                         SwitchAnchors.ModifyMesh(mesh);

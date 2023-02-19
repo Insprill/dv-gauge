@@ -15,9 +15,6 @@ namespace Gauge
         [Draw("Sleeper Spacing (meters)", Tooltip = "The distance, in meters, between each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
         public int sleeperSpacing = 750;
 
-        [Draw("Switch Type", Tooltip = "Dynamic switches are smoother but don't have points or frogs")]
-        public SwitchType switchType = SwitchType.Modified;
-
         [Draw("Adjust Ballast Width", Tooltip = "Whether track ballast should be adjusted according to the track gauge. May cause holes in the map.")]
         public bool adjustBallastWidth = true;
 
@@ -35,11 +32,5 @@ namespace Gauge
             if (sleeperSpacing > 2000) sleeperSpacing = 2000;
             Save(this, modEntry);
         }
-    }
-
-    public enum SwitchType
-    {
-        Dynamic,
-        Modified
     }
 }
