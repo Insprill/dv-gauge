@@ -7,6 +7,7 @@
   "LoadAfter": [
     "DVCustomCarLoader"
   ],
+  "ManagerVersion": "0.25.0",
   "HomePage": "https://www.nexusmods.com/derailvalley/mods/563",
   "Repository": "https://raw.githubusercontent.com/Insprill/dv-gauge/master/repository.json"
 }
