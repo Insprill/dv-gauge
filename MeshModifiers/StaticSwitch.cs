@@ -6,7 +6,6 @@ namespace Gauge.MeshModifiers
     public static class StaticSwitch
     {
         public const float Z_OFFSET_FACTOR = 18;
-        private const ushort VERT_COUNT = 1370;
 
         // Vertices going clockwise. All verts are duplicated for the edges of the rail, and the outline of the end
         private static readonly ushort[] DIVERGING_EXTEND_VERTS = {
@@ -21,11 +20,6 @@ namespace Gauge.MeshModifiers
         public static void ModifyMesh(Mesh mesh)
         {
             Vector3[] verts = mesh.vertices;
-            if (verts.Length != VERT_COUNT)
-            {
-                Main.Logger.Error($"Unexpected vertex count for rails_static. Expected {VERT_COUNT}, got {verts.Length}.");
-                return;
-            }
 
             float gaugeDiff = Main.Settings.gauge.GetDiffToStandard();
             float zOffset = gaugeDiff * Z_OFFSET_FACTOR;
