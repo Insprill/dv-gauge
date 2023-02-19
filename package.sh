@@ -8,4 +8,4 @@ if ! [ -e $GAUGE_DLL ]; then
     exit 1
 fi
 
-zip -1 -T -j -u "${DISPLAY_NAME}_$VERSION.zip" $GAUGE_DLL info.json
+zip -1 -T -j -u "${DISPLAY_NAME}_v$VERSION.zip" $GAUGE_DLL info.json
