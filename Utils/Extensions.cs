@@ -1,5 +1,4 @@
-﻿using DVCustomCarLoader;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gauge.Utils
 {
@@ -46,10 +45,7 @@ namespace Gauge.Utils
 
         public static float? GetGauge(this TrainCar car)
         {
-            if (!Main.IsCCLEnabled || !CarTypeInjector.IsInCustomRange(car.carType) || !CarTypeInjector.TryGetCustomCarByType(car.carType, out CustomCar customCar))
-                return Gauge.Standard.GetGauge();
-            float gauge = customCar.Gauge;
-            return gauge < 1.0f ? Gauge.Standard.GetGauge() : gauge / 1000.0f;
+            return Main.IsCCLEnabled ? CCL.GetGauge(car) : Gauge.Standard.GetGauge();
         }
     }
 }

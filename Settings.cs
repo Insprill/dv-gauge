@@ -26,11 +26,14 @@ namespace Gauge
         public override void Save(UnityModManager.ModEntry modEntry)
         {
             // The normal min/max properties make it impossible to type, so we just do the validation here.
-            if (width < 350) width = 350;
-            if (width > 1435) width = 1435; // Things fall apart on broader gauges.
-            if (sleeperSpacing < 350) sleeperSpacing = 300;
-            if (sleeperSpacing > 2000) sleeperSpacing = 2000;
+            width = (int)ClampGauge(width);
+            sleeperSpacing = Mathf.Clamp(sleeperSpacing, 350, 2000);
             Save(this, modEntry);
+        }
+
+        public static float ClampGauge(float gaugeMillis)
+        {
+            return Mathf.Clamp(gaugeMillis, 350, 1435);
         }
     }
 }
