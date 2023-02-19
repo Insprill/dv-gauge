@@ -60,7 +60,7 @@ A rough roadmap of things that are done, and things that need to be done.
     - [x] Anchors
     - [x] Sleepers
     - [x] Ballast
-  - [ ] Switches
+  - [x] Switches
   - [x] Turn Tables
   - [ ] Roundhouse tracks
   - [x] End-of-track buffers
