@@ -4,7 +4,6 @@ namespace Gauge
 {
     public enum Gauge
     {
-        TwoFoot,
         ThreeFoot,
         Cape,
         Standard,
@@ -20,8 +19,6 @@ namespace Gauge
         {
             switch (gauge)
             {
-                case Gauge.TwoFoot:
-                    return 0.610f;
                 case Gauge.ThreeFoot:
                     return 0.914f;
                 case Gauge.Cape:
@@ -39,12 +36,10 @@ namespace Gauge
         {
             switch (gauge)
             {
-                case Gauge.TwoFoot:
-                    return 1.0f;
                 case Gauge.ThreeFoot:
                     return 0.9f;
                 case Gauge.Cape:
-                    return 0.8f;
+                    return 0.85f;
                 case Gauge.Standard:
                     return 0.75f; // From RailType
                 case Gauge.Custom:
