@@ -8,7 +8,7 @@ namespace Gauge.MeshModifiers
         // All variable names are assuming a switch that diverges to the left.
         private const ushort START_VERT = 1884;
         private const ushort START_VERT_BACK = 1890;
-        private const ushort END_VERT = 1714;
+        private const ushort END_VERT = 1710;
         private static readonly ushort[] TOP_LEFT_VERTS = {
             32, 35, 36, 39, 40, 42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 89, 90, 91, 92, 93, 94, 95, 96, 115, 116, 117, 118, 119, 120, 121, 122, 141, 142, 143, 144, 145, 146, 147,
             148, 167, 168, 169, 170, 171, 172, 173, 174, 193, 194, 195, 196, 197, 198, 199, 200, 227, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 259, 260, 261, 262, 263, 264, 265, 266,
