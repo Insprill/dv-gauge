@@ -280,8 +280,7 @@ Temporary Items
 
 ### Custom
 # Builds
-#bin/
-#obj/
+Gauge_*.zip
 
 # User-specific refrence paths
 Directory.Build.targets

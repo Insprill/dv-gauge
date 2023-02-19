@@ -1,10 +1,12 @@
 {
   "Id": "Gauge",
-  "Author": "Insprill",
-  "DisplayName": "Gauge",
   "Version": "0.1.0",
+  "DisplayName": "Gauge",
+  "Author": "Insprill",
   "EntryMethod": "Gauge.Main.Load",
   "LoadAfter": [
     "DVCustomCarLoader"
-  ]
+  ],
+  "HomePage": "https://www.nexusmods.com/derailvalley/mods/563",
+  "Repository": "https://raw.githubusercontent.com/Insprill/dv-gauge/master/repository.json"
 }
