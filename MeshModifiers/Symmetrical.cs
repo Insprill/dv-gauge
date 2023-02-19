@@ -11,10 +11,10 @@ namespace Gauge.MeshModifiers
         public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null, ushort[] skipVerts = null, ushort[] includeVerts = null)
         {
             Vector3[] verts = mesh.vertices;
-            for (ushort i = 0; i < verts.Length; i++)
+            for (int i = 0; i < verts.Length; i++)
             {
-                if (skipVerts != null && Array.BinarySearch(skipVerts, i) >= 0) continue;
-                if (includeVerts != null && Array.BinarySearch(includeVerts, i) < 0) continue;
+                if (skipVerts != null && i < ushort.MaxValue && Array.BinarySearch(skipVerts, (ushort)i) >= 0) continue;
+                if (includeVerts != null && i < ushort.MaxValue && Array.BinarySearch(includeVerts, (ushort)i) < 0) continue;
                 verts[i] = ScaleToGauge(verts[i], useGaugeAsThreshold, baseGauge);
             }
 
