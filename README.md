@@ -106,15 +106,14 @@ You can find it in `bin/Debug` or `bin/Release` depending on the selected build 
 
 To build under Linux, you'll need to adjust the paths and add the path to your UnityModManager installation for Harmony.
 
-Here's an example file assuming Steam and Derail Valley are both installed in their default paths, and UnityModManger is installed next to Steam.
+Here's an example file assuming Steam and Derail Valley are both installed in their default paths.
 ```xml
 <Project>
     <PropertyGroup>
         <ReferencePath>
             /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/;
-            /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/;
-            /home/username/.local/share/Steam/steamapps/common/Derail Valley/Mods/DVCustomCarLoader/;
-            /home/username/.local/share/UnityModManager/
+            /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/UnityModManager/;
+            /home/username/.local/share/Steam/steamapps/common/Derail Valley/Mods/DVCustomCarLoader/
         </ReferencePath>
         <AssemblySearchPaths>$(AssemblySearchPaths);$(ReferencePath);</AssemblySearchPaths>
     </PropertyGroup>
