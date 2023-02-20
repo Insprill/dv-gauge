@@ -26,13 +26,13 @@ namespace Gauge.Patches
             foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
                 Mesh mesh = filter.sharedMesh;
-                if (modifiedMeshes.Contains(mesh))
+                if (!mesh.isReadable || modifiedMeshes.Contains(mesh))
                     continue;
                 Symmetrical.ScaleToGauge(mesh);
                 modifiedMeshes.Add(mesh);
             }
 
-            if (__instance.anchorMesh != null)
+            if (__instance.anchorMesh != null && __instance.anchorMesh.isReadable)
             {
                 Symmetrical.ScaleToGauge(__instance.anchorMesh);
                 modifiedMeshes.Add(__instance.anchorMesh);
@@ -51,7 +51,7 @@ namespace Gauge.Patches
             foreach (MeshFilter filter in Object.FindObjectsOfType<MeshFilter>())
             {
                 Mesh mesh = filter.sharedMesh;
-                if (modifiedMeshes.Contains(mesh))
+                if (!mesh.isReadable || modifiedMeshes.Contains(mesh))
                     continue;
                 switch (mesh.name)
                 {
