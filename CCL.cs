@@ -8,7 +8,7 @@ namespace Gauge
         {
             if (!CarTypeInjector.IsInCustomRange(car.carType) || !CarTypeInjector.TryGetCustomCarByType(car.carType, out CustomCar customCar))
                 return Gauge.Standard.GetGauge();
-            return Settings.ClampGauge(customCar.Gauge) / 1000.0f;
+            return customCar.Gauge / 1000.0f;
         }
     }
 }

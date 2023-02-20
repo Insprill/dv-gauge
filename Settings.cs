@@ -36,16 +36,11 @@ namespace Gauge
             if (!allowUnsafeValues)
             {
                 // The normal min/max properties make it impossible to type, so we just do the validation here.
-                width = (int)ClampGauge(width);
+                width = Mathf.Clamp(width, MIN_RAIL_WIDTH, MAX_RAIL_WIDTH);
                 sleeperSpacing = Mathf.Clamp(sleeperSpacing, MIN_SLEEPER_SPACING, MAX_SLEEPER_SPACING);
             }
 
             Save(this, modEntry);
-        }
-
-        public static float ClampGauge(float gaugeMillis)
-        {
-            return Mathf.Clamp(gaugeMillis, MIN_RAIL_WIDTH, MAX_RAIL_WIDTH);
         }
     }
 }
