@@ -115,7 +115,7 @@ namespace Gauge.MeshModifiers
             // Curved point
             Vector3 startVert = verts[START_VERT];
             Vector3 endVert = verts[END_VERT];
-            float initialZOffset = Mathf.Abs((initialStartVert.z - initialEndVert.z - (startVert.z - endVert.z)) / MIDDLE_RIGHT_VERTS.Length);
+            float initialZOffset = (initialStartVert.z - initialEndVert.z - (startVert.z - endVert.z)) / MIDDLE_RIGHT_VERTS.Length;
             float zOffset = initialZOffset;
 
             Vector3[] curve = BezierCurve.Interpolate(startVert, verts[START_VERT_BACK], endVert, endVert, MIDDLE_RIGHT_VERTS.Length);
