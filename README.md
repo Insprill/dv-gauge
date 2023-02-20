@@ -48,40 +48,20 @@ Currently, it only supports 3ft narrow gauge.
 
 
 
-<!-- ROADMAP -->
-
-## Roadmap
-
-A rough roadmap of things that are done, and things that need to be done.
-
-- [ ] Rails
-  - [x] Regular splines
-    - [x] Rails
-    - [x] Anchors
-    - [x] Sleepers
-    - [x] Ballast
-  - [x] Switches
-  - [x] Turn Tables
-  - [ ] Roundhouse tracks
-  - [x] End-of-track buffers
-  - [ ] Service station markers
-- [x] Rolling stock
-  - [x] Cars
-  - [x] DE2
-  - [x] DE6
-  - [x] SH282
-
-
-
-
 <!-- BUILDING -->
 
 ## Building
 
-To build Gauge, you'll need to create a new [`Directory.Build.targets`](https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2022) file to specify your reference paths. 
-This file should be located in the root of the project, next to this README.
+To build Gauge, you'll need to have [Custom Car Loader](https://www.nexusmods.com/derailvalley/mods/324) 1.8.3 or newer installed.  
 
-Here's an example file you can use as a template.
+You'll also need to create a new [`Directory.Build.targets`](https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2022) file to specify your reference paths. 
+This file should be located in the root of the project, next to this README.
+You can use one of the examples below as a template depending on your platform.
+
+<details>
+<summary>Windows</summary>
+
+Here's an example file for Windows you can use as a template.
 Replace the provided paths with the paths to your Derail Valley installation directory.
 Make sure to include the semicolons between each of the paths, but not after the last one!
 Note that shortcuts like `%ProgramFiles%` *cannot* be used.
@@ -97,16 +77,14 @@ Note that shortcuts like `%ProgramFiles%` *cannot* be used.
     </PropertyGroup>
 </Project>
 ```
-
-To test your changes, `Gauge.dll` will need to be copied into the mod's install directory (e.g. `...Derail Valley/Mods/Gauge`).
-You can find it in `bin/Debug` or `bin/Release` depending on the selected build configuration.
+</details>
 
 <details>
 <summary>Linux</summary>
 
-To build under Linux, you'll need to adjust the paths and add the path to your UnityModManager installation for Harmony.
-
-Here's an example file assuming Steam and Derail Valley are both installed in their default paths.
+Here's an example file for Windows you can use as a template.
+Replace the provided paths with the paths to your Derail Valley installation directory.
+Make sure to include the semicolons between each of the paths, but not after the last one!
 ```xml
 <Project>
     <PropertyGroup>
@@ -120,6 +98,11 @@ Here's an example file assuming Steam and Derail Valley are both installed in th
 </Project>
 ```
 </details>
+
+To test your changes, `Gauge.dll` will need to be copied into the mod's install directory (e.g. `...Derail Valley/Mods/Gauge`) along with `info.json`.
+The .dll can be found in `bin/Debug` or `bin/Release` depending on the selected build configuration.
+The info.json can be found in the root of this repository.
+
 
 
 
