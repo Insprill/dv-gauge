@@ -20,11 +20,14 @@ namespace Gauge
         [Draw("Sleeper Spacing (meters)", Tooltip = "The distance, in millimeters, between the center of each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
         public int sleeperSpacing = 750;
 
-        [Draw("Allow Unsafe Values", Tooltip = "Removes restrictions on track width. Using unsafe values are NOT supported, and things WILL break.", VisibleOn = "gauge|Custom")]
-        public bool allowUnsafeValues = false;
-
         [Draw("Adjust Ballast Width", Tooltip = "Whether track ballast should be adjusted according to the track gauge. May cause holes in the map.")]
         public bool adjustBallastWidth = true;
+
+        [Draw("Enable Hidden settings", Tooltip = "Shows hidden settings that may cause things to break. Support will not be given if these cause issues!")]
+        public bool enableHiddenSettings = false;
+
+        [Draw("Remove Gauge Restrictions", Tooltip = "Removes restrictions from custom track width.", VisibleOn = "enableHiddenSettings|true")]
+        public bool removeGaugeRestrictions = false;
 
         public void OnChange()
         {
@@ -33,7 +36,7 @@ namespace Gauge
 
         public override void Save(UnityModManager.ModEntry modEntry)
         {
-            if (!allowUnsafeValues)
+            if (!enableHiddenSettings || !removeGaugeRestrictions)
             {
                 // The normal min/max properties make it impossible to type, so we just do the validation here.
                 width = Mathf.Clamp(width, MIN_RAIL_WIDTH, MAX_RAIL_WIDTH);
