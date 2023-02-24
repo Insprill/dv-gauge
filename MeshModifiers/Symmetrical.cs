@@ -33,7 +33,11 @@ namespace Gauge.MeshModifiers
         private static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null)
         {
             bool isNarrow = Main.Settings.gauge.GetGauge() < Gauge.Standard.GetGauge();
-            float threshold = useGaugeAsThreshold && isNarrow ? Main.Settings.gauge.GetGauge() / 2 : BASE_THRESHOLD;
+            float threshold = useGaugeAsThreshold
+                ? isNarrow
+                    ? (Main.Settings.gauge.GetGauge() / 2) - BASE_THRESHOLD
+                    : (baseGauge.GetValueOrDefault(Gauge.Standard.GetGauge()) / 2) - BASE_THRESHOLD
+                : BASE_THRESHOLD;
             float gaugeDiff = baseGauge == null ? Main.Settings.gauge.GetDiffToStandard() : Main.Settings.gauge.GetDiffFrom(baseGauge.Value);
             if (vert.x > threshold) vert.x = Mathf.Max(0.001f, vert.x - gaugeDiff);
             else if (vert.x < -threshold) vert.x = Mathf.Min(-0.001f, vert.x + gaugeDiff);
