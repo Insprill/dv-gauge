@@ -48,11 +48,18 @@ namespace Gauge.MeshModifiers
             11540, 11541, 11542, 11543, 11548, 11549, 11550, 11551, 11552, 11553, 11554, 11555, 11556, 11557, 11558, 11559, 11630, 11631, 11632, 11633, 11726, 11727, 11728, 11729, 11952, 11953, 11954,
             11955, 12226, 12227, 12228, 12229, 12230, 12231, 12232, 12233, 12234, 12235, 12236, 12237
         };
+        private static readonly ushort[] FIREBOX_INCLUDE_VERTS = {
+            16, 19, 30, 31, 32, 33, 34, 37, 39, 41, 42, 43, 45, 47, 48, 49, 50, 51, 52, 53, 68, 69, 70, 71
+        };
 
         public static void ModifyMesh(Mesh mesh)
         {
             switch (mesh.name)
             {
+                // Update TrainCarPatch when adding/removing cases!
+                case "Firebox":
+                    Symmetrical.ScaleToGauge(mesh, includeVerts: FIREBOX_INCLUDE_VERTS);
+                    break;
                 case "ext Wheels Driving 4":
                 case "ext Wheels Driving 2":
                 case "ext Wheels Driving 1":

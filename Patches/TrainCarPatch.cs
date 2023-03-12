@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gauge.MeshModifiers;
 using HarmonyLib;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(TrainCar), "Start")]
     public static class TrainCar_Start_Patch
     {
-        private static readonly HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
+        internal static readonly HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
 
         public static void Postfix(TrainCar __instance)
         {
@@ -33,6 +34,31 @@ namespace Gauge.Patches
                     case "ext Wheels Front Support":
                         SH282.ModifyMesh(mesh);
                         modifiedMeshes.Add(mesh);
+                        break;
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(TrainCar), "LoadInterior")]
+    public static class TrainCar_LoadInterior_Patch
+    {
+        public static void Postfix(TrainCar __instance)
+        {
+            // The SH282's mesh modifications will *not* work on broader gauges, don't even try.
+            if (__instance.carType != TrainCarType.LocoSteamHeavy || Main.Settings.gauge.GetGauge() >= Gauge.Standard.GetGauge())
+                return;
+
+            foreach (MeshFilter filter in __instance.interior.GetComponentsInChildren<MeshFilter>())
+            {
+                Mesh mesh = filter.sharedMesh;
+                if (!mesh.isReadable || TrainCar_Start_Patch.modifiedMeshes.Contains(mesh)) continue;
+                switch (mesh.name)
+                {
+                    case "Firebox":
+                        SH282.ModifyMesh(mesh);
+                        TrainCar_Start_Patch.modifiedMeshes.Add(mesh);
+                        filter.mesh = null;
                         break;
                 }
             }
