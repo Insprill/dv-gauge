@@ -1,11 +1,18 @@
+#!/bin/bash
+
+function check_file_exists() {
+    if ! [ -e "$1" ]; then
+        echo "Failed to find $1!"
+        exit 1
+    fi
+}
+
 INFO_FILE="info.json"
-GAUGE_DLL="bin/Release/netframework4.8/Gauge.dll"
+GAUGE_DLL="build/Gauge.dll"
 DISPLAY_NAME=$(jq -r '.DisplayName' $INFO_FILE)
 VERSION=$(jq -r '.Version' $INFO_FILE)
 
-if ! [ -e $GAUGE_DLL ]; then
-    echo "Failed to find $GAUGE_DLL! Have you built it in release mode yet?"
-    exit 1
-fi
+check_file_exists "$GAUGE_DLL"
+check_file_exists "$INFO_FILE"
 
-zip -1 -T -j -u "${DISPLAY_NAME}_v$VERSION.zip" $GAUGE_DLL info.json
+zip -1 -T -j -u "${DISPLAY_NAME}_v$VERSION.zip" $GAUGE_DLL $INFO_FILE
