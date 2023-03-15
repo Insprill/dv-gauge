@@ -1,6 +1,7 @@
 1.1.0:
 - Added support for broad gauges.
 - Added an option to bypass setting restrictions.
+- Fixed non-standard gauge cars not being regauged when standard gauge is selected.
 - Fixed roundhouse rails not being regauged.
 - Fixed service station markers not being regauged.
 - Fixed the mod trying to load with Unity Mod Manager versions older than 0.25.0.

@@ -50,7 +50,7 @@ namespace Gauge.Utils
             mesh.ApplyVerts(vertices);
         }
 
-        public static float? GetGauge(this TrainCar car)
+        public static float GetGauge(this TrainCar car)
         {
             return Main.IsCCLEnabled ? CCL.GetGauge(car) : Gauge.Standard.GetGauge();
         }

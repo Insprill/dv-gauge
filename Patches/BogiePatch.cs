@@ -17,7 +17,7 @@ namespace Gauge.Patches
 
         public static void Postfix(Bogie __instance)
         {
-            if (Main.Settings.gauge == Gauge.Standard)
+            if (Mathf.Abs(Main.Settings.gauge.GetGauge() - __instance.Car.GetGauge()) < 0.001f)
                 return;
 
             foreach (MeshFilter filter in __instance.gameObject.GetComponentsInChildren<MeshFilter>())
@@ -34,6 +34,7 @@ namespace Gauge.Patches
                         Symmetrical.ScaleToGauge(mesh, true, __instance.Car.GetGauge());
                         break;
                 }
+
                 modifiedMeshes.Add(mesh);
             }
         }
