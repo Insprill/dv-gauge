@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityModManagerNet;
 
+// ReSharper disable ConvertToConstant.Global
+// ReSharper disable FieldCanBeMadeReadOnly.Global
 namespace Gauge
 {
     public class Settings : UnityModManager.ModSettings, IDrawable
     {
         private const ushort MIN_RAIL_WIDTH = 350;
-        private const ushort MAX_RAIL_WIDTH = 1600;
+        private const ushort MAX_RAIL_WIDTH = 1700;
         private const ushort MIN_SLEEPER_SPACING = 350;
         private const ushort MAX_SLEEPER_SPACING = 2000;
 
@@ -14,7 +16,7 @@ namespace Gauge
         [Draw("Rail gauge")]
         public Gauge gauge = Gauge.ThreeFoot;
 
-        [Draw("Width (meters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 1600.", VisibleOn = "gauge|Custom")]
+        [Draw("Width (meters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 1700.", VisibleOn = "gauge|Custom")]
         public int width = 1435;
 
         [Draw("Sleeper Spacing (meters)", Tooltip = "The distance, in millimeters, between the center of each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
