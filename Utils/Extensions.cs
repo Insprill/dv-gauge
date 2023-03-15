@@ -43,6 +43,13 @@ namespace Gauge.Utils
             mesh.RecalculateBounds();
         }
 
+        public static void AdjustY(this Mesh mesh, float offset)
+        {
+            Vector3[] vertices = mesh.vertices;
+            for (int i = 0; i < vertices.Length; i++) vertices[i].y += offset;
+            mesh.ApplyVerts(vertices);
+        }
+
         public static float? GetGauge(this TrainCar car)
         {
             return Main.IsCCLEnabled ? CCL.GetGauge(car) : Gauge.Standard.GetGauge();

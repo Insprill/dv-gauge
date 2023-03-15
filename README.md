@@ -30,6 +30,7 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#building">Building</a></li>
+    <li><a href="#building-the-asset-bundle">Building the Asset Bundle</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
   </ol>
@@ -106,6 +107,19 @@ The info.json can be found in the root of this repository.
 
 
 
+<!-- BUILDING ASSET BUNDLE -->
+
+## Building The Asset Bundle
+
+To build the AssetBundle for gauge, you'll need to install Unity **2019.4.22f1**.
+You can then open up the `GaugeBundleBuilder` project in this repo.
+
+To add the meshes to the project you'll need to export them yourself using something like [AssetStudio][asset-studio-url].
+You can find all the meshes you need to export in `GaugeBundleBuilder/Assets/Meshes/meshes.txt`. If you're missing meshes, it'll' warn you when you try to build.
+
+
+
+
 <!-- CONTRIBUTING -->
 
 ## Contributing
@@ -121,8 +135,11 @@ If you're new to contributing to open-source projects, you can follow [this][con
 
 ## License
 
-Distributed under the Apache 2.0 license.  
+Code is distributed under the Apache 2.0 license.  
 See [LICENSE][license-url] for more information.
+
+AssetBundle assets are owned by Altfuture and are included with permission, for the purpose of having Read/Write protection on them removed, which is necessary for this mod to function.
+These assets are not covered by the Apache 2.0 license and have different terms and conditions. Contact [support@altfuture.gg][altfuture-support-email-url] for more information.
 
 
 
@@ -140,4 +157,6 @@ See [LICENSE][license-url] for more information.
 [issues-url]: https://github.com/Insprill/dv-gauge/issues
 [license-shield]: https://img.shields.io/github/license/Insprill/dv-gauge.svg?style=for-the-badge
 [license-url]: https://github.com/Insprill/dv-gauge/blob/master/LICENSE
+[altfuture-support-email-url]: mailto:support@altfuture.gg
 [contributing-quickstart-url]: https://docs.github.com/en/get-started/quickstart/contributing-to-projects
+[asset-studio-url]: https://github.com/Perfare/AssetStudio

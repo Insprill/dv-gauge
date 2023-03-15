@@ -46,51 +46,6 @@ namespace Gauge.Patches
                 railTrack.baseType = baseType;
             }
 
-            Main.Logger.Log("Modifying static meshes");
-
-            foreach (MeshFilter filter in Object.FindObjectsOfType<MeshFilter>())
-            {
-                Mesh mesh = filter.sharedMesh;
-                if (!mesh.isReadable || modifiedMeshes.Contains(mesh))
-                    continue;
-                switch (mesh.name)
-                {
-                    // Switches
-                    case "rails_static":
-                        StaticSwitch.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
-                        break;
-                    case "rails_moving":
-                        MovingSwitch.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
-                        break;
-                    // Switch anchors
-                    case "anchors":
-                        SwitchAnchors.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
-                        break;
-                    // Switch ballast
-                    case "ballast" when Main.Settings.adjustBallastWidth:
-                    case "ballast-outersign" when Main.Settings.adjustBallastWidth:
-                    // Switch sleepers
-                    case "sleepers":
-                    case "sleepers-outersign":
-                    // Turntable rails
-                    case "TurntableRail":
-                    case "TurntableRail_ShadowCaster":
-                    // Roundhouse rails
-                    // case "TurntableRail.002": // Not modifiable
-                    // Buffer stops
-                    case "buffer_stop_sleeper_n_1":
-                    case "buffer_stop_rails":
-                    case "buffer_stop_rails_LOD1":
-                    case "buffer_stop_holders":
-                        Symmetrical.ScaleToGauge(mesh);
-                        modifiedMeshes.Add(mesh);
-                        break;
-                }
-            }
-
             return true;
         }
     }

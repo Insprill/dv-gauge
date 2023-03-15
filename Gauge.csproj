@@ -13,12 +13,17 @@
         <Reference Include="0Harmony" />
         <Reference Include="Assembly-CSharp" />
         <Reference Include="DV.Interaction" />
+        <Reference Include="DV.Utils" />
         <Reference Include="BezierCurves" />
-        <Reference Include="UnityEngine" />
+        <Reference Include="UnityEngine.AssetBundleModule" />
         <Reference Include="UnityEngine.CoreModule" />
-        <Reference Include="UnityEngine.IMGUIModule" />
-        <Reference Include="UnityEngine.PhysicsModule" />
         <Reference Include="UnityModManager" />
         <Reference Include="DVCustomCarLoader" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="GaugeBundleBuilder/**" />
+        <Compile Remove="GaugeBundleBuilder/**" />
+        <Content Remove="GaugeBundleBuilder/**" />
     </ItemGroup>
 </Project>

@@ -29,6 +29,10 @@ namespace Gauge
                 harmony = new Harmony(ModEntry.Info.Id);
                 harmony.PatchAll();
                 Logger.Log("Successfully patched");
+
+                Logger.Log("Loading assets...");
+                if (Assets.Init(ModEntry.Path))
+                    Logger.Log("Successfully loaded assets");
             }
             catch (Exception ex)
             {

@@ -278,6 +278,29 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### Bundle Builder
+# What kind of git nonsense is this...
+# Required Assets
+!GaugeBundleBuilder/
+GaugeBundleBuilder/*
+!GaugeBundleBuilder/Assets/
+GaugeBundleBuilder/Assets/*
+!GaugeBundleBuilder/Assets/Meshes/
+GaugeBundleBuilder/Assets/Meshes/*
+!GaugeBundleBuilder/Assets/Meshes/meshes.txt
+!GaugeBundleBuilder/Assets/Meshes.meta
+!GaugeBundleBuilder/Assets/Scripts/
+!GaugeBundleBuilder/Assets/Scripts.meta
+# Project Settings
+!GaugeBundleBuilder/ProjectSettings/
+GaugeBundleBuilder/ProjectSettings/*
+!GaugeBundleBuilder/ProjectSettings/ProjectSettings.asset
+!GaugeBundleBuilder/ProjectSettings/EditorSettings.asset
+!GaugeBundleBuilder/ProjectSettings/PackageManagerSettings.asset
+!GaugeBundleBuilder/ProjectSettings/ProjectVersion.txt
+# Packages
+!GaugeBundleBuilder/Packages
+
 ### Custom
 # Builds
 Gauge_*.zip
