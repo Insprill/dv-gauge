@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Gauge.MeshModifiers;
+﻿using Gauge.MeshModifiers;
+using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -8,8 +8,6 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(TrainCar), "Start")]
     public static class TrainCar_Start_Patch
     {
-        private static readonly HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
-
         public static void Postfix(TrainCar __instance)
         {
             // The SH282's mesh modifications will *not* work on broader gauges, don't even try.
@@ -19,7 +17,7 @@ namespace Gauge.Patches
             foreach (MeshFilter filter in __instance.gameObject.GetComponentsInChildren<MeshFilter>())
             {
                 Mesh mesh = filter.sharedMesh;
-                if (!mesh.isReadable || modifiedMeshes.Contains(mesh)) continue;
+                if (!mesh.isReadable || mesh.IsModified()) continue;
                 switch (mesh.name)
                 {
                     case "ext Wheels Driving 4":
@@ -32,7 +30,7 @@ namespace Gauge.Patches
                     case "ext Brakes":
                     case "ext Wheels Front Support":
                         SH282.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
+                        mesh.SetModified();
                         break;
                 }
             }

@@ -9,8 +9,6 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(WorldStreamingInit), "Awake")]
     public static class WorldStreamingInit_Awake_Patch
     {
-        private static readonly HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
-
         public static void Postfix()
         {
             if (Main.Settings.gauge.IsStandard())
@@ -24,7 +22,7 @@ namespace Gauge.Patches
             foreach (MeshFilter filter in SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.GetComponentsInChildren<MeshFilter>())
             {
                 Mesh mesh = filter.sharedMesh;
-                if (mesh == null || modifiedMeshes.Contains(mesh))
+                if (mesh == null || mesh.IsModified())
                     continue;
 
                 string name = mesh.name;
@@ -42,22 +40,22 @@ namespace Gauge.Patches
                     // Switches
                     case "rails_static":
                         StaticSwitch.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
+                        mesh.SetModified();
                         break;
                     case "rails_moving":
                         MovingSwitch.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
+                        mesh.SetModified();
                         break;
                     // Switch anchors
                     case "anchors":
                         SwitchAnchors.ModifyMesh(mesh);
-                        modifiedMeshes.Add(mesh);
+                        mesh.SetModified();
                         break;
                     // Roundhouse rails
                     case "TurntableRail.002":
                         Symmetrical.ScaleToGauge(mesh, scale: 0.1f - GaugeExtensions.railEdgeOffset * 0.1f * 8); // ???
                         mesh.AdjustY(-0.025f * 0.1f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
-                        modifiedMeshes.Add(mesh);
+                        mesh.SetModified();
                         break;
                     // Service station markers
                     case "ServiceStationMarker01":
@@ -79,7 +77,7 @@ namespace Gauge.Patches
                     case "buffer_stop_rails_LOD1":
                     case "buffer_stop_holders":
                         Symmetrical.ScaleToGauge(mesh);
-                        modifiedMeshes.Add(mesh);
+                        mesh.SetModified();
                         break;
                 }
             }

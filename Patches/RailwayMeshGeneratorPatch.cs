@@ -17,7 +17,6 @@ namespace Gauge.Patches
 
             Main.Logger.Log($"Changing gauge to {Main.Settings.gauge}");
 
-            HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
             RailTrack[] railTracks = Object.FindObjectsOfType<RailTrack>();
 
             BaseType baseType = railTracks[0].baseType.Clone();
@@ -26,16 +25,16 @@ namespace Gauge.Patches
             foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
                 Mesh mesh = filter.sharedMesh;
-                if (!mesh.isReadable || modifiedMeshes.Contains(mesh))
+                if (!mesh.isReadable || mesh.IsModified())
                     continue;
                 Symmetrical.ScaleToGauge(mesh);
-                modifiedMeshes.Add(mesh);
+                mesh.SetModified();
             }
 
             if (__instance.anchorMesh != null && __instance.anchorMesh.isReadable)
             {
                 Symmetrical.ScaleToGauge(__instance.anchorMesh);
-                modifiedMeshes.Add(__instance.anchorMesh);
+                __instance.anchorMesh.SetModified();
             }
 
             RailType railType = railTracks[0].railType.Clone();
