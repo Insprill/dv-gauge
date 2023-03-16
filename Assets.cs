@@ -31,11 +31,6 @@ namespace Gauge
         {
             switch (name)
             {
-                case "ServiceStationMarker01":
-                case "ServiceStationMarker01_LOD1":
-                case "ServiceStationMarker02":
-                case "ServiceStationMarker02_LOD1":
-                    return Meshes[$"{name}_0"];
                 case "TurntableRail.002":
                     if (Meshes.ContainsKey(name))
                         return Meshes[name];
@@ -57,7 +52,8 @@ namespace Gauge
                     Meshes.Add(name, combinedMesh);
                     return combinedMesh;
                 default:
-                    return null;
+                    bool foundMesh = Meshes.TryGetValue($"{name}_0", out Mesh mesh);
+                    return foundMesh ? mesh : null;
             }
         }
     }
