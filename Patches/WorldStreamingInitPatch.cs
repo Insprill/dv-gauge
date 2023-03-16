@@ -13,6 +13,8 @@ namespace Gauge.Patches
 
         public static void Postfix()
         {
+            if (Main.Settings.gauge.IsStandard())
+                return;
             WorldStreamingInit.LoadingFinished += OnLoadingFinished;
         }
 

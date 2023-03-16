@@ -12,7 +12,7 @@ namespace Gauge.Patches
     {
         private static bool Prefix(RailwayMeshGenerator __instance)
         {
-            if (Main.Settings.gauge == Gauge.Standard)
+            if (Main.Settings.gauge.IsStandard())
                 return true;
 
             Main.Logger.Log($"Changing gauge to {Main.Settings.gauge}");

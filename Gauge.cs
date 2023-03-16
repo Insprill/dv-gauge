@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Gauge
 {
@@ -57,6 +58,11 @@ namespace Gauge
         public static float GetDiffFrom(this Gauge to, float from)
         {
             return (from - to.GetGauge()) / 2 + railEdgeOffset;
+        }
+
+        public static bool IsStandard(this Gauge gauge)
+        {
+            return Mathf.Abs(gauge.GetGauge() - Gauge.Standard.GetGauge()) < 0.001;
         }
     }
 }
