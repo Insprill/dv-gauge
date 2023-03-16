@@ -57,11 +57,6 @@ namespace Gauge.Patches
                         mesh.AdjustY(-0.025f * 0.1f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
                         mesh.SetModified();
                         break;
-                    // Service station markers
-                    case "ServiceStationMarker01":
-                    case "ServiceStationMarker01_LOD1":
-                    case "ServiceStationMarker02":
-                    case "ServiceStationMarker02_LOD1":
                     // Switch ballast
                     case "ballast" when Main.Settings.adjustBallastWidth:
                     case "ballast-outersign" when Main.Settings.adjustBallastWidth:
