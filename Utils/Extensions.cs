@@ -8,8 +8,6 @@ namespace Gauge.Utils
 {
     public static class Extensions
     {
-        private static readonly HashSet<int> modifiedMeshes = new HashSet<int>();
-
         public static BaseType Clone(this BaseType standardBaseType)
         {
             BaseType baseType = ScriptableObject.CreateInstance<BaseType>();
@@ -43,6 +41,15 @@ namespace Gauge.Utils
             return railType;
         }
 
+        public static float GetGauge(this TrainCar car)
+        {
+            return Main.IsCCLEnabled ? CCL.GetGauge(car) : Gauge.Standard.GetGauge();
+        }
+
+        #region Meshes
+
+        private static readonly HashSet<int> modifiedMeshes = new HashSet<int>();
+
         public static void ApplyVerts(this Mesh mesh, Vector3[] verts)
         {
             mesh.vertices = verts;
@@ -56,11 +63,6 @@ namespace Gauge.Utils
             mesh.ApplyVerts(vertices);
         }
 
-        public static float GetGauge(this TrainCar car)
-        {
-            return Main.IsCCLEnabled ? CCL.GetGauge(car) : Gauge.Standard.GetGauge();
-        }
-
         public static bool IsModified(this Mesh mesh)
         {
             return modifiedMeshes.Contains(mesh.vertices.Hash());
@@ -69,6 +71,23 @@ namespace Gauge.Utils
         public static void SetModified(this Mesh mesh)
         {
             modifiedMeshes.Add(mesh.vertices.Hash());
+        }
+
+        private static int Hash(this IReadOnlyCollection<Vector3> vectors)
+        {
+            StringBuilder sb = new StringBuilder(vectors.Count * 3 * sizeof(float)); // Close enough
+            foreach (Vector3 vector in vectors)
+            {
+                sb.Append(vector.x);
+                sb.Append(vector.y);
+                sb.Append(vector.z);
+            }
+
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()));
+                return BitConverter.ToInt32(hashBytes, 0);
+            }
         }
 
         public static void ModifyMeshes(this GameObject gameObject, HandleMesh func, Component component = null)
@@ -102,21 +121,6 @@ namespace Gauge.Utils
 
         public delegate void HandleMesh(string name, Mesh mesh, Component component = null);
 
-        private static int Hash(this IReadOnlyCollection<Vector3> vectors)
-        {
-            StringBuilder sb = new StringBuilder(vectors.Count * 3 * sizeof(float)); // Close enough
-            foreach (Vector3 vector in vectors)
-            {
-                sb.Append(vector.x);
-                sb.Append(vector.y);
-                sb.Append(vector.z);
-            }
-
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()));
-                return BitConverter.ToInt32(hashBytes, 0);
-            }
-        }
+        #endregion
     }
 }
