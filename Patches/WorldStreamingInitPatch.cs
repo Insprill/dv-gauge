@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
@@ -9,6 +8,8 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(WorldStreamingInit), "Awake")]
     public static class WorldStreamingInit_Awake_Patch
     {
+        private static readonly ushort[] SLEEPER_SKIP_VERTS = { 498, 499, 500, 501, 503, 506 };
+
         public static void Postfix()
         {
             if (Main.Settings.gauge.IsStandard())
@@ -51,6 +52,12 @@ namespace Gauge.Patches
                         SwitchAnchors.ModifyMesh(mesh);
                         mesh.SetModified();
                         break;
+                    // Switch sleepers
+                    case "sleepers":
+                    case "sleepers-outersign":
+                        Symmetrical.ScaleToGauge(mesh, skipVerts: SLEEPER_SKIP_VERTS);
+                        mesh.SetModified();
+                        break;
                     // Roundhouse rails
                     case "TurntableRail.002":
                         Symmetrical.ScaleToGauge(mesh, scale: 0.1f - GaugeExtensions.railEdgeOffset * 0.1f * 8); // ???
@@ -60,9 +67,6 @@ namespace Gauge.Patches
                     // Switch ballast
                     case "ballast" when Main.Settings.adjustBallastWidth:
                     case "ballast-outersign" when Main.Settings.adjustBallastWidth:
-                    // Switch sleepers
-                    case "sleepers":
-                    case "sleepers-outersign":
                     // Turntable rails
                     case "TurntableRail":
                     case "TurntableRail_ShadowCaster":
