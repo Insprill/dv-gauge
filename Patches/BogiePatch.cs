@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Gauge.MeshModifiers;
+﻿using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
@@ -18,22 +17,22 @@ namespace Gauge.Patches
             if (Mathf.Abs(Main.Settings.gauge.GetGauge() - __instance.Car.GetGauge()) < 0.001f)
                 return;
 
-            foreach (MeshFilter filter in __instance.gameObject.GetComponentsInChildren<MeshFilter>())
-            {
-                Mesh mesh = filter.sharedMesh;
-                if (!mesh.isReadable || mesh.IsModified()) continue;
-                switch (mesh.name)
-                {
-                    case "ext axle_F":
-                    case "ext axle_R":
-                        Symmetrical.ScaleToGauge(mesh, true, __instance.Car.GetGauge(), DE2_AXLE_SKIP_VERTS);
-                        break;
-                    default:
-                        Symmetrical.ScaleToGauge(mesh, true, __instance.Car.GetGauge());
-                        break;
-                }
+            __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
+        }
 
-                mesh.SetModified();
+        private static void HandleMesh(string name, Mesh mesh, Component component)
+        {
+            switch (name)
+            {
+                case "ext axle_F":
+                case "ext axle_R":
+                    Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).Car.GetGauge(), DE2_AXLE_SKIP_VERTS);
+                    mesh.SetModified();
+                    break;
+                default:
+                    Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).Car.GetGauge());
+                    mesh.SetModified();
+                    break;
             }
         }
     }

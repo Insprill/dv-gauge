@@ -71,6 +71,37 @@ namespace Gauge.Utils
             modifiedMeshes.Add(mesh.vertices.Hash());
         }
 
+        public static void ModifyMeshes(this GameObject gameObject, HandleMesh func, Component component = null)
+        {
+            gameObject.transform.ModifyMeshes(func, component);
+        }
+
+        public static void ModifyMeshes(this Transform transform, HandleMesh func, Component component = null)
+        {
+            foreach (MeshFilter filter in transform.GetComponentsInChildren<MeshFilter>())
+            {
+                Mesh mesh = filter.sharedMesh;
+                if (mesh == null)
+                    continue;
+
+                string name = mesh.name;
+
+                if (!mesh.isReadable)
+                {
+                    Mesh m = Assets.GetMesh(mesh.name);
+                    if (m == null) continue;
+                    filter.sharedMesh = mesh = m;
+                }
+
+                if (mesh.IsModified())
+                    continue;
+
+                func(name, mesh, component);
+            }
+        }
+
+        public delegate void HandleMesh(string name, Mesh mesh, Component component = null);
+
         private static int Hash(this IReadOnlyCollection<Vector3> vectors)
         {
             StringBuilder sb = new StringBuilder(vectors.Count * 3 * sizeof(float)); // Close enough

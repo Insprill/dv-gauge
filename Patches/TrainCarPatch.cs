@@ -14,25 +14,25 @@ namespace Gauge.Patches
             if (__instance.carType != TrainCarType.LocoSteamHeavy || Main.Settings.gauge.GetGauge() >= Gauge.Standard.GetGauge())
                 return;
 
-            foreach (MeshFilter filter in __instance.gameObject.GetComponentsInChildren<MeshFilter>())
+            __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
+        }
+
+        private static void HandleMesh(string name, Mesh mesh, Component component)
+        {
+            switch (name)
             {
-                Mesh mesh = filter.sharedMesh;
-                if (!mesh.isReadable || mesh.IsModified()) continue;
-                switch (mesh.name)
-                {
-                    case "ext Wheels Driving 4":
-                    case "ext Wheels Driving 2":
-                    case "ext Wheels Driving 1":
-                    case "ext Wheels Driving 3":
-                    case "ext Support":
-                    case "ext Locomotive Body":
-                    case "ext Suspension":
-                    case "ext Brakes":
-                    case "ext Wheels Front Support":
-                        SH282.ModifyMesh(mesh);
-                        mesh.SetModified();
-                        break;
-                }
+                case "ext Wheels Driving 4":
+                case "ext Wheels Driving 2":
+                case "ext Wheels Driving 1":
+                case "ext Wheels Driving 3":
+                case "ext Support":
+                case "ext Locomotive Body":
+                case "ext Suspension":
+                case "ext Brakes":
+                case "ext Wheels Front Support":
+                    SH282.ModifyMesh(mesh);
+                    mesh.SetModified();
+                    break;
             }
         }
     }

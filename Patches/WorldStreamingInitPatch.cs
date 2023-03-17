@@ -20,65 +20,53 @@ namespace Gauge.Patches
         private static void OnLoadingFinished()
         {
             Main.Logger.Log("Modifying static meshes");
-            foreach (MeshFilter filter in SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.GetComponentsInChildren<MeshFilter>())
+            SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
+        }
+
+        private static void HandleMesh(string name, Mesh mesh, Component component)
+        {
+            switch (name)
             {
-                Mesh mesh = filter.sharedMesh;
-                if (mesh == null || mesh.IsModified())
-                    continue;
-
-                string name = mesh.name;
-
-                if (!mesh.isReadable)
-                {
-                    Mesh m = Assets.GetMesh(mesh.name);
-                    if (m == null)
-                        continue;
-                    filter.sharedMesh = mesh = m;
-                }
-
-                switch (name)
-                {
-                    // Switches
-                    case "rails_static":
-                        StaticSwitch.ModifyMesh(mesh);
-                        mesh.SetModified();
-                        break;
-                    case "rails_moving":
-                        MovingSwitch.ModifyMesh(mesh);
-                        mesh.SetModified();
-                        break;
-                    // Switch anchors
-                    case "anchors":
-                        SwitchAnchors.ModifyMesh(mesh);
-                        mesh.SetModified();
-                        break;
-                    // Switch sleepers
-                    case "sleepers":
-                    case "sleepers-outersign":
-                        Symmetrical.ScaleToGauge(mesh, skipVerts: SLEEPER_SKIP_VERTS);
-                        mesh.SetModified();
-                        break;
-                    // Roundhouse rails
-                    case "TurntableRail.002":
-                        Symmetrical.ScaleToGauge(mesh, scale: 0.1f - GaugeExtensions.railEdgeOffset * 0.1f * 8); // ???
-                        mesh.AdjustY(-0.025f * 0.1f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
-                        mesh.SetModified();
-                        break;
-                    // Switch ballast
-                    case "ballast" when Main.Settings.adjustBallastWidth:
-                    case "ballast-outersign" when Main.Settings.adjustBallastWidth:
-                    // Turntable rails
-                    case "TurntableRail":
-                    case "TurntableRail_ShadowCaster":
-                    // Buffer stops
-                    case "buffer_stop_sleeper_n_1":
-                    case "buffer_stop_rails":
-                    case "buffer_stop_rails_LOD1":
-                    case "buffer_stop_holders":
-                        Symmetrical.ScaleToGauge(mesh);
-                        mesh.SetModified();
-                        break;
-                }
+                // Switches
+                case "rails_static":
+                    StaticSwitch.ModifyMesh(mesh);
+                    mesh.SetModified();
+                    break;
+                case "rails_moving":
+                    MovingSwitch.ModifyMesh(mesh);
+                    mesh.SetModified();
+                    break;
+                // Switch anchors
+                case "anchors":
+                    SwitchAnchors.ModifyMesh(mesh);
+                    mesh.SetModified();
+                    break;
+                // Switch sleepers
+                case "sleepers":
+                case "sleepers-outersign":
+                    Symmetrical.ScaleToGauge(mesh, skipVerts: SLEEPER_SKIP_VERTS);
+                    mesh.SetModified();
+                    break;
+                // Roundhouse rails
+                case "TurntableRail.002":
+                    Symmetrical.ScaleToGauge(mesh, scale: 0.1f - GaugeExtensions.railEdgeOffset * 0.1f * 8); // ???
+                    mesh.AdjustY(-0.025f * 0.1f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
+                    mesh.SetModified();
+                    break;
+                // Switch ballast
+                case "ballast" when Main.Settings.adjustBallastWidth:
+                case "ballast-outersign" when Main.Settings.adjustBallastWidth:
+                // Turntable rails
+                case "TurntableRail":
+                case "TurntableRail_ShadowCaster":
+                // Buffer stops
+                case "buffer_stop_sleeper_n_1":
+                case "buffer_stop_rails":
+                case "buffer_stop_rails_LOD1":
+                case "buffer_stop_holders":
+                    Symmetrical.ScaleToGauge(mesh);
+                    mesh.SetModified();
+                    break;
             }
         }
     }

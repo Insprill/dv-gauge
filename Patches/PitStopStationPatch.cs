@@ -10,33 +10,21 @@ namespace Gauge.Patches
     {
         public static void Postfix(PitStopStation __instance)
         {
-            foreach (MeshFilter filter in __instance.transform.parent.GetComponentsInChildren<MeshFilter>())
+            __instance.transform.parent.ModifyMeshes(HandleMesh);
+        }
+
+        private static void HandleMesh(string name, Mesh mesh, Component component)
+        {
+            switch (name)
             {
-                Mesh mesh = filter.sharedMesh;
-                if (mesh == null || mesh.IsModified())
-                    continue;
-
-                string name = mesh.name;
-
-                if (!mesh.isReadable)
-                {
-                    Mesh m = Assets.GetMesh(mesh.name);
-                    if (m == null)
-                        continue;
-                    filter.sharedMesh = mesh = m;
-                }
-
-                switch (name)
-                {
-                    // Service station markers
-                    case "ServiceStationMarker01":
-                    case "ServiceStationMarker01_LOD1":
-                    case "ServiceStationMarker02":
-                    case "ServiceStationMarker02_LOD1":
-                        Symmetrical.ScaleToGauge(mesh, scale: 0.1875f);
-                        mesh.SetModified();
-                        break;
-                }
+                // Service station markers
+                case "ServiceStationMarker01":
+                case "ServiceStationMarker01_LOD1":
+                case "ServiceStationMarker02":
+                case "ServiceStationMarker02_LOD1":
+                    Symmetrical.ScaleToGauge(mesh, scale: 0.1875f);
+                    mesh.SetModified();
+                    break;
             }
         }
     }
