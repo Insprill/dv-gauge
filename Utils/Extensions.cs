@@ -41,9 +41,14 @@ namespace Gauge.Utils
             return railType;
         }
 
-        public static float GetGauge(this TrainCar car)
+        public static float GetGauge(this Bogie bogie)
         {
-            return Main.IsCCLEnabled ? CCL.GetGauge(car) : Gauge.Standard.GetGauge();
+            return Main.IsCCLEnabled ? CCL.GetGauge(bogie) : Gauge.Standard.GetGauge();
+        }
+
+        public static bool IsFront(this Bogie bogie)
+        {
+            return bogie.Car.Bogies[0] == bogie;
         }
 
         #region Meshes

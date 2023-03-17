@@ -14,7 +14,7 @@ namespace Gauge.Patches
 
         public static void Postfix(Bogie __instance)
         {
-            if (Mathf.Abs(Main.Settings.gauge.GetGauge() - __instance.Car.GetGauge()) < 0.001f)
+            if (Mathf.Abs(Main.Settings.gauge.GetGauge() - __instance.GetGauge()) < 0.001f)
                 return;
 
             __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
@@ -26,11 +26,11 @@ namespace Gauge.Patches
             {
                 case "ext axle_F":
                 case "ext axle_R":
-                    Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).Car.GetGauge(), DE2_AXLE_SKIP_VERTS);
+                    Symmetrical.ScaleToGauge(mesh, true, skipVerts: DE2_AXLE_SKIP_VERTS);
                     mesh.SetModified();
                     break;
                 default:
-                    Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).Car.GetGauge());
+                    Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).GetGauge());
                     mesh.SetModified();
                     break;
             }

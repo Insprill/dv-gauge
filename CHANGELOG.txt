@@ -6,6 +6,7 @@
 - Fixed service station markers not being regauged.
 - Fixed switch markers floating on narrow gauges.
 - Fixed the mod trying to load with Unity Mod Manager versions older than 0.25.0.
+- Fixed non-standard gauge custom cars with one default bogie not being regauged properly.
 
 
 1.0.0:
