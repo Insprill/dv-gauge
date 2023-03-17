@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 namespace Gauge.Utils
 {
     public static class Extensions
     {
-        private static readonly HashSet<Mesh> modifiedMeshes = new HashSet<Mesh>();
+        private static readonly HashSet<int> modifiedMeshes = new HashSet<int>();
 
         public static BaseType Clone(this BaseType standardBaseType)
         {
@@ -61,16 +63,29 @@ namespace Gauge.Utils
 
         public static bool IsModified(this Mesh mesh)
         {
-            Vector3[] verts = mesh.vertices;
-            foreach (Mesh modifiedMesh in modifiedMeshes)
-                if (modifiedMesh.vertices.SequenceEqual(verts))
-                    return true;
-            return false;
+            return modifiedMeshes.Contains(mesh.vertices.Hash());
         }
 
         public static void SetModified(this Mesh mesh)
         {
-            modifiedMeshes.Add(mesh);
+            modifiedMeshes.Add(mesh.vertices.Hash());
+        }
+
+        private static int Hash(this IReadOnlyCollection<Vector3> vectors)
+        {
+            StringBuilder sb = new StringBuilder(vectors.Count * 3 * sizeof(float)); // Close enough
+            foreach (Vector3 vector in vectors)
+            {
+                sb.Append(vector.x);
+                sb.Append(vector.y);
+                sb.Append(vector.z);
+            }
+
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()));
+                return BitConverter.ToInt32(hashBytes, 0);
+            }
         }
     }
 }
