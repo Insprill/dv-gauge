@@ -8,14 +8,14 @@ namespace Gauge.MeshModifiers
     {
         private const float BASE_THRESHOLD = 0.05f;
 
-        public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null, ushort[] skipVerts = null, ushort[] includeVerts = null, float scale = 1)
+        public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null, ushort[] skipVerts = null, ushort[] includeVerts = null)
         {
             Vector3[] verts = mesh.vertices;
             for (int i = 0; i < verts.Length; i++)
             {
                 if (skipVerts != null && i < ushort.MaxValue && Array.BinarySearch(skipVerts, (ushort)i) >= 0) continue;
                 if (includeVerts != null && i < ushort.MaxValue && Array.BinarySearch(includeVerts, (ushort)i) < 0) continue;
-                verts[i] = ScaleToGauge(verts[i], useGaugeAsThreshold, baseGauge, scale);
+                verts[i] = ScaleToGauge(verts[i], useGaugeAsThreshold, baseGauge);
             }
 
             mesh.ApplyVerts(verts);
@@ -30,12 +30,12 @@ namespace Gauge.MeshModifiers
             }
         }
 
-        private static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null, float scale = 1)
+        private static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null)
         {
-            float threshold = (useGaugeAsThreshold
+            float threshold = useGaugeAsThreshold
                 ? baseGauge.GetValueOrDefault(Gauge.Standard.GetGauge()) / 2 - BASE_THRESHOLD
-                : BASE_THRESHOLD) * scale;
-            float gaugeDiff = (baseGauge == null ? Main.Settings.gauge.GetDiffToStandard() : Main.Settings.gauge.GetDiffFrom(baseGauge.Value)) * scale;
+                : BASE_THRESHOLD;
+            float gaugeDiff = baseGauge == null ? Main.Settings.gauge.GetDiffToStandard() : Main.Settings.gauge.GetDiffFrom(baseGauge.Value);
             if (vert.x > threshold) vert.x = Mathf.Max(0.001f, vert.x - gaugeDiff);
             else if (vert.x < -threshold) vert.x = Mathf.Min(-0.001f, vert.x + gaugeDiff);
             return vert;

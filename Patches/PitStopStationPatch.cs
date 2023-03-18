@@ -22,7 +22,7 @@ namespace Gauge.Patches
                 case "ServiceStationMarker01_LOD1":
                 case "ServiceStationMarker02":
                 case "ServiceStationMarker02_LOD1":
-                    Symmetrical.ScaleToGauge(mesh, scale: 0.1875f);
+                    Symmetrical.ScaleToGauge(mesh);
                     mesh.SetModified();
                     break;
             }

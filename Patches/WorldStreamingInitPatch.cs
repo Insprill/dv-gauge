@@ -49,8 +49,8 @@ namespace Gauge.Patches
                     break;
                 // Roundhouse rails
                 case "TurntableRail.002":
-                    Symmetrical.ScaleToGauge(mesh, scale: 0.1f - GaugeExtensions.railEdgeOffset * 0.1f * 8); // ???
-                    mesh.AdjustY(-0.025f * 0.1f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
+                    Symmetrical.ScaleToGauge(mesh);
+                    mesh.AdjustY(-0.06f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
                     mesh.SetModified();
                     break;
                 // Switch ballast
