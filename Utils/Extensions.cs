@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gauge.Utils
@@ -70,29 +67,12 @@ namespace Gauge.Utils
 
         public static bool IsModified(this Mesh mesh)
         {
-            return modifiedMeshes.Contains(mesh.vertices.Hash());
+            return modifiedMeshes.Contains(mesh.GetHashCode());
         }
 
         public static void SetModified(this Mesh mesh)
         {
-            modifiedMeshes.Add(mesh.vertices.Hash());
-        }
-
-        private static int Hash(this IReadOnlyCollection<Vector3> vectors)
-        {
-            StringBuilder sb = new StringBuilder(vectors.Count * 3 * sizeof(float)); // Close enough
-            foreach (Vector3 vector in vectors)
-            {
-                sb.Append(vector.x);
-                sb.Append(vector.y);
-                sb.Append(vector.z);
-            }
-
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()));
-                return BitConverter.ToInt32(hashBytes, 0);
-            }
+            modifiedMeshes.Add(mesh.GetHashCode());
         }
 
         public static void ModifyMeshes(this GameObject gameObject, HandleMesh func, Component component = null)
