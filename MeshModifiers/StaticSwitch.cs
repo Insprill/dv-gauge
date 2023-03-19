@@ -8,8 +8,10 @@ namespace Gauge.MeshModifiers
         public const float Z_OFFSET_FACTOR = 18;
 
         private const ushort SPLIT_MAX_VERT = 344;
+        private const ushort RIGHT_RAIL_MIN_VERT = 344;
         private const ushort RIGHT_RAIL_MAX_VERT = 381;
-        private const ushort LEFT_RAIL_MAX_VERT = 1370;
+        private const ushort LEFT_RAIL_MIN_VERT = 382;
+        private const ushort LEFT_RAIL_MAX_VERT = 1369;
         private static readonly ushort[] DIVERGING_EXTEND_VERTS = {
             17, 18, 19, 21, 23, 25, 35, 40, 43, 48, 55, 60, 62, 77, 79, 85, 90, 93, 98, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222
         };
@@ -40,10 +42,10 @@ namespace Gauge.MeshModifiers
             foreach (ushort idx in STRAIGHT_EXTEND_VERTS) verts[idx].z -= zOffset;
 
             // Right rail
-            for (int i = SPLIT_MAX_VERT - 1; i < RIGHT_RAIL_MAX_VERT; i++) verts[i].x += gaugeDiff;
+            for (int i = RIGHT_RAIL_MIN_VERT; i <= RIGHT_RAIL_MAX_VERT; i++) verts[i].x += gaugeDiff;
 
             // Left rail
-            for (int i = RIGHT_RAIL_MAX_VERT; i < LEFT_RAIL_MAX_VERT; i++) verts[i].x -= gaugeDiff;
+            for (int i = LEFT_RAIL_MIN_VERT + 1; i <= LEFT_RAIL_MAX_VERT; i++) verts[i].x -= gaugeDiff;
 
             mesh.ApplyVerts(verts);
         }
