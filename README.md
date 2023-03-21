@@ -11,7 +11,7 @@
 <div align="center">
   <h1>Gauge</h1>
   <p>
-    An experimental <a href="https://store.steampowered.com/app/588030">Derail Valley</a> mod rebuilding the valley in 3ft narrow gauge!
+    A <a href="https://store.steampowered.com/app/588030">Derail Valley</a> that allows the track gauge to be changed. 
     <br />
     <br />
     <a href="https://github.com/Insprill/dv-gauge/issues">Report Bug</a>
@@ -43,8 +43,11 @@
 
 ## About The Project
 
-Gauge is an experimental Derail Valley mod to allow changing the track gauge.
-Currently, it only supports 3ft narrow gauge.
+Gauge a Derail Valley mod that allows you to change the track gauge to anything you want.
+
+This changes the gauge of the tracks, rolling stock bogies (with CCL support!), and track decorations like buffer stops. Physics is unaffected, this mod is purely aesthetic.
+
+There are four pre-set gauges to select from, or you can enter your own gauge in millimeters.
 
 
 
@@ -100,9 +103,9 @@ Make sure to include the semicolons between each of the paths, but not after the
 ```
 </details>
 
-To test your changes, `Gauge.dll` will need to be copied into the mod's install directory (e.g. `...Derail Valley/Mods/Gauge`) along with `info.json`.
+To test your changes, `Gauge.dll` will need to be copied into the mod's install directory (e.g. `...Derail Valley/Mods/Gauge`) along with `info.json` and `gauge.assetbundle`.
 The .dll can be found in `bin/Debug` or `bin/Release` depending on the selected build configuration.
-The info.json can be found in the root of this repository.
+The info.json and gauge.assetbundle can be found in the root of this repository.
 
 
 
