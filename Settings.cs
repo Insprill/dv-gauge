@@ -2,6 +2,7 @@
 using UnityModManagerNet;
 
 // ReSharper disable ConvertToConstant.Global
+// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 namespace Gauge
 {
@@ -16,10 +17,10 @@ namespace Gauge
         [Draw("Rail gauge")]
         public Gauge gauge = Gauge.ThreeFoot;
 
-        [Draw("Width (meters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 1700.", VisibleOn = "gauge|Custom")]
+        [Draw("Width (millimeters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 1700.", VisibleOn = "gauge|Custom")]
         public int width = 1435;
 
-        [Draw("Sleeper Spacing (meters)", Tooltip = "The distance, in millimeters, between the center of each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
+        [Draw("Sleeper Spacing (millimeters)", Tooltip = "The distance, in millimeters, between the center of each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.", VisibleOn = "gauge|Custom")]
         public int sleeperSpacing = 750;
 
         [Draw("Adjust Ballast Width", Tooltip = "Whether track ballast should be adjusted according to the track gauge. May cause holes in the map.")]
