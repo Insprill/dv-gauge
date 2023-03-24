@@ -303,6 +303,7 @@ GaugeBundleBuilder/ProjectSettings/*
 
 ### Custom
 # Builds
+build/
 Gauge_*.zip
 
 # User-specific refrence paths

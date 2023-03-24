@@ -26,4 +26,9 @@
         <Compile Remove="GaugeBundleBuilder/**" />
         <Content Remove="GaugeBundleBuilder/**" />
     </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Condition="'$(OS)' != 'Windows_NT'" Command="export OUT_DIR=&quot;$(SolutionDir)build&quot;; mkdir -p &quot;$OUT_DIR&quot;; cp -pfu &quot;$(TargetPath)&quot; &quot;$OUT_DIR&quot;" />
+        <Exec Condition="'$(OS)' == 'Windows_NT'" Command="set OUT_DIR=&quot;$(SolutionDir)build&quot; &amp; if not exist &quot;%OUT_DIR%&quot; md &quot;%OUT_DIR%&quot; &amp; copy /d /y &quot;$(TargetPath)&quot; &quot;%OUT_DIR%\&quot;" />
+    </Target>
 </Project>
