@@ -57,7 +57,7 @@ namespace Gauge
 
         public static float GetDiffFrom(this Gauge to, float from)
         {
-            return (from - to.GetGauge()) / 2 + railEdgeOffset;
+            return (from - to.GetGauge()) / 2;
         }
 
         public static bool IsStandard(this Gauge gauge)
