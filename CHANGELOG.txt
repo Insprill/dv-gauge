@@ -1,5 +1,10 @@
+1.1.1:
+- Fixed the actual track gauge being 70mm too narrow.
+- Fixed a stretched vertex on switches.
+
+
 1.1.0:
-- Added initial support for broad gauges.
+- Added support for broad gauges.
 - Added an option to bypass settings restrictions.
 - Fixed roundhouse rails not being regauged.
 - Fixed service station markers not being regauged.
