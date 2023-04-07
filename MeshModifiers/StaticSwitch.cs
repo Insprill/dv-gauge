@@ -65,7 +65,7 @@ namespace Gauge.MeshModifiers
             for (int i = RIGHT_RAIL_MIN_VERT; i <= RIGHT_RAIL_MAX_VERT; i++) verts[i].x += gaugeDiff;
 
             // Left rail
-            for (int i = LEFT_RAIL_MIN_VERT + 1; i <= LEFT_RAIL_MAX_VERT; i++) verts[i].x -= gaugeDiff;
+            for (int i = LEFT_RAIL_MIN_VERT; i <= LEFT_RAIL_MAX_VERT; i++) verts[i].x -= gaugeDiff;
 
             mesh.ApplyVerts(verts);
         }
