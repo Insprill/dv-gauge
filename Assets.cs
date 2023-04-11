@@ -32,19 +32,23 @@ namespace Gauge
             switch (name)
             {
                 case "TurntableRail.002":
-                    if (Meshes.ContainsKey(name))
-                        return Meshes[name];
+                    if (Meshes.TryGetValue(name, out Mesh railMesh))
+                        return railMesh;
+
+                    if (!Meshes.TryGetValue($"{name}_0", out Mesh mesh1))
+                        return null;
+                    if (!Meshes.TryGetValue($"{name}_1", out Mesh mesh2))
+                        return null;
 
                     Mesh combinedMesh = new Mesh();
-
                     // Rails must go first
                     combinedMesh.CombineMeshes(new[] {
                         new CombineInstance {
-                            mesh = Meshes[$"{name}_0"],
+                            mesh = mesh1,
                             transform = Matrix4x4.identity
                         },
                         new CombineInstance {
-                            mesh = Meshes[$"{name}_1"],
+                            mesh = mesh2,
                             transform = Matrix4x4.identity
                         }
                     }, false);
