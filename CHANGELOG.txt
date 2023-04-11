@@ -1,4 +1,5 @@
 1.1.2:
+- Fixed wheelslip particles not being regauged.
 - Fixed an error if the AssetBundle isn't present.
 
 

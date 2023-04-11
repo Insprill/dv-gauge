@@ -10,6 +10,15 @@ namespace Gauge.Patches
     {
         public static void Postfix(TrainCar __instance)
         {
+            if (Main.Settings.gauge.IsStandard())
+                return;
+
+            foreach (Transform t in __instance.GetComponentsInChildren<Transform>())
+            {
+                if (t.name != "[wheel sparks]") continue;
+                Symmetrical.ScaleToGauge(t, __instance.GetGauge());
+            }
+
             // The SH282's mesh modifications will *not* work on broader gauges, don't even try.
             if (__instance.carType != TrainCarType.LocoSteamHeavy || Main.Settings.gauge.GetGauge() >= Gauge.Standard.GetGauge())
                 return;

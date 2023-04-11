@@ -38,6 +38,11 @@ namespace Gauge.Utils
             return railType;
         }
 
+        public static float GetGauge(this TrainCar trainCar)
+        {
+            return Main.IsCCLEnabled ? CCL.GetGauge(trainCar.Bogies[0]) : Gauge.Standard.GetGauge();
+        }
+
         public static float GetGauge(this Bogie bogie)
         {
             return Main.IsCCLEnabled ? CCL.GetGauge(bogie) : Gauge.Standard.GetGauge();

@@ -21,7 +21,7 @@ namespace Gauge.Patches
 
             BaseType baseType = railTracks[0].baseType.Clone();
             baseType.sleeperDistance = Main.Settings.gauge.GetSleeperDistance();
-            if (Main.Settings.adjustBallastWidth) Symmetrical.ScaleToGauge(baseType.baseShape);
+            if (Main.Settings.adjustBallastWidth) Symmetrical.ScaleToGauge(baseType.baseShape.transform);
             foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
                 Mesh mesh = filter.sharedMesh;

@@ -21,12 +21,12 @@ namespace Gauge.MeshModifiers
             mesh.ApplyVerts(verts);
         }
 
-        public static void ScaleToGauge(Shape shape)
+        public static void ScaleToGauge(Transform parent, float? baseGauge = null)
         {
-            for (int i = 0; i < shape.transform.childCount; ++i)
+            for (int i = 0; i < parent.childCount; ++i)
             {
-                Transform t = shape.transform.GetChild(i);
-                t.localPosition = ScaleToGauge(t.localPosition);
+                Transform child = parent.GetChild(i);
+                child.localPosition = ScaleToGauge(child.localPosition, baseGauge: baseGauge);
             }
         }
 
