@@ -14,7 +14,7 @@ namespace Gauge.Patches
 
         public static void Postfix(Bogie __instance)
         {
-            if (Mathf.Abs(Main.Settings.gauge.GetGauge() - __instance.GetGauge()) < 0.001f)
+            if (__instance.IsCorrectGauge())
                 return;
 
             __instance.gameObject.ModifyMeshes(HandleMesh, __instance);

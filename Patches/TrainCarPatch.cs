@@ -10,7 +10,7 @@ namespace Gauge.Patches
     {
         public static void Postfix(TrainCar __instance)
         {
-            if (Main.Settings.gauge.IsStandard())
+            if (__instance.IsCorrectGauge())
                 return;
 
             foreach (Transform t in __instance.GetComponentsInChildren<Transform>())

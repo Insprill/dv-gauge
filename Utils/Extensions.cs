@@ -40,12 +40,22 @@ namespace Gauge.Utils
 
         public static float GetGauge(this TrainCar trainCar)
         {
-            return Main.IsCCLEnabled ? CCL.GetGauge(trainCar.Bogies[0]) : Gauge.Standard.GetGauge();
+            return trainCar.Bogies[0].GetGauge();
         }
 
         public static float GetGauge(this Bogie bogie)
         {
             return Main.IsCCLEnabled ? CCL.GetGauge(bogie) : Gauge.Standard.GetGauge();
+        }
+
+        public static bool IsCorrectGauge(this TrainCar trainCar)
+        {
+            return trainCar.Bogies[0].IsCorrectGauge();
+        }
+
+        public static bool IsCorrectGauge(this Bogie bogie)
+        {
+            return Mathf.Abs(Main.Settings.gauge.GetGauge() - bogie.GetGauge()) < 0.001f;
         }
 
         public static bool IsFront(this Bogie bogie)
