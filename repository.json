@@ -2,6 +2,11 @@
   "Releases": [
     {
       "Id": "Gauge",
+      "Version": "1.1.2",
+      "DownloadUrl": "https://github.com/Insprill/dv-gauge/releases/download/v1.1.2/Gauge_v1.1.2.zip"
+    },
+    {
+      "Id": "Gauge",
       "Version": "1.1.1",
       "DownloadUrl": "https://github.com/Insprill/dv-gauge/releases/download/v1.1.1/Gauge_v1.1.1.zip"
     },
