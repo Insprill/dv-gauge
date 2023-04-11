@@ -8,7 +8,7 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(TrainCar), "Start")]
     public static class TrainCar_Start_Patch
     {
-        public static void Postfix(TrainCar __instance)
+        private static void Postfix(TrainCar __instance)
         {
             if (__instance.IsCorrectGauge())
                 return;

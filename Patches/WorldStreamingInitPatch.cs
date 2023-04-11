@@ -10,7 +10,7 @@ namespace Gauge.Patches
     {
         private static readonly ushort[] SLEEPER_SKIP_VERTS = { 498, 499, 500, 501, 503, 506 };
 
-        public static void Postfix()
+        private static void Postfix()
         {
             if (Main.Settings.gauge.IsStandard())
                 return;

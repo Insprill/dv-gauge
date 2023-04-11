@@ -8,7 +8,7 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(PitStopStation), "OnEnable")]
     public static class PitStopStationPatch
     {
-        public static void Postfix(PitStopStation __instance)
+        private static void Postfix(PitStopStation __instance)
         {
             if (Main.Settings.gauge.IsStandard())
                 return;

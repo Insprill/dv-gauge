@@ -12,7 +12,7 @@ namespace Gauge.Patches
             264, 267, 269, 271, 273, 275, 277, 279, 281, 283, 285, 287, 289, 291, 293, 295, 297, 628, 631, 633, 635, 637, 639, 641, 643, 645, 647, 649, 651, 653, 655, 657, 659, 661
         };
 
-        public static void Postfix(Bogie __instance)
+        private static void Postfix(Bogie __instance)
         {
             if (__instance.IsCorrectGauge())
                 return;

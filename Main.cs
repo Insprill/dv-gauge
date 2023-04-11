@@ -6,7 +6,6 @@ namespace Gauge
 {
     public static class Main
     {
-
         private static UnityModManager.ModEntry ModEntry;
         public static UnityModManager.ModEntry.ModLogger Logger => ModEntry.Logger;
         public static Settings Settings;
@@ -14,7 +13,7 @@ namespace Gauge
         private static readonly UnityModManager.ModEntry CCLMod = UnityModManager.FindMod("DVCustomCarLoader");
         public static bool IsCCLEnabled => CCLMod != null && CCLMod.Enabled && CCLMod.Version >= Version.Parse("1.8.3");
 
-        public static bool Load(UnityModManager.ModEntry modEntry)
+        private static bool Load(UnityModManager.ModEntry modEntry)
         {
             ModEntry = modEntry;
             Settings = Settings.Load<Settings>(modEntry);
@@ -53,6 +52,5 @@ namespace Gauge
         {
             Settings.Save(entry);
         }
-
     }
 }
