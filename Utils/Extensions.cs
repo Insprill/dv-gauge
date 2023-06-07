@@ -45,7 +45,7 @@ namespace Gauge.Utils
 
         public static float GetGauge(this Bogie bogie)
         {
-            return Main.IsCCLEnabled ? CCL.GetGauge(bogie) : Gauge.Standard.GetGauge();
+            return /*Main.IsCCLEnabled ? CCL.GetGauge(bogie) :*/ Gauge.Standard.GetGauge();
         }
 
         public static bool IsCorrectGauge(this TrainCar trainCar)

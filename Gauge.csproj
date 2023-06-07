@@ -13,12 +13,13 @@
         <Reference Include="0Harmony" />
         <Reference Include="Assembly-CSharp" />
         <Reference Include="DV.Interaction" />
+        <Reference Include="DV.ThingTypes" />
         <Reference Include="DV.Utils" />
         <Reference Include="BezierCurves" />
         <Reference Include="UnityEngine.AssetBundleModule" />
         <Reference Include="UnityEngine.CoreModule" />
         <Reference Include="UnityModManager" />
-        <Reference Include="DVCustomCarLoader" />
+<!--        <Reference Include="DVCustomCarLoader" />-->
     </ItemGroup>
 
     <ItemGroup>

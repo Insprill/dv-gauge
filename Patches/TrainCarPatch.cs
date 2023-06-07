@@ -1,4 +1,5 @@
-﻿using Gauge.MeshModifiers;
+﻿using DV.ThingTypes;
+using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
@@ -30,15 +31,15 @@ namespace Gauge.Patches
         {
             switch (name)
             {
-                case "ext Wheels Driving 4":
-                case "ext Wheels Driving 2":
-                case "ext Wheels Driving 1":
-                case "ext Wheels Driving 3":
-                case "ext Support":
-                case "ext Locomotive Body":
-                case "ext Suspension":
-                case "ext Brakes":
-                case "ext Wheels Front Support":
+                case "s282_wheels_driving_1":
+                case "s282_wheels_driving_2":
+                case "s282_wheels_driving_3":
+                case "s282_wheels_driving_4":
+                case "s282_support":
+                case "s282_locomotive_body":
+                case "s282_suspension":
+                case "s282_brakes":
+                case "s282_wheels_front_support":
                     SH282.ModifyMesh(mesh);
                     mesh.SetModified();
                     break;

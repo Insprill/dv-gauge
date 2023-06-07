@@ -10,8 +10,8 @@ namespace Gauge
         public static UnityModManager.ModEntry.ModLogger Logger => ModEntry.Logger;
         public static Settings Settings;
 
-        private static readonly UnityModManager.ModEntry CCLMod = UnityModManager.FindMod("DVCustomCarLoader");
-        public static bool IsCCLEnabled => CCLMod != null && CCLMod.Enabled && CCLMod.Version >= Version.Parse("1.8.3");
+        // private static readonly UnityModManager.ModEntry CCLMod = UnityModManager.FindMod("DVCustomCarLoader");
+        // public static bool IsCCLEnabled => CCLMod != null && CCLMod.Enabled && CCLMod.Version >= Version.Parse("1.8.3");
 
         private static bool Load(UnityModManager.ModEntry modEntry)
         {
