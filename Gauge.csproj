@@ -6,33 +6,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+        <Reference Include="0Harmony"/>
+        <Reference Include="Assembly-CSharp"/>
+        <Reference Include="DV.Interaction"/>
+        <Reference Include="DV.ThingTypes"/>
+        <Reference Include="DV.Utils"/>
+        <Reference Include="BezierCurves"/>
+        <Reference Include="UnityEngine.AssetBundleModule"/>
+        <Reference Include="UnityEngine.CoreModule"/>
+        <Reference Include="UnityModManager"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="0Harmony" />
-        <Reference Include="Assembly-CSharp" />
-        <Reference Include="DV.Interaction" />
-        <Reference Include="DV.ThingTypes" />
-        <Reference Include="DV.Utils" />
-        <Reference Include="BezierCurves" />
-        <Reference Include="UnityEngine.AssetBundleModule" />
-        <Reference Include="UnityEngine.CoreModule" />
-        <Reference Include="UnityModManager" />
-<!--        <Reference Include="DVCustomCarLoader" />-->
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Remove="GaugeBundleBuilder/**" />
-        <Compile Remove="GaugeBundleBuilder/**" />
-        <Content Remove="GaugeBundleBuilder/**" />
+        <None Remove="GaugeBundleBuilder/**"/>
+        <Compile Remove="GaugeBundleBuilder/**"/>
+        <Content Remove="GaugeBundleBuilder/**"/>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Exec Condition="'$(OS)' != 'Windows_NT'" Command="mkdir -p ../build &amp;&amp; cp &quot;$(TargetPath)&quot; ../build/" />
-        <Exec Condition="'$(OS)' != 'Windows_NT'" Command="export DEST=&quot;$HOME/.local/share/Steam/steamapps/common/Derail Valley/Mods/Gauge&quot; &amp;&amp; [ -d &quot;${DEST}&quot; ] &amp;&amp; cp -pfu &quot;$(TargetPath)&quot; &quot;${DEST}&quot;" />
+        <!-- Copy to build folder -->
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="../build/"/>
 
-        <Exec Condition="'$(OS)' == 'Windows_NT'" Command="xcopy /d /y &quot;$(TargetPath)&quot; ..\build\" />
-        <Exec Condition="'$(OS)' == 'Windows_NT'" Command="setlocal enabledelayedexpansion &amp;&amp; set DEST=C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\Mods\Gauge &amp;&amp; if exist !DEST! xcopy /d /y &quot;$(TargetPath)&quot; &quot;!DEST!&quot;" />
+        <!-- Copy to game install folder -->
+        <Exec Condition="Exists('$(DvInstallDir)') And '$(OS)' == 'Windows_NT'" Command="powershell -executionpolicy bypass -Command &quot;(../package.ps1 -NoArchive -OutputDirectory '$(DvInstallDir)')&quot;"/>
+        <Exec Condition="Exists('$(DvInstallDir)') And '$(OS)' != 'Windows_NT'" Command="pwsh  -Command &quot;(../package.ps1 -NoArchive -OutputDirectory '$(DvInstallDir)')&quot;"/>
     </Target>
 </Project>
