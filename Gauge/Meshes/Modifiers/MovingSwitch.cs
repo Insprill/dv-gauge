@@ -1,4 +1,4 @@
-﻿using Gauge.Utils;
+﻿using Gauge.Meshes;
 using UnityEngine;
 
 namespace Gauge.MeshModifiers
@@ -91,7 +91,7 @@ namespace Gauge.MeshModifiers
         {
             Vector3[] verts = mesh.vertices;
 
-            float gaugeDiff = Main.Settings.gauge.GetDiffToStandard();
+            float gaugeDiff = Gauge.Instance.RailGauge.DiffToStandard;
             bool isNarrow = gaugeDiff >= 0; // The logic related to this is sketchy, a proper fix should be found...
             float baseZOffset = gaugeDiff * StaticSwitch.Z_OFFSET_FACTOR;
 
@@ -122,11 +122,11 @@ namespace Gauge.MeshModifiers
             float zOffset = initialZOffset;
 
             Vector3[] curve = BezierCurve.Interpolate(startVert, verts[START_VERT_BACK], endVert, endVert, isNarrow ? MIDDLE_RIGHT_VERTS.Length : MIDDLE_RIGHT_VERTS.Length - 1);
-            for (int seg = 0; seg < MIDDLE_RIGHT_VERTS.Length; seg++)
+            for (ushort seg = 0; seg < MIDDLE_RIGHT_VERTS.Length; seg++)
             {
                 ushort[] segment = MIDDLE_RIGHT_VERTS[seg];
                 float baseLine = Mathf.Lerp(startVert.x, endVert.x, seg / (float)MIDDLE_RIGHT_VERTS.Length);
-                int railHeadCenterVert = segment[segment.Length - 3];
+                ushort railHeadCenterVert = segment[segment.Length - 3];
                 float xOffset = verts[railHeadCenterVert].x - baseLine;
                 foreach (ushort i in segment)
                 {

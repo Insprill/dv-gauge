@@ -15,19 +15,18 @@ else
     $ZipWorkDir = "$DistDir/tmp"
 }
 $ZipRootDir = "$ZipWorkDir/BepInEx"
-$ZipInnerDir = "$ZipRootDir/plugins/Mapify/"
-$RuntimeBuildDir = "build/runtime"
+$ZipInnerDir = "$ZipRootDir/plugins/Gauge/"
+$BuildDir = "build"
 $LicenseFile = "LICENSE"
-$LocaleFile = "locale.csv"
-$MapifyDll = "$RuntimeBuildDir/Mapify.dll"
-$MapifyEditorDll = "$RuntimeBuildDir/MapifyEditor.dll"
+$GaugeDll = "$BuildDir/Gauge.dll"
+$AssetBundle = "$BuildDir/gauge.assetbundle"
 
 New-Item "$ZipInnerDir" -ItemType Directory -Force
-Copy-Item -Force -Path $LicenseFile, $LocaleFile, $MapifyDll, $MapifyEditorDll -Destination $ZipInnerDir
+Copy-Item -Force -Path "$LicenseFile", "$GaugeDll", "$AssetBundle" -Destination "$ZipInnerDir"
 
 if (!$NoArchive)
 {
-    $VERSION = (Select-String -Pattern '([0-9]+\.[0-9]+\.[0-9]+)' -Path Mapify/Mapify.cs).Matches.Value
-    $FILE_NAME = "$DistDir/Mapify_v$VERSION.zip"
+    $VERSION = (Select-String -Pattern '([0-9]+\.[0-9]+\.[0-9]+)' -Path Gauge/Gauge.cs).Matches.Value
+    $FILE_NAME = "$DistDir/Gauge_v$VERSION.zip"
     Compress-Archive -Update -CompressionLevel Fastest -Path "$ZipRootDir" -DestinationPath "$FILE_NAME"
 }

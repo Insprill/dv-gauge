@@ -6,21 +6,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Reference Include="0Harmony"/>
+        <!-- Derail Valley -->
         <Reference Include="Assembly-CSharp"/>
         <Reference Include="DV.Interaction"/>
         <Reference Include="DV.ThingTypes"/>
         <Reference Include="DV.Utils"/>
+        <!-- Third-Party -->
         <Reference Include="BezierCurves"/>
-        <Reference Include="UnityEngine.AssetBundleModule"/>
-        <Reference Include="UnityEngine.CoreModule"/>
-        <Reference Include="UnityModManager"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Remove="GaugeBundleBuilder/**"/>
-        <Compile Remove="GaugeBundleBuilder/**"/>
-        <Content Remove="GaugeBundleBuilder/**"/>
+        <!-- Unity -->
+        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile"/>
+        <!-- Mod Loader -->
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.Core" Version="5.*"/>
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*"/>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

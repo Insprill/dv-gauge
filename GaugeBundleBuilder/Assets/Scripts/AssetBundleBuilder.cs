@@ -15,7 +15,7 @@ namespace Gauge.GaugeBundleBuilder
         private static readonly string MESH_LIST_PATH = $"{MESH_PATH}/meshes.txt";
         private static readonly string BUNDLE_OUT_DIR_META = $"{BUNDLE_OUT_DIR}.meta";
         private static readonly string BUNDLE_OUT_PATH = $"{BUNDLE_OUT_DIR}/{ASSET_BUNDLE_NAME}";
-        private static readonly string BUNDLE_MOVE_PATH = $"../{ASSET_BUNDLE_NAME}.assetbundle";
+        private static readonly string BUNDLE_MOVE_PATH = $"../build/{ASSET_BUNDLE_NAME}.assetbundle";
 
         [MenuItem("Gauge/Build Asset Bundles")]
         public static void BuildAssetBundles()
@@ -46,7 +46,8 @@ namespace Gauge.GaugeBundleBuilder
                 File.Delete(BUNDLE_MOVE_PATH);
             }
 
-            Debug.Log("Moving Asset Bundle to parent project");
+            Debug.Log("Moving Asset Bundle to build folder");
+            Directory.CreateDirectory(Path.GetDirectoryName(BUNDLE_MOVE_PATH));
             File.Move(BUNDLE_OUT_PATH, BUNDLE_MOVE_PATH);
 
             Debug.Log("Deleting temp dir");
@@ -78,8 +79,17 @@ namespace Gauge.GaugeBundleBuilder
         private static void UpdateImportSettings(ModelImporter importer)
         {
             importer.assetBundleName = ASSET_BUNDLE_NAME;
+            // Don't import stuff we don't need.
             importer.materialImportMode = ModelImporterMaterialImportMode.None;
+            importer.importAnimation = false;
+            importer.animationType = ModelImporterAnimationType.None;
+            // Allow us to do the thing.
             importer.isReadable = true;
+            // Some of our work depends on specific vertex indices, so we can't weld or optimize them.
+            importer.weldVertices = false;
+            importer.optimizeMeshVertices = false;
+            // But polygons are free game.
+            importer.optimizeMeshPolygons = true;
         }
 
         private static IEnumerable<KeyValuePair<string, string>> GetMeshPaths()

@@ -53,25 +53,25 @@ namespace Gauge.MeshModifiers
         {
             switch (mesh.name)
             {
-                case "ext Wheels Driving 4":
-                case "ext Wheels Driving 2":
-                case "ext Wheels Driving 1":
+                case "s282_wheels_driving_1":
+                case "s282_wheels_driving_2":
+                case "s282_wheels_driving_4":
                     Symmetrical.ScaleToGauge(mesh, skipVerts: DRIVING_WHEELS_1_2_4_SKIP_VERTS);
                     break;
-                case "ext Wheels Driving 3":
+                case "s282_wheels_driving_3":
                     Symmetrical.ScaleToGauge(mesh, skipVerts: DRIVING_WHEEL_3_SKIP_VERTS);
                     break;
-                case "ext Support":
+                case "s282_support":
                     Symmetrical.ScaleToGauge(mesh, includeVerts: SUPPORT_INCLUDE_VERTS);
                     break;
-                case "ext Locomotive Body":
+                case "s282_locomotive_body":
                     Symmetrical.ScaleToGauge(mesh, includeVerts: BODY_INCLUDE_VERTS);
                     break;
-                case "ext Suspension":
-                case "ext Brakes":
+                case "s282_suspension":
+                case "s282_brakes":
                     Symmetrical.ScaleToGauge(mesh);
                     break;
-                case "ext Wheels Front Support":
+                case "s282_wheels_front_support":
                     Symmetrical.ScaleToGauge(mesh, true);
                     break;
             }

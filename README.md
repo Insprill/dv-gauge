@@ -56,56 +56,8 @@ There are four pre-set gauges to select from, or you can enter your own gauge in
 
 ## Building
 
-To build Gauge, you'll need to have [Custom Car Loader](https://www.nexusmods.com/derailvalley/mods/324) 1.8.3 or newer installed.  
-
-You'll also need to create a new [`Directory.Build.targets`](https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2022) file to specify your reference paths. 
-This file should be located in the root of the project, next to this README.
-You can use one of the examples below as a template depending on your platform.
-
-<details>
-<summary>Windows</summary>
-
-Here's an example file for Windows you can use as a template.
-Replace the provided paths with the paths to your Derail Valley installation directory.
-Make sure to include the semicolons between each of the paths, but not after the last one!
-Note that shortcuts like `%ProgramFiles%` *cannot* be used.
-```xml
-<Project>
-    <PropertyGroup>
-        <ReferencePath>
-            C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\DerailValley_Data\Managed\;
-            C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityModManager\;
-            C:\Program Files (x86)\Steam\steamapps\common\Derail Valley\Mods\DVCustomCarLoader\
-        </ReferencePath>
-        <AssemblySearchPaths>$(AssemblySearchPaths);$(ReferencePath);</AssemblySearchPaths>
-    </PropertyGroup>
-</Project>
-```
-</details>
-
-<details>
-<summary>Linux</summary>
-
-Here's an example file for Windows you can use as a template.
-Replace the provided paths with the paths to your Derail Valley installation directory.
-Make sure to include the semicolons between each of the paths, but not after the last one!
-```xml
-<Project>
-    <PropertyGroup>
-        <ReferencePath>
-            /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/;
-            /home/username/.local/share/Steam/steamapps/common/Derail Valley/DerailValley_Data/Managed/UnityModManager/;
-            /home/username/.local/share/Steam/steamapps/common/Derail Valley/Mods/DVCustomCarLoader/
-        </ReferencePath>
-        <AssemblySearchPaths>$(AssemblySearchPaths);$(ReferencePath);</AssemblySearchPaths>
-    </PropertyGroup>
-</Project>
-```
-</details>
-
-To test your changes, `Gauge.dll` will need to be copied into the mod's install directory (e.g. `...Derail Valley/Mods/Gauge`) along with `info.json` and `gauge.assetbundle`.
-The .dll can be found in `bin/Debug` or `bin/Release` depending on the selected build configuration.
-The info.json and gauge.assetbundle can be found in the root of this repository.
+Gauge uses the same build system as Mapify.
+For instructions on how to build the project, please read the [Mapify building documentation][mapify-building-docs].
 
 
 
@@ -114,11 +66,14 @@ The info.json and gauge.assetbundle can be found in the root of this repository.
 
 ## Building The Asset Bundle
 
-To build the AssetBundle for gauge, you'll need to install Unity **2019.4.22f1**.
+To build the AssetBundle for gauge, you'll need to install Unity **2019.4.40f1**.
 You can then open up the `GaugeBundleBuilder` project in this repo.
 
 To add the meshes to the project you'll need to export them yourself using something like [AssetStudio][asset-studio-url].
-You can find all the meshes you need to export in `GaugeBundleBuilder/Assets/Meshes/meshes.txt`. If you're missing meshes, it'll' warn you when you try to build.
+You can find all the meshes you need to export in `GaugeBundleBuilder/Assets/Meshes/meshes.txt`.
+
+To build the bundle, go to `Gauge > Build Asset Bundle`.
+If you're missing meshes, it won't let you build the bundle.
 
 
 
@@ -163,3 +118,4 @@ These assets are not covered by the Apache 2.0 license and have different terms 
 [altfuture-support-email-url]: mailto:support@altfuture.gg
 [contributing-quickstart-url]: https://docs.github.com/en/get-started/quickstart/contributing-to-projects
 [asset-studio-url]: https://github.com/Perfare/AssetStudio
+[mapify-building-docs]: https://dv-mapify.readthedocs.io/en/latest/contributing/building/

@@ -1,6 +1,6 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gauge", "Gauge.csproj", "{57D181A9-9D9D-4EBA-BBDD-9172EEB79983}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gauge", "Gauge/Gauge.csproj", "{57D181A9-9D9D-4EBA-BBDD-9172EEB79983}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

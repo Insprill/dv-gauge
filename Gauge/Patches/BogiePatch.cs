@@ -1,4 +1,5 @@
-﻿using Gauge.MeshModifiers;
+﻿using Gauge.Meshes;
+using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
@@ -27,11 +28,9 @@ namespace Gauge.Patches
                 case "ext axle_F":
                 case "ext axle_R":
                     Symmetrical.ScaleToGauge(mesh, true, skipVerts: DE2_AXLE_SKIP_VERTS);
-                    mesh.SetModified();
                     break;
                 default:
                     Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).GetGauge());
-                    mesh.SetModified();
                     break;
             }
         }

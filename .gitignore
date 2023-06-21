@@ -92,8 +92,6 @@ BenchmarkDotNet.Artifacts/
 *_p.c
 *_h.h
 *.ilk
-*.meta
-*.obj
 *.iobj
 *.pch
 *.pdb
@@ -278,6 +276,16 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### Custom
+# Development builds
+build/
+
+# Release builds
+dist/
+
+# User-specific refrence paths
+Directory.Build.targets
+
 ### Bundle Builder
 # What kind of git nonsense is this...
 # Required Assets
@@ -300,11 +308,3 @@ GaugeBundleBuilder/ProjectSettings/*
 !GaugeBundleBuilder/ProjectSettings/ProjectVersion.txt
 # Packages
 !GaugeBundleBuilder/Packages
-
-### Custom
-# Builds
-build/
-Gauge_*.zip
-
-# User-specific refrence paths
-Directory.Build.targets

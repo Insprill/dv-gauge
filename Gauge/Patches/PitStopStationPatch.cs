@@ -1,5 +1,5 @@
+using Gauge.Meshes;
 using Gauge.MeshModifiers;
-using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Gauge.Patches
     {
         private static void Postfix(PitStopStation __instance)
         {
-            if (Main.Settings.gauge.IsStandard())
+            if (Gauge.Instance.RailGauge.IsStandard())
                 return;
 
             __instance.transform.parent.ModifyMeshes(HandleMesh);
@@ -26,7 +26,6 @@ namespace Gauge.Patches
                 case "ServiceStationMarker02":
                 case "ServiceStationMarker02_LOD1":
                     Symmetrical.ScaleToGauge(mesh);
-                    mesh.SetModified();
                     break;
             }
         }

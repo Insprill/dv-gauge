@@ -1,6 +1,6 @@
 using DV.Utils;
+using Gauge.Meshes;
 using Gauge.MeshModifiers;
-using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -13,14 +13,14 @@ namespace Gauge.Patches
 
         private static void Postfix()
         {
-            if (Main.Settings.gauge.IsStandard())
+            if (Gauge.Instance.RailGauge.IsStandard())
                 return;
             WorldStreamingInit.LoadingFinished += OnLoadingFinished;
         }
 
         private static void OnLoadingFinished()
         {
-            Main.Logger.Log("Modifying static meshes");
+            Gauge.LogDebug("Modifying static meshes");
             SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
         }
 
@@ -31,42 +31,32 @@ namespace Gauge.Patches
                 // Switches
                 case "rails_static":
                     StaticSwitch.ModifyMesh(mesh);
-                    mesh.SetModified();
                     break;
                 case "rails_moving":
                     MovingSwitch.ModifyMesh(mesh);
-                    mesh.SetModified();
                     break;
                 // Switch anchors
                 case "anchors":
                     SwitchAnchors.ModifyMesh(mesh);
-                    mesh.SetModified();
                     break;
                 // Switch sleepers
                 case "sleepers":
                 case "sleepers-outersign":
                     Symmetrical.ScaleToGauge(mesh, skipVerts: SLEEPER_SKIP_VERTS);
-                    mesh.SetModified();
                     break;
                 // Roundhouse rails
                 case "TurntableRail.002":
-                    Symmetrical.ScaleToGauge(mesh);
-                    mesh.AdjustY(-0.06f); // The rails are visually a bit too high in vanilla, so might as well fix that while we're here
-                    mesh.SetModified();
-                    break;
                 // Switch ballast
-                case "ballast" when Main.Settings.adjustBallastWidth:
-                case "ballast-outersign" when Main.Settings.adjustBallastWidth:
+                case "ballast" when Gauge.Instance.Settings.adjustBallastWidth.Value:
+                case "ballast-outersign" when Gauge.Instance.Settings.adjustBallastWidth.Value:
                 // Turntable rails
                 case "TurntableRail":
                 case "TurntableRail_ShadowCaster":
                 // Buffer stops
-                case "buffer_stop_sleeper_n_1":
                 case "buffer_stop_rails":
                 case "buffer_stop_rails_LOD1":
                 case "buffer_stop_holders":
                     Symmetrical.ScaleToGauge(mesh);
-                    mesh.SetModified();
                     break;
             }
         }

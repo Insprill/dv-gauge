@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Gauge
@@ -15,19 +16,24 @@ namespace Gauge
             AssetBundle assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
             if (assetBundle == null)
             {
-                Main.Logger.Error($"Failed to load asset bundle at {assetBundlePath}. Some assets may not be regauged.");
+                Gauge.LogError($"Failed to load asset bundle at {assetBundlePath}. Some assets may not be regauged.");
                 return false;
             }
 
             foreach (Mesh mesh in assetBundle.LoadAllAssets<Mesh>())
                 Meshes.Add(mesh.name, mesh);
 
-            assetBundle.Unload(false);
-
             return true;
         }
 
-        public static Mesh GetMesh(string name)
+        [CanBeNull]
+        public static Mesh GetMesh([CanBeNull] Mesh mesh)
+        {
+            return mesh == null ? null : GetMesh(mesh.name);
+        }
+
+        [CanBeNull]
+        public static Mesh GetMesh([NotNull] string name)
         {
             switch (name)
             {
@@ -56,7 +62,7 @@ namespace Gauge
                     Meshes.Add(name, combinedMesh);
                     return combinedMesh;
                 default:
-                    bool foundMesh = Meshes.TryGetValue($"{name}_0", out Mesh mesh);
+                    bool foundMesh = Meshes.TryGetValue($"{name.Replace(' ', '_')}_0", out Mesh mesh);
                     return foundMesh ? mesh : null;
             }
         }

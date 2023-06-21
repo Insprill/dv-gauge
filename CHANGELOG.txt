@@ -1,3 +1,8 @@
+1.2.0:
+- Added support for Simulator.
+- Fixed buffer stop sleepers being regauged.
+
+
 1.1.2:
 - Fixed wheelslip particles not being regauged.
 - Fixed an error if the AssetBundle isn't present.
