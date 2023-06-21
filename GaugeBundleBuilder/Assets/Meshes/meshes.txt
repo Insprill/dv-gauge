@@ -45,6 +45,7 @@ ext axle_R.obj
 rails_moving.obj
 rails_static.obj
 s282_brakes.obj
+s282_cab_LOD1.obj
 s282_locomotive_body.obj
 s282_support.obj
 s282_suspension.obj
@@ -52,7 +53,9 @@ s282_wheels_driving_1.obj
 s282_wheels_driving_2.obj
 s282_wheels_driving_3.obj
 s282_wheels_driving_4.obj
+s282_wheels_front.obj
 s282_wheels_front_support.obj
+s282_wheels_rear.obj
 ServiceStationMarker01_LOD1.obj
 ServiceStationMarker02_LOD1.obj
 ServiceStationMarker01.obj

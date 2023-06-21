@@ -20,15 +20,14 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(t, __instance.GetGauge());
             }
 
-            // TODO: doesn't work
             if (__instance.carLivery.id == "LocoS282" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
             {
+                Gauge.Instance.Logger.LogInfo("Modifying s282");
                 __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
             }
 
             // TODO: S060?
 
-            // TODO: doesn't work
             if (__instance.carLivery.id == "LocoDM3")
             {
                 __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
@@ -52,7 +51,10 @@ namespace Gauge.Patches
                 case "s282_suspension":
                 case "s282_brakes":
                 case "s282_wheels_front_support":
-                    SH282.ModifyMesh(mesh);
+                case "s282_wheels_front":
+                case "s282_wheels_rear":
+                case "s282_cab_LOD1":
+                    SH282.ModifyMesh(name, mesh);
                     break;
                 // DM3
                 case "dm3_wheel_01":
@@ -62,7 +64,7 @@ namespace Gauge.Patches
                 case "dm3_wheel_02_LOD1":
                 case "dm3_wheel_03_LOD1":
                 case "dm3_brake_shoes":
-                    DM3.ModifyMesh(mesh);
+                    DM3.ModifyMesh(name, mesh);
                     break;
             }
         }

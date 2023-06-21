@@ -4,9 +4,9 @@ namespace Gauge.MeshModifiers
 {
     public static class DM3
     {
-        public static void ModifyMesh(Mesh mesh)
+        public static void ModifyMesh(string name, Mesh mesh)
         {
-            switch (mesh.name)
+            switch (name)
             {
                 case "dm3_wheel_01":
                 case "dm3_wheel_02":
