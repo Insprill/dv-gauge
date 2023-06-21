@@ -1,3 +1,4 @@
+using System.IO;
 using DV.Utils;
 using Gauge.Meshes;
 using Gauge.MeshModifiers;
@@ -15,12 +16,13 @@ namespace Gauge.Patches
         {
             if (Gauge.Instance.RailGauge.IsStandard())
                 return;
-            WorldStreamingInit.LoadingFinished += OnLoadingFinished;
+            if (Assets.Init(Path.GetDirectoryName(Gauge.Instance.Info.Location)))
+                WorldStreamingInit.LoadingFinished += OnLoadingFinished;
         }
 
         private static void OnLoadingFinished()
         {
-            Gauge.LogDebug("Modifying static meshes");
+            Gauge.Instance.Logger.LogDebug("Modifying static meshes");
             SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
         }
 

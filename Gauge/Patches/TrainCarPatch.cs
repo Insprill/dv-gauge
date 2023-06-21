@@ -23,7 +23,6 @@ namespace Gauge.Patches
             // TODO: doesn't work
             if (__instance.carLivery.id == "LocoS282" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
             {
-                Gauge.Log("Modify SH282");
                 __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
             }
 
@@ -53,7 +52,6 @@ namespace Gauge.Patches
                 case "s282_suspension":
                 case "s282_brakes":
                 case "s282_wheels_front_support":
-                    Gauge.Log($"Modifying SH282 mesh {mesh.name}");
                     SH282.ModifyMesh(mesh);
                     break;
                 // DM3

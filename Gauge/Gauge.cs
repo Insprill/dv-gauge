@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using BepInEx;
+using BepInEx.Logging;
 using HarmonyLib;
 
 namespace Gauge
@@ -14,6 +14,7 @@ namespace Gauge
         public Settings Settings;
         private Harmony harmony;
         public RailGauge RailGauge { get; private set; }
+        internal new ManualLogSource Logger => base.Logger;
 
         private void Awake()
         {
@@ -31,17 +32,6 @@ namespace Gauge
 
             try
             {
-                Logger.LogInfo("Loading assets...");
-                if (Assets.Init(Path.GetDirectoryName(Info.Location)))
-                {
-                    Logger.LogInfo("Successfully loaded assets");
-                }
-                else
-                {
-                    Logger.LogFatal("Failed to load assets!");
-                    return;
-                }
-
                 Patch();
             }
             catch (Exception ex)
@@ -64,29 +54,5 @@ namespace Gauge
             harmony?.UnpatchSelf();
             Logger.LogInfo("Successfully Unpatched");
         }
-
-        #region Logging
-
-        public static void LogDebug(object msg)
-        {
-            Instance.Logger.LogDebug($"{msg}");
-        }
-
-        public static void Log(object msg)
-        {
-            Instance.Logger.LogInfo($"{msg}");
-        }
-
-        public static void LogWarning(object msg)
-        {
-            Instance.Logger.LogWarning($"{msg}");
-        }
-
-        public static void LogError(object msg)
-        {
-            Instance.Logger.LogError($"{msg}");
-        }
-
-        #endregion
     }
 }

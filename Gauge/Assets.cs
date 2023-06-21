@@ -9,19 +9,25 @@ namespace Gauge
     {
         private const string ASSET_BUNDLE_NAME = "gauge.assetbundle";
         private static readonly Dictionary<string, Mesh> Meshes = new Dictionary<string, Mesh>();
+        private static AssetBundle assetBundle;
 
         public static bool Init(string modPath)
         {
             string assetBundlePath = Path.Combine(modPath, ASSET_BUNDLE_NAME);
-            AssetBundle assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
+            assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
             if (assetBundle == null)
             {
-                Gauge.LogError($"Failed to load asset bundle at {assetBundlePath}. Some assets may not be regauged.");
+                Gauge.Instance.Logger.LogError($"Failed to load asset bundle at '{assetBundlePath}'. Most assets won't be regauged!");
                 return false;
             }
 
+            Gauge.Instance.Logger.LogInfo($"Loaded asset bundle from '{assetBundlePath}'.");
+
+            Meshes.Clear();
             foreach (Mesh mesh in assetBundle.LoadAllAssets<Mesh>())
                 Meshes.Add(mesh.name, mesh);
+
+            assetBundle.Unload(false);
 
             return true;
         }
