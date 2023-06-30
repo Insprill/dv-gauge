@@ -18,11 +18,12 @@ $ZipRootDir = "$ZipWorkDir/BepInEx"
 $ZipInnerDir = "$ZipRootDir/plugins/Gauge/"
 $BuildDir = "build"
 $LicenseFile = "LICENSE"
+$VerticesFile = "vertices.json"
 $GaugeDll = "$BuildDir/Gauge.dll"
 $AssetBundle = "$BuildDir/gauge.assetbundle"
 
 New-Item "$ZipInnerDir" -ItemType Directory -Force
-Copy-Item -Force -Path "$LicenseFile", "$GaugeDll", "$AssetBundle" -Destination "$ZipInnerDir"
+Copy-Item -Force -Path "$LicenseFile", "$VerticesFile", "$GaugeDll", "$AssetBundle" -Destination "$ZipInnerDir"
 
 if (!$NoArchive)
 {

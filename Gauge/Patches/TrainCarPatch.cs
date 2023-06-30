@@ -22,7 +22,6 @@ namespace Gauge.Patches
 
             if (__instance.carLivery.id == "LocoS282" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
             {
-                Gauge.Instance.Logger.LogInfo("Modifying s282");
                 __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
             }
 
@@ -43,15 +42,19 @@ namespace Gauge.Patches
             {
                 // SH282
                 case "s282_wheels_driving_1":
+                case "s282_wheels_driving_1_LOD1":
                 case "s282_wheels_driving_2":
+                case "s282_wheels_driving_2_LOD1":
                 case "s282_wheels_driving_3":
+                case "s282_wheels_driving_3_LOD1":
                 case "s282_wheels_driving_4":
-                case "s282_support":
+                case "s282_wheels_driving_4_LOD1":
                 case "s282_locomotive_body":
-                case "s282_suspension":
-                case "s282_brakes":
+                case "s282_locomotive_body_LOD1":
+                case "s282_brake_shoes":
                 case "s282_wheels_front_support":
                 case "s282_wheels_front":
+                case "s282_wheels_front_LOD1":
                 case "s282_wheels_rear":
                 case "s282_cab_LOD1":
                     SH282.ModifyMesh(name, mesh);

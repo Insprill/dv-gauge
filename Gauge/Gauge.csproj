@@ -13,6 +13,7 @@
         <Reference Include="DV.Utils"/>
         <!-- Third-Party -->
         <Reference Include="BezierCurves"/>
+        <Reference Include="Newtonsoft.Json"/>
         <!-- Unity -->
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile"/>
         <!-- Mod Loader -->

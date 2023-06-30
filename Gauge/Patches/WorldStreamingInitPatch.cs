@@ -10,8 +10,6 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(WorldStreamingInit), "Awake")]
     public static class WorldStreamingInit_Awake_Patch
     {
-        private static readonly ushort[] SLEEPER_SKIP_VERTS = { 498, 499, 500, 501, 503, 506 };
-
         private static void Postfix()
         {
             if (Gauge.Instance.RailGauge.IsStandard())
@@ -44,7 +42,7 @@ namespace Gauge.Patches
                 // Switch sleepers
                 case "sleepers":
                 case "sleepers-outersign":
-                    Symmetrical.ScaleToGauge(mesh, skipVerts: SLEEPER_SKIP_VERTS);
+                    Symmetrical.ScaleToGauge(mesh, skipVerts: Vertices.Verts.switch_sleeper_skip);
                     break;
                 // Roundhouse rails
                 case "TurntableRail.002":
