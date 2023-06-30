@@ -21,55 +21,30 @@ namespace Gauge.Patches
             }
 
             if (__instance.carLivery.id == "LocoS282" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
-            {
-                __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
-            }
-
-            // TODO: S060?
+                __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
 
             if (__instance.carLivery.id == "LocoDM3")
-            {
-                __instance.gameObject.ModifyMeshes(HandleMesh, __instance);
-                foreach (Transform child in __instance.transform)
-                    if (child.name == "mech_wheels_connect" || child.name == "mech_1")
-                        Symmetrical.ScaleToGauge(child);
-            }
+                HandleDM3(__instance);
         }
 
-        private static void HandleMesh(string name, Mesh mesh, Component component)
+        private static void HandleDM3(Component trainCar)
         {
-            switch (name)
-            {
-                // SH282
-                case "s282_wheels_driving_1":
-                case "s282_wheels_driving_1_LOD1":
-                case "s282_wheels_driving_2":
-                case "s282_wheels_driving_2_LOD1":
-                case "s282_wheels_driving_3":
-                case "s282_wheels_driving_3_LOD1":
-                case "s282_wheels_driving_4":
-                case "s282_wheels_driving_4_LOD1":
-                case "s282_locomotive_body":
-                case "s282_locomotive_body_LOD1":
-                case "s282_brake_shoes":
-                case "s282_wheels_front_support":
-                case "s282_wheels_front":
-                case "s282_wheels_front_LOD1":
-                case "s282_wheels_rear":
-                case "s282_cab_LOD1":
-                    SH282.ModifyMesh(name, mesh);
-                    break;
-                // DM3
-                case "dm3_wheel_01":
-                case "dm3_wheel_02":
-                case "dm3_wheel_03":
-                case "dm3_wheel_01_LOD1":
-                case "dm3_wheel_02_LOD1":
-                case "dm3_wheel_03_LOD1":
-                case "dm3_brake_shoes":
-                    DM3.ModifyMesh(name, mesh);
-                    break;
-            }
+            trainCar.gameObject.ModifyMeshes(DM3.ModifyMesh, trainCar);
+            Vector3 pos;
+            foreach (Transform child in trainCar.GetComponentsInChildren<Transform>())
+                switch (child.name)
+                {
+                    case "crank_pivot_L":
+                        pos = child.localPosition;
+                        pos.x += Gauge.Instance.RailGauge.DiffToStandard;
+                        child.localPosition = pos;
+                        break;
+                    case "crank_pivot_R":
+                        pos = child.localPosition;
+                        pos.x += -Gauge.Instance.RailGauge.DiffToStandard;
+                        child.localPosition = pos;
+                        break;
+                }
         }
     }
 }

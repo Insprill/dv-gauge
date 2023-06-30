@@ -17,6 +17,13 @@ namespace Gauge
             Verts = JsonConvert.DeserializeObject<Vertices>(json);
         }
 
+        #region DM3
+
+        public ushort[] dm3_body_include;
+        public ushort[] dm3_body_lod1_include;
+
+        #endregion
+
         #region DE2
 
         public ushort[] de2_axle_skip;

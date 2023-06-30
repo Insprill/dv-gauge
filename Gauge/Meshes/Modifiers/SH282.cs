@@ -4,9 +4,8 @@ namespace Gauge.MeshModifiers
 {
     public static class SH282
     {
-        public static void ModifyMesh(string name, Mesh mesh)
+        public static void ModifyMesh(string name, Mesh mesh, Component component)
         {
-            Gauge.Instance.Logger.LogDebug($"Modifying S282 mesh {name}");
             switch (name)
             {
                 case "s282_wheels_driving_1":
@@ -34,6 +33,7 @@ namespace Gauge.MeshModifiers
                 case "s282_wheels_front":
                 case "s282_wheels_front_LOD1":
                 case "s282_wheels_rear":
+                case "s282_wheels_rear_LOD1":
                     Symmetrical.ScaleToGauge(mesh);
                     break;
                 case "s282_wheels_front_support":
