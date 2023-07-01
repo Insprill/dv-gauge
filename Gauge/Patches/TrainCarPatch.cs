@@ -20,7 +20,7 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(t, __instance.GetGauge());
             }
 
-            if (__instance.carLivery.id == "LocoS282" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
+            if (__instance.carLivery.id == "LocoS282A" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
                 __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
 
             if (__instance.carLivery.id == "LocoDM3")
