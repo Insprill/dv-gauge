@@ -2,6 +2,7 @@
 - Added support for Simulator.
 - Switched to BepInEx.
 - Fixed buffer stop sleepers being regauged.
+- Fixed the inside of the S282 firebox being visible outside the locomotive on narrow gauges.
 
 
 1.1.2:
