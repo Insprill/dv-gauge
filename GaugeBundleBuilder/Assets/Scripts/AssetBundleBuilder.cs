@@ -10,9 +10,9 @@ namespace Gauge.GaugeBundleBuilder
     public static class AssetBundleBuilder
     {
         private const string ASSET_BUNDLE_NAME = "gauge";
-        private const string MESH_PATH = "Assets/Meshes";
+        public const string MESH_PATH = "Assets/Meshes";
         private const string BUNDLE_OUT_DIR = "Assets/Temp";
-        private static readonly string MESH_LIST_PATH = $"{MESH_PATH}/meshes.txt";
+        public static readonly string MESH_LIST_PATH = $"{MESH_PATH}/meshes.txt";
         private static readonly string BUNDLE_OUT_DIR_META = $"{BUNDLE_OUT_DIR}.meta";
         private static readonly string BUNDLE_OUT_PATH = $"{BUNDLE_OUT_DIR}/{ASSET_BUNDLE_NAME}";
         private static readonly string BUNDLE_MOVE_PATH = $"../build/{ASSET_BUNDLE_NAME}.assetbundle";
