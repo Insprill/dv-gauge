@@ -34,6 +34,8 @@ namespace Gauge
 
         public ushort[] s282_body_include;
         public ushort[] s282_body_lod1_include;
+        public ushort[] s282_body_lod2_include;
+        public ushort[] s282_body_lod3_include;
         public ushort[] s282_driving_wheels_1_2_4_skip;
         public ushort[] s282_driving_wheel_3_skip;
         public ushort[] s282_cab_include;

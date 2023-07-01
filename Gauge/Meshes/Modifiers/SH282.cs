@@ -22,6 +22,12 @@ namespace Gauge.MeshModifiers
                 case "s282_locomotive_body_LOD1":
                     Symmetrical.ScaleToGauge(mesh, includeVerts: Vertices.Verts.s282_body_lod1_include);
                     break;
+                case "s282_locomotive_body_LOD2":
+                    Symmetrical.ScaleToGauge(mesh, includeVerts: Vertices.Verts.s282_body_lod2_include);
+                    break;
+                case "s282_locomotive_body_LOD3":
+                    Symmetrical.ScaleToGauge(mesh, includeVerts: Vertices.Verts.s282_body_lod3_include);
+                    break;
                 case "s282_cab_LOD1":
                     Symmetrical.ScaleToGauge(mesh, includeVerts: Vertices.Verts.s282_cab_include);
                     break;

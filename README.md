@@ -45,9 +45,8 @@
 
 Gauge a Derail Valley mod that allows you to change the track gauge to anything you want.
 
-This changes the gauge of the tracks, rolling stock bogies (with CCL support!), and track decorations like buffer stops. Physics is unaffected, this mod is purely aesthetic.
-
-There are four pre-set gauges to select from, or you can enter your own gauge in millimeters.
+This changes the gauge of the tracks, rolling stock bogies, and track decorations like buffer stops.
+Physics is unaffected, this mod is purely aesthetic.
 
 
 
