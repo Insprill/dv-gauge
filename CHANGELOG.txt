@@ -1,5 +1,6 @@
 1.2.0:
 - Added support for Simulator.
+- Switched to BepInEx.
 - Fixed buffer stop sleepers being regauged.
 
 
