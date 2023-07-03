@@ -68,6 +68,7 @@ namespace Gauge.GaugeBundleBuilder
             {
                 ClearExistingMeshes();
                 RunAssetStudio(dataDirectory);
+                AssetDatabase.Refresh();
                 Debug.Log("Finished dumping meshes!");
             }
             finally
