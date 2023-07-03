@@ -152,7 +152,7 @@ namespace Gauge.GaugeBundleBuilder
             for (int i = 0; i < files.Length; i++)
             {
                 string file = files[i];
-                if (file.EndsWith(AssetBundleBuilder.MESH_LIST_PATH))
+                if (Path.GetFileName(file) == Path.GetFileName(AssetBundleBuilder.MESH_LIST_PATH))
                     continue;
                 EditorUtility.DisplayProgressBar("Deleting meshes", file, i / (float)files.Length);
                 File.Delete(file);
