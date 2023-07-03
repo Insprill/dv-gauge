@@ -7,7 +7,7 @@ using HarmonyLib;
 
 namespace Gauge
 {
-    [BepInPlugin("net.insprill.dv-gauge", "Gauge", "1.2.0")]
+    [BepInPlugin("net.insprill.dv-gauge", "Gauge", "1.2.1")]
     public class Gauge : BaseUnityPlugin
     {
         public static Gauge Instance { get; private set; }
