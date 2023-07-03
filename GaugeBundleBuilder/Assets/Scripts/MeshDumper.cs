@@ -116,7 +116,6 @@ namespace Gauge.GaugeBundleBuilder
             string assetList = string.Join(",",
                 File.ReadLines(AssetBundleBuilder.MESH_LIST_PATH).Select(s => Path.ChangeExtension(s, null))
             );
-            Debug.Log(assetList);
             ProcessStartInfo startInfo = new ProcessStartInfo {
                 FileName = "dotnet",
                 Arguments = $"Assets/Scripts/AssetStudio/AssetStudioModCLI.dll \"{installDirectory}\" -o \"{AssetBundleBuilder.MESH_PATH}\" -t mesh --filter-by-name \"{assetList}\"",

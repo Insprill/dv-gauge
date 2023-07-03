@@ -31,6 +31,8 @@ namespace Gauge.GaugeBundleBuilder
                 importer.SaveAndReimport();
             }
 
+            FixAnchor();
+
             AssetBundleBuild build = new AssetBundleBuild {
                 assetBundleName = ASSET_BUNDLE_NAME,
                 assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(ASSET_BUNDLE_NAME)
@@ -96,6 +98,35 @@ namespace Gauge.GaugeBundleBuilder
         {
             return File.ReadAllLines(MESH_LIST_PATH)
                 .Select(s => new KeyValuePair<string, string>(s, $"{MESH_PATH}/{s}"));
+        }
+
+        /// <summary>
+        ///     Finds all meshes with the name "Anchor" and deletes all but the one with the most vertices.
+        ///     This is due to Derail Valley having two meshes named 'Anchor'. One is a pair of anchors, and the other is a single anchor.
+        /// </summary>
+        private static void FixAnchor()
+        {
+            const string anchor = "Anchor";
+            Mesh[] anchorMeshes = AssetDatabase.FindAssets(anchor)
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Distinct()
+                .Where(assetPath => Path.GetFileName(assetPath).StartsWith(anchor))
+                .Select(AssetDatabase.LoadAssetAtPath<Mesh>)
+                .OrderByDescending(mesh => mesh.vertices.Length)
+                .ToArray();
+
+            if (anchorMeshes.Length < 2)
+            {
+                Debug.LogWarning($"Only found {anchorMeshes.Length} anchor mesh(s)!");
+                return;
+            }
+
+            for (var i = anchorMeshes.Length - 1; i >= 1; i--)
+                AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(anchorMeshes[i]));
+
+            AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(anchorMeshes[0]), anchor);
+
+            AssetDatabase.Refresh();
         }
     }
 }
