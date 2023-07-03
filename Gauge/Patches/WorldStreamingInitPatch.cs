@@ -46,12 +46,11 @@ namespace Gauge.Patches
                     break;
                 // Roundhouse rails
                 case "TurntableRail.002":
+                // Turntable rails
+                case "TurntableRail":
                 // Switch ballast
                 case "ballast" when Gauge.Instance.Settings.adjustBallastWidth.Value:
                 case "ballast-outersign" when Gauge.Instance.Settings.adjustBallastWidth.Value:
-                // Turntable rails
-                case "TurntableRail":
-                case "TurntableRail_ShadowCaster":
                 // Buffer stops
                 case "buffer_stop_rails":
                 case "buffer_stop_rails_LOD1":

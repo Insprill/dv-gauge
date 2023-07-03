@@ -1,3 +1,7 @@
+1.2.1:
+- Fixed turntable rails not being regauged.
+
+
 1.2.0:
 - Added support for Simulator.
 - Switched to BepInEx.

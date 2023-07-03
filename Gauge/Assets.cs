@@ -43,6 +43,7 @@ namespace Gauge
         {
             switch (name)
             {
+                case "TurntableRail":
                 case "TurntableRail.002":
                     if (Meshes.TryGetValue(name, out Mesh railMesh))
                         return railMesh;
