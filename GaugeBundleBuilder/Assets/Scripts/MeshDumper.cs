@@ -83,7 +83,8 @@ namespace Gauge.GaugeBundleBuilder
                 Arguments = "--version",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
+                CreateNoWindow = true
             };
             Process process = Process.Start(startInfo);
             if (process == null)
@@ -120,7 +121,8 @@ namespace Gauge.GaugeBundleBuilder
                 Arguments = $"Assets/Scripts/AssetStudio/AssetStudioModCLI.dll \"{installDirectory}\" -o \"{AssetBundleBuilder.MESH_PATH}\" -t mesh --filter-by-name \"{assetList}\"",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
+                CreateNoWindow = true
             };
             Process process = Process.Start(startInfo);
             if (process == null)
