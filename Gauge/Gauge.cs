@@ -7,6 +7,7 @@ using HarmonyLib;
 
 namespace Gauge
 {
+    [BepInProcess("DerailValley.exe")]
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class Gauge : BaseUnityPlugin
     {
