@@ -3,6 +3,7 @@
         <TargetFramework>netframework4.8</TargetFramework>
         <LangVersion>7.3</LangVersion>
         <RootNamespace>Gauge</RootNamespace>
+        <Version>1.2.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
