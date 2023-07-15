@@ -12,7 +12,6 @@ namespace Gauge
 
         public static void Load(string directory)
         {
-            Gauge.Instance.Logger.LogInfo("Loading vertices...");
             string json = File.ReadAllText(Path.Combine(directory, FILE_NAME));
             Verts = JsonConvert.DeserializeObject<Vertices>(json);
         }

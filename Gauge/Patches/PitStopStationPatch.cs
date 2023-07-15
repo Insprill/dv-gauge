@@ -10,7 +10,7 @@ namespace Gauge.Patches
     {
         private static void Postfix(PitStopStation __instance)
         {
-            if (Gauge.Instance.RailGauge.IsStandard())
+            if (Gauge.Settings.RailGauge.IsStandard())
                 return;
 
             __instance.transform.parent.ModifyMeshes(HandleMesh);

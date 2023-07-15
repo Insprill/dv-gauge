@@ -11,7 +11,7 @@ namespace Gauge.Utils
 
         public static float GetGauge(this Bogie bogie)
         {
-            return /*Main.IsCCLEnabled ? CCL.GetGauge(bogie) :*/ RailGauge.STANDARD.Gauge;
+            return /*Main.IsCCLEnabled ? CCL.GetGauge(bogie) :*/ RailGaugePreset.Standard.RailGauge().Gauge;
         }
 
         public static bool IsCorrectGauge(this TrainCar trainCar)
@@ -21,7 +21,7 @@ namespace Gauge.Utils
 
         public static bool IsCorrectGauge(this Bogie bogie)
         {
-            return Mathf.Abs(Gauge.Instance.RailGauge.Gauge - bogie.GetGauge()) < 0.001f;
+            return Mathf.Abs(Gauge.Settings.RailGauge.Gauge - bogie.GetGauge()) < 0.001f;
         }
 
         public static bool IsFront(this Bogie bogie)

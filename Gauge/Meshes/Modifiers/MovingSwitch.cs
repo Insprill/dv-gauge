@@ -9,7 +9,7 @@ namespace Gauge.MeshModifiers
         {
             Vector3[] verts = mesh.vertices;
 
-            float gaugeDiff = Gauge.Instance.RailGauge.DiffToStandard;
+            float gaugeDiff = Gauge.Settings.RailGauge.DiffToStandard;
             bool isNarrow = gaugeDiff >= 0; // The logic related to this is sketchy, a proper fix should be found...
             float baseZOffset = gaugeDiff * StaticSwitch.Z_OFFSET_FACTOR;
 

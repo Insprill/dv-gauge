@@ -17,11 +17,11 @@ namespace Gauge
             assetBundle = AssetBundle.LoadFromFile(assetBundlePath);
             if (assetBundle == null)
             {
-                Gauge.Instance.Logger.LogError($"Failed to load asset bundle at '{assetBundlePath}'. Most assets won't be regauged!");
+                Gauge.Logger.Critical($"Failed to load asset bundle at '{assetBundlePath}'. Most assets won't be regauged!");
                 return false;
             }
 
-            Gauge.Instance.Logger.LogInfo($"Loaded asset bundle from '{assetBundlePath}'.");
+            Gauge.Logger.Log($"Loaded asset bundle from '{assetBundlePath}'.");
 
             Meshes.Clear();
             foreach (Mesh mesh in assetBundle.LoadAllAssets<Mesh>())

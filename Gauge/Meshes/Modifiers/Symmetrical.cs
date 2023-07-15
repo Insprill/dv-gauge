@@ -33,9 +33,9 @@ namespace Gauge.MeshModifiers
         private static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null)
         {
             float threshold = useGaugeAsThreshold
-                ? baseGauge.GetValueOrDefault(RailGauge.STANDARD.Gauge) / 2f - BASE_THRESHOLD_METERS
+                ? baseGauge.GetValueOrDefault(RailGaugePreset.Standard.RailGauge().Gauge) / 2f - BASE_THRESHOLD_METERS
                 : BASE_THRESHOLD_METERS;
-            float gaugeDiff = baseGauge == null ? Gauge.Instance.RailGauge.DiffToStandard : Gauge.Instance.RailGauge.GetDiffFrom(baseGauge.Value);
+            float gaugeDiff = baseGauge == null ? Gauge.Settings.RailGauge.DiffToStandard : Gauge.Settings.RailGauge.GetDiffFrom(baseGauge.Value);
             if (vert.x > threshold) vert.x = Mathf.Max(0.001f, vert.x - gaugeDiff);
             else if (vert.x < -threshold) vert.x = Mathf.Min(-0.001f, vert.x + gaugeDiff);
             return vert;

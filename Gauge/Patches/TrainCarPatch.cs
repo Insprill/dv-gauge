@@ -20,7 +20,7 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(t, __instance.GetGauge());
             }
 
-            if (__instance.carLivery.id == "LocoS282A" && Gauge.Instance.RailGauge.Gauge < RailGauge.STANDARD.Gauge)
+            if (__instance.carLivery.id == "LocoS282A" && Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
                 __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
 
             if (__instance.carLivery.id == "LocoDM3")
@@ -36,12 +36,12 @@ namespace Gauge.Patches
                 {
                     case "crank_pivot_L":
                         pos = child.localPosition;
-                        pos.x += Gauge.Instance.RailGauge.DiffToStandard;
+                        pos.x += Gauge.Settings.RailGauge.DiffToStandard;
                         child.localPosition = pos;
                         break;
                     case "crank_pivot_R":
                         pos = child.localPosition;
-                        pos.x += -Gauge.Instance.RailGauge.DiffToStandard;
+                        pos.x += -Gauge.Settings.RailGauge.DiffToStandard;
                         child.localPosition = pos;
                         break;
                 }

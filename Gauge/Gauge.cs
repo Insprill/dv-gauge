@@ -1,61 +1,46 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
-using BepInEx;
-using BepInEx.Logging;
 using HarmonyLib;
+using UnityModManagerNet;
 
 namespace Gauge
 {
-    [BepInProcess("DerailValley.exe")]
-    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-    public class Gauge : BaseUnityPlugin
+    public static class Gauge
     {
-        public static Gauge Instance { get; private set; }
+        internal static UnityModManager.ModEntry ModEntry;
+        public static UnityModManager.ModEntry.ModLogger Logger => ModEntry.Logger;
+        public static Settings Settings;
 
-        public Settings Settings;
-        private Harmony harmony;
-        public RailGauge RailGauge { get; private set; }
-        internal new ManualLogSource Logger => base.Logger;
-
-        private void Awake()
+        private static bool Load(UnityModManager.ModEntry modEntry)
         {
-            if (Instance != null)
-            {
-                Logger.LogFatal($"{Info.Metadata.Name} is already loaded!");
-                Destroy(this);
-                return;
-            }
+            ModEntry = modEntry;
+            Settings = Settings.Load<Settings>(modEntry);
+            ModEntry.OnGUI = Settings.Draw;
+            ModEntry.OnSaveGUI = Settings.Save;
 
-            Instance = this;
-
-            Settings = new Settings(Config);
-            RailGauge = new RailGauge(Settings.gauge.Value, Settings.sleeperSpacing.Value);
+            Harmony harmony = null;
 
             try
             {
-                Vertices.Load(Path.GetDirectoryName(Info.Location));
-                Patch();
+                Logger.Log("Patching...");
+                harmony = new Harmony(ModEntry.Info.Id);
+                harmony.PatchAll();
+                Logger.Log("Successfully patched");
+
+                Logger.Log("Loading assets...");
+                if (Assets.Init(ModEntry.Path))
+                    Logger.Log("Successfully loaded assets");
+
+                Logger.Log("Loading vertices...");
+                Vertices.Load(ModEntry.Path);
             }
             catch (Exception ex)
             {
-                Logger.LogFatal($"Failed to load Gauge: {ex}");
-                Destroy(this);
+                Logger.LogException("Failed to load Gauge:", ex);
+                harmony?.UnpatchAll();
+                return false;
             }
-        }
 
-        private void Patch()
-        {
-            Logger.LogInfo("Patching...");
-            harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
-            Logger.LogInfo("Successfully patched");
-        }
-
-        private void OnDestroy()
-        {
-            Logger.LogInfo("Unpatching...");
-            harmony?.UnpatchSelf();
-            Logger.LogInfo("Successfully Unpatched");
+            return true;
         }
     }
 }

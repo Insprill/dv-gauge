@@ -1,4 +1,3 @@
-using System.IO;
 using DV.Utils;
 using Gauge.Meshes;
 using Gauge.MeshModifiers;
@@ -12,15 +11,14 @@ namespace Gauge.Patches
     {
         private static void Postfix()
         {
-            if (Gauge.Instance.RailGauge.IsStandard())
+            if (Gauge.Settings.RailGauge.IsStandard())
                 return;
-            if (Assets.Init(Path.GetDirectoryName(Gauge.Instance.Info.Location)))
+            if (Assets.Init(Gauge.ModEntry.Path))
                 WorldStreamingInit.LoadingFinished += OnLoadingFinished;
         }
 
         private static void OnLoadingFinished()
         {
-            Gauge.Instance.Logger.LogDebug("Modifying static meshes");
             SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
         }
 
@@ -49,8 +47,8 @@ namespace Gauge.Patches
                 // Turntable rails
                 case "TurntableRail":
                 // Switch ballast
-                case "ballast" when Gauge.Instance.Settings.adjustBallastWidth.Value:
-                case "ballast-outersign" when Gauge.Instance.Settings.adjustBallastWidth.Value:
+                case "ballast" when Gauge.Settings.adjustBallastWidth:
+                case "ballast-outersign" when Gauge.Settings.adjustBallastWidth:
                 // Buffer stops
                 case "buffer_stop_rails":
                 case "buffer_stop_rails_LOD1":

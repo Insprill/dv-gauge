@@ -8,27 +8,26 @@
 
     <ItemGroup>
         <!-- Derail Valley -->
-        <Reference Include="Assembly-CSharp"/>
-        <Reference Include="DV.Interaction"/>
-        <Reference Include="DV.ThingTypes"/>
-        <Reference Include="DV.Utils"/>
+        <Reference Include="Assembly-CSharp" />
+        <Reference Include="DV.Interaction" />
+        <Reference Include="DV.ThingTypes" />
+        <Reference Include="DV.Utils" />
         <!-- Third-Party -->
-        <Reference Include="BezierCurves"/>
-        <Reference Include="Newtonsoft.Json"/>
+        <Reference Include="BezierCurves" />
+        <Reference Include="Newtonsoft.Json" />
         <!-- Unity -->
-        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile"/>
+        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
         <!-- Mod Loader -->
-        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
-        <PackageReference Include="BepInEx.Core" Version="5.*"/>
-        <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*"/>
+        <Reference Include="UnityModManager" />
+        <Reference Include="0Harmony" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <!-- Copy to build folder -->
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="../build/"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="../build/" />
 
         <!-- Copy to game install folder -->
-        <Exec Condition="Exists('$(DvInstallDir)') And '$(OS)' == 'Windows_NT'" Command="powershell -executionpolicy bypass -Command &quot;(../package.ps1 -NoArchive -OutputDirectory '$(DvInstallDir)')&quot;"/>
-        <Exec Condition="Exists('$(DvInstallDir)') And '$(OS)' != 'Windows_NT'" Command="pwsh  -Command &quot;(../package.ps1 -NoArchive -OutputDirectory '$(DvInstallDir)')&quot;"/>
+        <Exec Condition="Exists('$(DvInstallDir)') And '$(OS)' == 'Windows_NT'" Command="powershell -executionpolicy bypass -Command &quot;(../package.ps1 -NoArchive -OutputDirectory '$(DvInstallDir)\Mods')&quot;" />
+        <Exec Condition="Exists('$(DvInstallDir)') And '$(OS)' != 'Windows_NT'" Command="pwsh  -Command &quot;(../package.ps1 -NoArchive -OutputDirectory '$(DvInstallDir)/Mods')&quot;" />
     </Target>
 </Project>

@@ -1,0 +1,10 @@
+{
+  "Id": "Gauge",
+  "Version": "1.2.0",
+  "DisplayName": "Gauge",
+  "Author": "Insprill",
+  "EntryMethod": "Gauge.Gauge.Load",
+  "ManagerVersion": "0.26.0",
+  "HomePage": "https://www.nexusmods.com/derailvalley/mods/563",
+  "Repository": "https://raw.githubusercontent.com/Insprill/dv-gauge/master/repository.json"
+}

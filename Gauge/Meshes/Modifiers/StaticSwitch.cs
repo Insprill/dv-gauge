@@ -29,7 +29,7 @@ namespace Gauge.MeshModifiers
         {
             Vector3[] verts = mesh.vertices;
 
-            float gaugeDiff = Gauge.Instance.RailGauge.DiffToStandard;
+            float gaugeDiff = Gauge.Settings.RailGauge.DiffToStandard;
             float baseZOffset = gaugeDiff * Z_OFFSET_FACTOR;
 
             // Split

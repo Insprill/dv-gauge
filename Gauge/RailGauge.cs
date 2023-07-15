@@ -1,19 +1,35 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using UnityEngine;
+using UnityModManagerNet;
 
 namespace Gauge
 {
-    public class RailGauge
+    [Serializable]
+    [DrawFields(DrawFieldMask.OnlyDrawAttr)]
+    public struct RailGauge
     {
-        public static readonly RailGauge STANDARD = new RailGauge(1435, 750);
-        public readonly float Gauge;
-        public readonly float SleeperSpacing;
+        public static readonly ReadOnlyDictionary<RailGaugePreset, RailGauge> PRESETS = new ReadOnlyDictionary<RailGaugePreset, RailGauge>(new Dictionary<RailGaugePreset, RailGauge> {
+            { RailGaugePreset.Standard, new RailGauge(1435, 750) },
+            { RailGaugePreset.Cape, new RailGauge(1067, 850) },
+            { RailGaugePreset.ThreeFoot, new RailGauge(914, 900) }
+        });
 
-        public float DiffToStandard => GetDiffFrom(STANDARD.Gauge);
+        [Draw("Gauge (millimeters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 1700.")]
+        public int GaugeMillimeters;
+        [Draw("Sleeper Spacing (millimeters)", Tooltip = "The distance, in millimeters, between the center of each sleeper. Doesn't apply to switches. Must be greater than 350 and less than 2000.")]
+        public int SleeperSpacingMillimeters;
+
+        public float Gauge => GaugeMillimeters / 1000f;
+        public float SleeperSpacing => SleeperSpacingMillimeters / 1000f;
+
+        public float DiffToStandard => GetDiffFrom(PRESETS[RailGaugePreset.Standard].Gauge);
 
         public RailGauge(int gauge, int sleeperSpacing)
         {
-            Gauge = Mathf.Clamp(gauge / 1000.0f, 0, 10);
-            SleeperSpacing = Mathf.Clamp(sleeperSpacing / 1000.0f, 0, 10);
+            GaugeMillimeters = gauge;
+            SleeperSpacingMillimeters = sleeperSpacing;
         }
 
         public float GetDiffFrom(float from)
@@ -23,7 +39,7 @@ namespace Gauge
 
         public bool IsStandard()
         {
-            return Mathf.Abs(Gauge - STANDARD.Gauge) < 0.001;
+            return Mathf.Abs(Gauge - PRESETS[RailGaugePreset.Standard].Gauge) < 0.001;
         }
     }
 }
