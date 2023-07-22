@@ -1,3 +1,8 @@
+1.3.0:
+- Switched back to UMM.
+- Added support for the S060.
+
+
 1.2.1:
 - Fixed turntable rails not being regauged.
 
