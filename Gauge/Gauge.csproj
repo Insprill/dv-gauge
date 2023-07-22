@@ -3,7 +3,6 @@
         <TargetFramework>net48</TargetFramework>
         <LangVersion>7.3</LangVersion>
         <RootNamespace>Gauge</RootNamespace>
-        <Version>1.2.1</Version>
     </PropertyGroup>
 
     <!-- Derail Valley -->
@@ -16,7 +15,7 @@
 
     <!-- Mod Loader -->
     <ItemGroup>
-        <PackageReference Include="UnityModManager" Version="0.27.0" />
+        <PackageReference Include="UnityModManager" Version="0.27.2" />
     </ItemGroup>
 
     <!-- Third-Party -->
@@ -27,7 +26,8 @@
 
     <!-- Unity -->
     <ItemGroup>
-        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
+        <Reference Include="UnityEngine.CoreModule" />
+        <Reference Include="UnityEngine.AssetBundleModule" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
