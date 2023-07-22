@@ -29,6 +29,15 @@ namespace Gauge
 
         #endregion
 
+        #region S060
+
+        public ushort[] s060_body_include;
+        public ushort[] s060_body_lod1_include;
+        public ushort[] s060_wheel_1_skip;
+        public ushort[] s060_wheels_2_3_skip;
+
+        #endregion
+
         # region S282
 
         public ushort[] s282_body_include;

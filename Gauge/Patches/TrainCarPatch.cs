@@ -22,6 +22,8 @@ namespace Gauge.Patches
 
             if (__instance.carLivery.id == "LocoS282A" && Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
                 __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
+            if (__instance.carLivery.id == "LocoS060" && Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
+                __instance.gameObject.ModifyMeshes(S060.ModifyMesh, __instance);
 
             if (__instance.carLivery.id == "LocoDM3")
                 HandleDM3(__instance);

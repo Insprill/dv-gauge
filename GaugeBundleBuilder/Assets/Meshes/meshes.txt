@@ -46,6 +46,15 @@ ext axle_F.obj
 ext axle_R.obj
 rails_moving.obj
 rails_static.obj
+s060_body.obj
+s060_body_LOD1.obj
+s060_brake_shoes.obj
+s060_Wheels_01_LOD1.obj
+s060_Wheels_02_LOD1.obj
+s060_Wheels_03_LOD1.obj
+s060_Wheels_01.obj
+s060_Wheels_02.obj
+s060_Wheels_03.obj
 s282_brake_shoes.obj
 s282_cab_LOD1.obj
 s282_locomotive_body.obj
