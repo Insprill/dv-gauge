@@ -1,7 +1,9 @@
 #if UNITY_EDITOR
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -10,6 +12,9 @@ namespace Gauge.GaugeBundleBuilder
 {
     public class MeshDumper : EditorWindow
     {
+        private const byte DOTNET_VERSION = 7;
+        private static readonly Regex VersionRegex = new Regex(@"(\d+)\.\d+\.\d+");
+
         private static string InstallationDirectory {
             get => EditorPrefs.GetString("Gauge.MeshDumper.InstallationDirectory");
             set => EditorPrefs.SetString("Gauge.MeshDumper.InstallationDirectory", value);
@@ -51,14 +56,13 @@ namespace Gauge.GaugeBundleBuilder
                 return;
             }
 
-            int dotNetVersion = GetDotNetVersion();
-            if (dotNetVersion == -1)
-                return;
-            if (dotNetVersion != 7)
+            List<int> dotNetVersions = GetDotNetVersions();
+            if (!dotNetVersions.Contains(DOTNET_VERSION))
             {
+                Debug.Log($"Failed to find .NET {DOTNET_VERSION}! Found: {string.Join(", ", dotNetVersions)}");
                 EditorUtility.DisplayDialog(
                     "Gauge",
-                    "You must have .NET 7 installed to use this tool.",
+                    $"You must have .NET {DOTNET_VERSION} installed to use this tool.",
                     "Ok"
                 );
                 return;
@@ -77,44 +81,53 @@ namespace Gauge.GaugeBundleBuilder
             }
         }
 
-        private static int GetDotNetVersion()
+        private static List<int> GetDotNetVersions()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo {
                 FileName = "dotnet",
-                Arguments = "--version",
+                Arguments = "--list-runtimes",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 CreateNoWindow = true
             };
             Process process = Process.Start(startInfo);
+            List<int> versions = new List<int>();
+
             if (process == null)
             {
                 Debug.LogError("Failed to start dotnet process!");
-                return -1;
+                return versions;
             }
 
             string err = process.StandardError.ReadToEnd();
             if (!string.IsNullOrWhiteSpace(err))
             {
                 Debug.LogError(err);
-                return -1;
+                return versions;
             }
 
             string versionString = process.StandardOutput.ReadToEnd();
-            if (!int.TryParse($"{versionString[0]}", out int version))
+            foreach (Match match in VersionRegex.Matches(versionString))
             {
-                Debug.LogError($"Failed to parse dotnet version '{versionString}'!");
-                return -1;
+                if (match.Groups.Count < 2)
+                    continue;
+
+                Group group = match.Groups[1];
+                if (!group.Success)
+                    continue;
+
+                versionString = group.Value;
+                versions.Add(int.Parse(versionString));
             }
 
-            return version;
+            return versions;
         }
 
         private static void RunAssetStudio(string installDirectory)
         {
             string assetList = string.Join(",",
-                File.ReadLines(AssetBundleBuilder.MESH_LIST_PATH).Select(s => Path.ChangeExtension(s, null))
+                File.ReadAllLines(AssetBundleBuilder.MESH_LIST_PATH).Select(s => Path.ChangeExtension(s, null))
             );
             ProcessStartInfo startInfo = new ProcessStartInfo {
                 FileName = "dotnet",

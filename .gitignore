@@ -291,6 +291,7 @@ Directory.Build.targets
 # Required Assets
 !GaugeBundleBuilder/
 GaugeBundleBuilder/*
+!GaugeBundleBuilder/global.json
 !GaugeBundleBuilder/Assets/
 GaugeBundleBuilder/Assets/*
 !GaugeBundleBuilder/Assets/Meshes/
