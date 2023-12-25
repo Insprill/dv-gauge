@@ -24,6 +24,9 @@ namespace Gauge.Meshes
         {
             foreach (MeshFilter filter in transform.GetComponentsInChildren<MeshFilter>())
             {
+                if (component is TrainCar && filter.GetComponentInParent<Bogie>())
+                    continue; // Prevents the body modifier from locking the bogie's mesh preventing the bogie modifier from modifying it
+
                 Mesh mesh = filter.sharedMesh;
                 if (mesh == null)
                     continue;

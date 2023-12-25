@@ -1,5 +1,6 @@
 1.x.x:
 - Fixed some mesh issues with the S060 and S282.
+- Fixed the DE2's traction motors and brake shoes not being regauged.
 
 
 1.3.0:

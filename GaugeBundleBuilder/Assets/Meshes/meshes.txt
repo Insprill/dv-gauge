@@ -14,6 +14,11 @@ Bogie2Brakes.obj
 buffer_stop_holders.obj
 buffer_stop_rails.obj
 buffer_stop_rails_LOD1.obj
+ext axle_F.obj
+ext axle_R.obj
+ext_brakes_F.obj
+ext_brakes_R.obj
+ext 621_exterior.obj
 dh4_bogie_brakes.obj
 dh4_bogie_frame.obj
 dh4_bogie_LOD1.obj
@@ -42,8 +47,6 @@ dm3_wheel_03_LOD1.obj
 dm3_wheel_01.obj
 dm3_wheel_02.obj
 dm3_wheel_03.obj
-ext axle_F.obj
-ext axle_R.obj
 rails_moving.obj
 rails_static.obj
 s060_body.obj

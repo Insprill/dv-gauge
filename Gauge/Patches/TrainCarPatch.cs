@@ -20,10 +20,22 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(t, __instance.GetGauge());
             }
 
-            if (__instance.carLivery.id == "LocoS282A" && Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
-                __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
-            if (__instance.carLivery.id == "LocoS060" && Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
-                __instance.gameObject.ModifyMeshes(S060.ModifyMesh, __instance);
+            // Narrow only
+            if (Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
+            {
+                switch (__instance.carLivery.id)
+                {
+                    case "LocoDE2":
+                        __instance.gameObject.ModifyMeshes(DE2.ModifyMesh, __instance);
+                        break;
+                    case "LocoS282A":
+                        __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
+                        break;
+                    case "LocoS060":
+                        __instance.gameObject.ModifyMeshes(S060.ModifyMesh, __instance);
+                        break;
+                }
+            }
 
             if (__instance.carLivery.id == "LocoDM3")
                 HandleDM3(__instance);

@@ -26,6 +26,7 @@ namespace Gauge
         #region DE2
 
         public ushort[] de2_axle_skip;
+        public ushort[] de2_body_include;
 
         #endregion
 
