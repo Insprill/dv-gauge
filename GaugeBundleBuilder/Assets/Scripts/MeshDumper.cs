@@ -169,9 +169,14 @@ namespace Gauge.GaugeBundleBuilder
                 string file = files[i];
                 if (Path.GetFileName(file) == Path.GetFileName(AssetBundleBuilder.MESH_LIST_PATH))
                     continue;
+
+                // We don't delete the meta files so import settings are saved, speeding up iteration times.
+                // If there's a mesh that is no longer being dumped, Unity will delete the meta file for us.
+                if (Path.GetExtension(file) == ".meta")
+                    continue;
+
                 EditorUtility.DisplayProgressBar("Deleting meshes", file, i / (float)files.Length);
                 File.Delete(file);
-                File.Delete($"{file}.meta");
             }
         }
     }

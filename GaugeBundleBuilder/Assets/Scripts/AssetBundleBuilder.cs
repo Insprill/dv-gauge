@@ -27,8 +27,8 @@ namespace Gauge.GaugeBundleBuilder
             foreach (KeyValuePair<string, string> mesh in GetMeshPaths())
             {
                 ModelImporter importer = (ModelImporter)AssetImporter.GetAtPath(mesh.Value);
-                UpdateImportSettings(importer);
-                importer.SaveAndReimport();
+                if (UpdateImportSettings(importer))
+                    importer.SaveAndReimport();
             }
 
             FixAnchor();
@@ -78,8 +78,9 @@ namespace Gauge.GaugeBundleBuilder
             return foundAllMeshes;
         }
 
-        private static void UpdateImportSettings(ModelImporter importer)
+        private static bool UpdateImportSettings(ModelImporter importer)
         {
+            var before = EditorJsonUtility.ToJson(importer);
             importer.assetBundleName = ASSET_BUNDLE_NAME;
             // Don't import stuff we don't need.
             importer.materialImportMode = ModelImporterMaterialImportMode.None;
@@ -92,6 +93,8 @@ namespace Gauge.GaugeBundleBuilder
             importer.optimizeMeshVertices = false;
             // But polygons are free game.
             importer.optimizeMeshPolygons = true;
+            var after = EditorJsonUtility.ToJson(importer);
+            return before != after; // Quick and dirty way to see if the settings changed and a reimport is needed.
         }
 
         private static IEnumerable<KeyValuePair<string, string>> GetMeshPaths()
@@ -117,7 +120,7 @@ namespace Gauge.GaugeBundleBuilder
 
             if (anchorMeshes.Length < 2)
             {
-                Debug.LogWarning($"Only found {anchorMeshes.Length} anchor mesh(s)!");
+                Debug.LogWarning($"Only found {anchorMeshes.Length} anchor mesh(s)! If this is your second time building the bundle without dumping again, this is fine.");
                 return;
             }
 
