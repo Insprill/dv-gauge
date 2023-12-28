@@ -14,6 +14,7 @@ namespace Gauge.GaugeBundleBuilder
     {
         private const byte DOTNET_VERSION = 7;
         private static readonly Regex VersionRegex = new Regex(@"(\d+)\.\d+\.\d+");
+        private static readonly Regex AsciiColorRegex = new Regex(@"\x1B\[[0-9;]*m");
 
         private static string InstallationDirectory {
             get => EditorPrefs.GetString("Gauge.MeshDumper.InstallationDirectory");
@@ -151,7 +152,7 @@ namespace Gauge.GaugeBundleBuilder
                     continue;
                 EditorUtility.DisplayProgressBar(
                     "Dumping meshes",
-                    line,
+                    AsciiColorRegex.Replace(line, string.Empty),
                     0f
                 );
             }
