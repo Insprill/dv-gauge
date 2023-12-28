@@ -131,7 +131,7 @@ namespace Gauge.GaugeBundleBuilder
             );
             ProcessStartInfo startInfo = new ProcessStartInfo {
                 FileName = "dotnet",
-                Arguments = $"Assets/Scripts/AssetStudio/AssetStudioModCLI.dll \"{installDirectory}\" -o \"{AssetBundleBuilder.MESH_PATH}\" -t mesh --filter-by-name \"{assetList}\"",
+                Arguments = $"AssetStudio/AssetStudioModCLI.dll \"{installDirectory}\" -o \"{AssetBundleBuilder.MESH_PATH}\" -t mesh --filter-by-name \"{assetList}\"",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

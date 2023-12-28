@@ -292,6 +292,7 @@ Directory.Build.targets
 !GaugeBundleBuilder/
 GaugeBundleBuilder/*
 !GaugeBundleBuilder/global.json
+!GaugeBundleBuilder/AssetStudio/
 !GaugeBundleBuilder/Assets/
 GaugeBundleBuilder/Assets/*
 !GaugeBundleBuilder/Assets/Meshes/
