@@ -12,9 +12,13 @@ namespace Gauge
         private const ushort MIN_SLEEPER_SPACING = 350;
         private const ushort MAX_SLEEPER_SPACING = 2000;
         private const float MIN_KINK_SCALE = 0.0f;
-        private const float MAX_KINK_SCALE = 2.0f;
+        private const float MAX_KINK_SCALE = 0.5f;
         private const float MIN_KINK_FREQUENCY = 0.0f;
-        private const float MAX_KINK_FREQUENCY = 2.0f;
+        private const float MAX_KINK_FREQUENCY = 1.0f;
+        private const float MIN_KINK_VERTICAL = 0.0f;
+        private const float MAX_KINK_VERTICAL = 0.5f;
+        private const float MIN_KINK_ROTATION = 0.0f;
+        private const float MAX_KINK_ROTATION = 5.0f;
 
         [Header("All settings require a restart")]
         [Draw("Rail Gauge Preset")]
@@ -54,7 +58,9 @@ namespace Gauge
                 
                 railQuality = new RailQuality(
                     Mathf.Clamp(RailQuality.KinkScale, MIN_KINK_SCALE, MAX_KINK_SCALE),
-                    Mathf.Clamp(RailQuality.KinkFrequency, MIN_KINK_FREQUENCY, MAX_KINK_FREQUENCY)
+                    Mathf.Clamp(RailQuality.KinkFrequency, MIN_KINK_FREQUENCY, MAX_KINK_FREQUENCY),
+                    Mathf.Clamp(RailQuality.VerticalKinkScale, MIN_KINK_VERTICAL, MAX_KINK_VERTICAL),
+                    Mathf.Clamp(RailQuality.RotationKinkScale, MIN_KINK_ROTATION, MAX_KINK_ROTATION)
                 );
             }
 
