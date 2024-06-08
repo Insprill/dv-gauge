@@ -26,5 +26,10 @@ namespace Gauge
             KinkScale = kinkScale;
             KinkFrequency = kinkFrequency;
         }
+        
+        public bool IsVanilla()
+        {
+            return Mathf.Approximately(KinkScale, PRESETS[RailGaugePreset.Vanilla].KinkScale) && Mathf.Approximately(KinkFrequency, PRESETS[RailGaugePreset.Vanilla].KinkFrequency);
+        }
     }
 }
