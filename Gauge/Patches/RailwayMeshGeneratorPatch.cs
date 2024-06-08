@@ -10,7 +10,7 @@ namespace Gauge.Patches
     {
         private static void Prefix(RailwayMeshGenerator __instance)
         {
-            if (Gauge.Settings.RailGauge.IsStandard())
+            if (Gauge.Settings.RailGauge.IsStandard() && Gauge.Settings.RailQuality.IsVanilla())
                 return;
 
             RailTrack[] railTracks = Object.FindObjectsOfType<RailTrack>();
@@ -18,7 +18,14 @@ namespace Gauge.Patches
             foreach (BaseType baseType in railTracks.Select(track => track.baseType).Distinct())
                 UpdateBaseType(baseType);
             foreach (RailType railType in railTracks.Select(rt => rt.railType).Distinct())
+            {
                 railType.gauge = Gauge.Settings.RailGauge.Gauge;
+                
+                railType.kinkScale = Gauge.Settings.RailQuality.KinkScale;
+                railType.kinkFrequency = Gauge.Settings.RailQuality.KinkFrequency;
+                railType.verticalKinkScale = Gauge.Settings.RailQuality.VerticalKinkScale;
+                railType.rotationKinkScale = Gauge.Settings.RailQuality.RotationKinkScale;
+            }
 
             Mesh anchorMesh = Assets.GetMesh(__instance.anchorMesh);
             if (anchorMesh == null)
