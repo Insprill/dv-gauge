@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Gauge.MeshModifiers;
 using HarmonyLib;
 using UnityEngine;
@@ -11,13 +11,18 @@ namespace Gauge.Patches
         private static void Prefix(RailwayMeshGenerator __instance)
         {
             if (Gauge.Settings.RailGauge.IsStandard() && Gauge.Settings.RailQuality.IsVanilla())
+            {
+                Gauge.Logger.Log("Gauge settings are fully vanilla, skipping.");
                 return;
+            }
+
+            Gauge.Logger.Log($"Preparing railway meshes with presets [{Gauge.Settings.railGaugePreset}][{Gauge.Settings.railQualityPreset}]");
 
             RailTrack[] railTracks = Object.FindObjectsOfType<RailTrack>();
 
             foreach (BaseType baseType in railTracks.Select(track => track.baseType).Distinct())
                 UpdateBaseType(baseType);
-            foreach (RailType railType in railTracks.Select(rt => rt.railType).Distinct())
+            foreach (RailType railType in railTracks.Select(rt => rt.railType))
             {
                 railType.gauge = Gauge.Settings.RailGauge.Gauge;
                 
