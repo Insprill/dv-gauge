@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace Gauge
         public static readonly ReadOnlyDictionary<RailQualityPreset, RailQuality> PRESETS = new ReadOnlyDictionary<RailQualityPreset, RailQuality>(new Dictionary<RailQualityPreset, RailQuality> {
             { RailQualityPreset.Vanilla, new RailQuality(0.07f, 0.07f, 0.07f, 1.00f) },
             { RailQualityPreset.HighSpeedCorridor, new RailQuality(0.03f, 0.03f, 0.03f, 0.50f) },
-            { RailQualityPreset.DisusedBranchLine, new RailQuality(0.20f, 0.20f, 0.20f, 3.00f) }
+            { RailQualityPreset.DisusedBranchLine, new RailQuality(0.30f, 0.30f, 0.30f, 3.00f) }
         });
 
         [Draw("Kink Scale", Tooltip = "The maximum offset of the kinks along the track.")]
@@ -35,10 +35,10 @@ namespace Gauge
         
         public bool IsVanilla()
         {
-            return Mathf.Approximately(KinkScale, PRESETS[RailGaugePreset.Vanilla].KinkScale) &&
-                Mathf.Approximately(KinkFrequency, PRESETS[RailGaugePreset.Vanilla].KinkFrequency) &&
-                Mathf.Approximately(VerticalKinkScale, PRESETS[RailGaugePreset.Vanilla].VerticalKinkScale) &&
-                Mathf.Approximately(RotationKinkScale, PRESETS[RailGaugePreset.Vanilla].RotationKinkScale);
+            return Mathf.Approximately(KinkScale, PRESETS[RailQualityPreset.Vanilla].KinkScale) &&
+                Mathf.Approximately(KinkFrequency, PRESETS[RailQualityPreset.Vanilla].KinkFrequency) &&
+                Mathf.Approximately(VerticalKinkScale, PRESETS[RailQualityPreset.Vanilla].VerticalKinkScale) &&
+                Mathf.Approximately(RotationKinkScale, PRESETS[RailQualityPreset.Vanilla].RotationKinkScale);
         }
     }
 }
