@@ -25,6 +25,9 @@ namespace Gauge.Patches
             __instance.railType.kinkFrequency = Gauge.Settings.RailQuality.KinkFrequency;
             __instance.railType.verticalKinkScale = Gauge.Settings.RailQuality.VerticalKinkScale;
             __instance.railType.rotationKinkScale = Gauge.Settings.RailQuality.RotationKinkScale;
+
+            __instance.overrideDefaultJointsSpan = Gauge.Settings.customJointDistance;
+            __instance.jointsSpan = Gauge.Settings.jointDistance;
         }
 
         private static void UpdateBaseType(BaseType baseType)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityModManagerNet;
 
@@ -19,6 +19,8 @@ namespace Gauge
         private const float MAX_KINK_VERTICAL = 0.5f;
         private const float MIN_KINK_ROTATION = 0.0f;
         private const float MAX_KINK_ROTATION = 5.0f;
+        private const float MIN_JOINT_DISTANCE = 0.0f;
+        private const float MAX_JOINT_DISTANCE = 100.0f;
 
         [Header("All settings require a restart")]
         [Draw("Rail Gauge Preset")]
@@ -39,6 +41,12 @@ namespace Gauge
 
         [Draw("Adjust Ballast Width", Tooltip = "Whether track ballast should be adjusted according to the track gauge. May cause holes in the map.")]
         public bool adjustBallastWidth = true;
+
+        [Draw("Use Custom Joint Distance", Tooltip = "Whether the distance between rail joints should be changed.")]
+        public bool customJointDistance = false;
+
+        [Draw("Joint Distance", Tooltip = "The distance between joints in metres. This affects sound only. Set to 0 for continuosly welded track.", VisibleOn = "customJointDistance|true")]
+        public float jointDistance = RailTrack.DEFAULT_JOINT_SPAN;
 
         [Draw("Enable Hidden settings", Tooltip = "Shows hidden settings that may cause things to break. Support will not be given if these cause issues!")]
         public bool enableHiddenSettings;
@@ -62,6 +70,18 @@ namespace Gauge
                     Mathf.Clamp(RailQuality.VerticalKinkScale, MIN_KINK_VERTICAL, MAX_KINK_VERTICAL),
                     Mathf.Clamp(RailQuality.RotationKinkScale, MIN_KINK_ROTATION, MAX_KINK_ROTATION)
                 );
+            }
+
+            if (customJointDistance)
+            {
+                if (!enableHiddenSettings || !removeGaugeRestrictions)
+                {
+                    jointDistance = Mathf.Clamp(jointDistance, MIN_JOINT_DISTANCE, MAX_JOINT_DISTANCE);
+                }
+            }
+            else
+            {
+                jointDistance = RailTrack.DEFAULT_JOINT_SPAN;
             }
 
             Save(this, modEntry);
