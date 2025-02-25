@@ -39,6 +39,9 @@ namespace Gauge
 
         public RailQuality RailQuality => railQualityPreset == RailQualityPreset.Custom ? railQuality : railQualityPreset.RailQuality();
 
+        [Draw("Rail Material")]
+        public RailMaterial railMaterial = RailMaterial.Default;
+
         [Draw("Adjust Ballast Width", Tooltip = "Whether track ballast should be adjusted according to the track gauge. May cause holes in the map.")]
         public bool adjustBallastWidth = true;
 
