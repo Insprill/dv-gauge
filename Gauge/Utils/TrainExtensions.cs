@@ -11,7 +11,7 @@ namespace Gauge.Utils
 
         public static float GetGauge(this Bogie bogie)
         {
-            return /*Main.IsCCLEnabled ? CCL.GetGauge(bogie) :*/ RailGaugePreset.Standard.RailGauge().Gauge;
+            return CCL.IsActive && CCL.HasCustomGauge(bogie, out var gauge) ? gauge : RailGauge.Standard;
         }
 
         public static bool IsCorrectGauge(this TrainCar trainCar)

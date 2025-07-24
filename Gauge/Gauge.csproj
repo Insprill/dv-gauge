@@ -9,6 +9,8 @@
     <ItemGroup>
         <Reference Include="Assembly-CSharp" />
         <Reference Include="DV.Interaction" />
+        <Reference Include="DV.MeshX" />
+        <Reference Include="DV.RailTrack" />
         <Reference Include="DV.ThingTypes" />
         <Reference Include="DV.Utils" />
     </ItemGroup>
