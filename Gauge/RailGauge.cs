@@ -15,7 +15,7 @@ namespace Gauge
             // Narrow.
             { RailGaugePreset.Cape, new RailGauge(1067, 850) },
             { RailGaugePreset.ThreeFoot, new RailGauge(914, 900) },
-            { RailGaugePreset.Metre, new RailGauge(1000, 900) },
+            { RailGaugePreset.Metre, new RailGauge(1000, 850) },
             // Broad.
             { RailGaugePreset.FiveFoot, new RailGauge(1524, 750) },
             { RailGaugePreset.Iberian, new RailGauge(1668, 750) },

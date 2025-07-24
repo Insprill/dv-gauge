@@ -1,22 +1,53 @@
-using DV.ThingTypes;
+using CCL.Importer.Types;
+using CCL.Types.Components;
+using Gauge.MeshModifiers;
 using Gauge.Utils;
-using UnityModManagerNet;
+using UnityEngine;
+
+using static UnityModManagerNet.UnityModManager;
 
 namespace Gauge
 {
     internal static class CCL
     {
-        public static bool IsActive => UnityModManager.modEntries.TryFind(x => x.Info.Id == "DVCustomCarLoader", out var mod) && mod.Active;
-
-        public static bool HasCustomGauge(TrainCarType_v2 car, out float gauge)
+        private static ModEntry s_mod = null;
+        public static ModEntry Entry
         {
-            var t = car.GetType();
-            var isCustom = t.GetField("UseCustomGauge");
-
-            if (isCustom != null && (bool)(isCustom.GetValue(car)))
+            get
             {
-                var customGauge = (int)(t.GetField("Gauge").GetValue(car));
-                gauge = customGauge / 1000.0f;
+                if (s_mod == null)
+                {
+                    modEntries.TryFind(x => x.Info.Id == "DVCustomCarLoader", out s_mod);
+                }
+
+                return s_mod;
+            }
+        }
+
+        public static bool IsActive => Entry != null && Entry.Active;
+
+        public static bool IsCustomCar(TrainCar car)
+        {
+            return car.carLivery.parentType is CCL_CarType;
+        }
+
+        private static bool IsCustomCar(TrainCar car, out CCL_CarType custom)
+        {
+            if (car.carLivery.parentType is CCL_CarType temp)
+            {
+                custom = temp;
+                return true;
+            }
+
+            custom = null;
+            return false;
+        }
+
+        public static bool HasCustomGauge(TrainCar car, out float gauge)
+        {
+            if (IsCustomCar(car, out var custom) && custom.UseCustomGauge)
+            {
+                gauge = custom.Gauge / 1000.0f;
                 return true;
             }
 
@@ -26,12 +57,36 @@ namespace Gauge
 
         public static bool HasCustomGauge(Bogie bogie, out float gauge)
         {
-            return HasCustomGauge(bogie.Car.carLivery.parentType, out gauge);
+            return HasCustomGauge(bogie.Car, out gauge);
         }
 
-        public static bool HasCustomGauge(TrainCar car, out float gauge)
+        private static void GenericModifyMeshes(MeshFilter[] meshes, float? gauge = null)
         {
-            return HasCustomGauge(car.carLivery.parentType, out gauge);
+            foreach (MeshFilter filter in meshes)
+            {
+                Mesh mesh = filter.sharedMesh;
+                if (mesh == null)
+                    continue;
+
+                if (!mesh.isReadable)
+                {
+                    Mesh m = Assets.GetMesh(mesh.name);
+                    if (m == null) continue;
+                    filter.sharedMesh = mesh = m;
+                    if (!m.isReadable)
+                        continue; // Already modified.
+                }
+
+                Symmetrical.ScaleToGauge(mesh, baseGauge: gauge);
+            }
+        }
+
+        public static void HandleCustomMeshes(TrainCar car)
+        {
+            if (IsCustomCar(car, out var custom) && car.TryGetComponent(out RegaugeableMeshes meshes))
+            {
+                GenericModifyMeshes(meshes.Meshes, custom.UseCustomGauge ? custom.Gauge / 1000.0f : (float?)null);
+            }
         }
     }
 }

@@ -24,6 +24,8 @@
     <ItemGroup>
         <Reference Include="BezierCurves" />
         <Reference Include="Newtonsoft.Json" />
+        <Reference Include="CCL.Importer" />
+        <Reference Include="CCL.Types" />
     </ItemGroup>
 
     <!-- Unity -->

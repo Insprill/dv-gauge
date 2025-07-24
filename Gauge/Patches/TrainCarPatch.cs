@@ -1,4 +1,4 @@
-﻿using Gauge.Meshes;
+using Gauge.Meshes;
 using Gauge.MeshModifiers;
 using Gauge.Utils;
 using HarmonyLib;
@@ -20,25 +20,30 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(t, __instance.GetGauge());
             }
 
-            // Narrow only
-            if (Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge)
-            {
-                switch (__instance.carLivery.id)
-                {
-                    case "LocoDE2":
-                        __instance.gameObject.ModifyMeshes(DE2.ModifyMesh, __instance);
-                        break;
-                    case "LocoS282A":
-                        __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
-                        break;
-                    case "LocoS060":
-                        __instance.gameObject.ModifyMeshes(S060.ModifyMesh, __instance);
-                        break;
-                }
-            }
+            // DE2, S282A and S060 only have modifications when narrow.
+            bool narrow = Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge;
 
-            if (__instance.carLivery.id == "LocoDM3")
-                HandleDM3(__instance);
+            switch (__instance.carLivery.id)
+            {
+                case "LocoDE2":
+                    if (narrow)
+                        __instance.gameObject.ModifyMeshes(DE2.ModifyMesh, __instance);
+                    break;
+                case "LocoS282A":
+                    if (narrow)
+                        __instance.gameObject.ModifyMeshes(SH282.ModifyMesh, __instance);
+                    break;
+                case "LocoS060":
+                    if (narrow)
+                        __instance.gameObject.ModifyMeshes(S060.ModifyMesh, __instance);
+                    break;
+                case "LocoDM3":
+                    HandleDM3(__instance);
+                    break;
+                default:
+                    TryHandleCustom(__instance);
+                    break;
+            }
         }
 
         private static void HandleDM3(Component trainCar)
@@ -59,6 +64,13 @@ namespace Gauge.Patches
                         child.localPosition = pos;
                         break;
                 }
+        }
+
+        private static void TryHandleCustom(TrainCar car)
+        {
+            if (!CCL.IsActive) return;
+
+            CCL.HandleCustomMeshes(car);
         }
     }
 }
