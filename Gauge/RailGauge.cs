@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -12,8 +12,14 @@ namespace Gauge
     {
         public static readonly ReadOnlyDictionary<RailGaugePreset, RailGauge> PRESETS = new ReadOnlyDictionary<RailGaugePreset, RailGauge>(new Dictionary<RailGaugePreset, RailGauge> {
             { RailGaugePreset.Standard, new RailGauge(1435, 750) },
+            // Narrow.
             { RailGaugePreset.Cape, new RailGauge(1067, 850) },
-            { RailGaugePreset.ThreeFoot, new RailGauge(914, 900) }
+            { RailGaugePreset.ThreeFoot, new RailGauge(914, 900) },
+            { RailGaugePreset.Metre, new RailGauge(1000, 850) },
+            // Broad.
+            { RailGaugePreset.FiveFoot, new RailGauge(1524, 750) },
+            { RailGaugePreset.Iberian, new RailGauge(1668, 750) },
+            { RailGaugePreset.Indian, new RailGauge(1676, 750) }
         });
 
         [Draw("Gauge (millimeters)", Tooltip = "The track gauge, in millimeters. Must be greater than 350 and less than 1700.")]
@@ -41,5 +47,7 @@ namespace Gauge
         {
             return Mathf.Abs(Gauge - PRESETS[RailGaugePreset.Standard].Gauge) < 0.001;
         }
+
+        public static float Standard => RailGaugePreset.Standard.RailGauge().Gauge;
     }
 }
