@@ -1,7 +1,6 @@
 using CCL.Importer.Types;
 using CCL.Types.Components;
 using Gauge.MeshModifiers;
-using Gauge.Utils;
 using UnityEngine;
 
 using static UnityModManagerNet.UnityModManager;
@@ -17,7 +16,7 @@ namespace Gauge
             {
                 if (s_mod == null)
                 {
-                    modEntries.TryFind(x => x.Info.Id == "DVCustomCarLoader", out s_mod);
+                    s_mod = modEntries.Find(x => x.Info.Id == "DVCustomCarLoader");
                 }
 
                 return s_mod;
