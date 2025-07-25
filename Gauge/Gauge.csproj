@@ -20,12 +20,16 @@
         <PackageReference Include="UnityModManager" Version="0.27.2" />
     </ItemGroup>
 
+    <!-- CCL Mod -->
+    <ItemGroup>
+        <Reference Include="CCL.Importer" />
+        <Reference Include="CCL.Types" />
+    </ItemGroup>
+
     <!-- Third-Party -->
     <ItemGroup>
         <Reference Include="BezierCurves" />
         <Reference Include="Newtonsoft.Json" />
-        <Reference Include="CCL.Importer" />
-        <Reference Include="CCL.Types" />
     </ItemGroup>
 
     <!-- Unity -->

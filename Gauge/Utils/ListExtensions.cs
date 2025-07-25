@@ -9,12 +9,7 @@ namespace Gauge.Utils
         {
             value = list.Find(match);
 
-            if (value == null)
-            {
-                return false;
-            }
-
-            return true;
+            return value != null;
         }
     }
 }

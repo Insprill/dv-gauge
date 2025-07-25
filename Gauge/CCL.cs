@@ -60,7 +60,7 @@ namespace Gauge
             return HasCustomGauge(bogie.Car, out gauge);
         }
 
-        private static void GenericModifyMeshes(MeshFilter[] meshes, float? gauge = null)
+        private static void ModifySpecificMeshes(MeshFilter[] meshes, float? gauge = null)
         {
             foreach (MeshFilter filter in meshes)
             {
@@ -81,11 +81,22 @@ namespace Gauge
             }
         }
 
+        private static void ModifyChildMeshes(GameObject[] gos, float? gauge = null)
+        {
+            foreach (var go in gos)
+            {
+                ModifySpecificMeshes(go.GetComponentsInChildren<MeshFilter>(), gauge);
+            }
+        }
+
         public static void HandleCustomMeshes(TrainCar car)
         {
             if (IsCustomCar(car, out var custom) && car.TryGetComponent(out RegaugeableMeshes meshes))
             {
-                GenericModifyMeshes(meshes.Meshes, custom.UseCustomGauge ? custom.Gauge / 1000.0f : (float?)null);
+                var gauge = custom.UseCustomGauge ? custom.Gauge / 1000.0f : (float?)null;
+
+                ModifyChildMeshes(meshes.Objects, gauge);
+                ModifySpecificMeshes(meshes.Meshes, gauge);
             }
         }
     }
