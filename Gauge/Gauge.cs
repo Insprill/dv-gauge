@@ -1,5 +1,6 @@
 using System;
 using HarmonyLib;
+using JetBrains.Annotations; // Included in UnityEngine.dll
 using UnityModManagerNet;
 
 namespace Gauge
@@ -10,10 +11,11 @@ namespace Gauge
         public static UnityModManager.ModEntry.ModLogger Logger => ModEntry.Logger;
         public static Settings Settings;
 
-        private static bool Load(UnityModManager.ModEntry modEntry)
+        [UsedImplicitly] // UMM entry point
+        static bool Load(UnityModManager.ModEntry modEntry)
         {
             ModEntry = modEntry;
-            Settings = Settings.Load<Settings>(modEntry);
+            Settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
             ModEntry.OnGUI = Settings.Draw;
             ModEntry.OnSaveGUI = Settings.Save;
 
