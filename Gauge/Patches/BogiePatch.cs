@@ -25,6 +25,9 @@ namespace Gauge.Patches
                 case "ext axle_R":
                     Symmetrical.ScaleToGauge(mesh, true, skipVerts: Vertices.Verts.de2_axle_skip);
                     break;
+                case "dh4_bogie_frame":
+                    Symmetrical.ScaleToGauge(mesh, false, ((Bogie)component).GetGauge());
+                    break;
                 default:
                     Symmetrical.ScaleToGauge(mesh, true, ((Bogie)component).GetGauge());
                     break;
