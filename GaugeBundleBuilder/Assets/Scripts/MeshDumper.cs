@@ -12,7 +12,7 @@ namespace Gauge.GaugeBundleBuilder
 {
     public class MeshDumper : EditorWindow
     {
-        private const byte DOTNET_VERSION = 7;
+        private const byte DOTNET_VERSION = 9;
         private static readonly Regex VersionRegex = new Regex(@"(\d+)\.\d+\.\d+");
         private static readonly Regex AsciiColorRegex = new Regex(@"\x1B\[[0-9;]*m");
 

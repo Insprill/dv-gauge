@@ -1,1 +1,2 @@
-v0.17.4 net7 portable
+v0.19.0 net9 portable
+https://github.com/aelurum/AssetStudio/releases/tag/v0.19.0
