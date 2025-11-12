@@ -1,19 +1,46 @@
-﻿root = true
+root = true
 
 [*]
-charset = utf-8
 end_of_line = lf
-indent_style = space
-indent_size = 4
+max_line_length = 120
 insert_final_newline = true
 trim_trailing_whitespace = true
-max_line_length = 215
+charset = utf-8
+indent_style = space
+indent_size = 4
 
-[*.md]
-trim_trailing_whitespace = false
-
-[*.json]
+[*.{json,yml,yaml}]
 indent_size = 2
 
-[*.csproj]
-ij_xml_space_inside_empty_tag = true
+# https://www.jetbrains.com/help/rider/EditorConfig_Properties.html
+# https://www.jetbrains.com/help/rider/Using_EditorConfig.html#roslyn (Only available in Rider 2025.3+)
+# https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options
+[*.cs]
+# Show style issues (Roslyn only)
+dotnet_analyzer_diagnostic.category-Style.severity = suggestion
+
+# Implicit type (var)
+resharper_for_built_in_types = use_var
+resharper_for_simple_types = use_var
+resharper_for_other_types = use_var
+resharper_use_roslyn_logic_for_evident_types = true
+csharp_style_var_elsewhere = true
+csharp_style_var_for_built_in_types = true
+csharp_style_var_when_type_is_apparent = true
+
+# No private modifier
+resharper_default_private_modifier = implicit
+dotnet_style_require_accessibility_modifiers = omit_if_default
+
+# Don't double-indent switch case blocks (Roslyn only)
+csharp_indent_case_contents_when_block = false
+
+# Allow the wild west of namespaces (Roslyn only)
+dotnet_diagnostic.CA1050.severity = none
+dotnet_style_namespace_match_folder = false
+
+# Allow if statements without braces
+csharp_prefer_braces = when_multiline
+
+# Allow expressions with implicit unused return values (Roslyn only)
+dotnet_diagnostic.IDE0058.severity = none
