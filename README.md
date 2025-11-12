@@ -11,7 +11,7 @@
 <div align="center">
   <h1>Gauge</h1>
   <p>
-    A <a href="https://store.steampowered.com/app/588030">Derail Valley</a> that allows the track gauge to be changed. 
+    A <a href="https://store.steampowered.com/app/588030">Derail Valley</a> that allows the track gauge to be changed.
     <br />
     <br />
     <a href="https://github.com/Insprill/dv-gauge/issues">Report Bug</a>
@@ -68,10 +68,12 @@ For instructions on how to build the project, please read the [Mapify building d
 To build the AssetBundle for gauge, you'll need to install Unity **2019.4.40f1**.
 You can then open up the `GaugeBundleBuilder` project in this repo.
 
-To add the meshes to the project you'll need to export them yourself using something like [AssetStudio][asset-studio-url].
-You can find all the meshes you need to export in `GaugeBundleBuilder/Assets/Meshes/meshes.txt`.
+Before building the asset bundle, you must dump all the required meshes into the project.
+This can be done automatically by going to `Gauge` > `Dump Meshes`.
+Select the folder that contains your install of the game, then click "Dump Meshes".
+After a few seconds, all the required meshes should be in the project.
 
-To build the bundle, go to `Gauge > Build Asset Bundle`.
+To build the bundle, go to `Gauge` > `Build Asset Bundle`.
 If you're missing meshes, it won't let you build the bundle.
 
 
@@ -81,8 +83,8 @@ If you're missing meshes, it won't let you build the bundle.
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create.  
-Any contributions you make are **greatly appreciated**!  
+Contributions are what make the open source community such an amazing place to learn, inspire, and create.
+Any contributions you make are **greatly appreciated**!
 If you're new to contributing to open-source projects, you can follow [this][contributing-quickstart-url] guide.
 
 
@@ -92,7 +94,7 @@ If you're new to contributing to open-source projects, you can follow [this][con
 
 ## License
 
-Code is distributed under the Apache 2.0 license.  
+Code is distributed under the Apache 2.0 license.
 See [LICENSE][license-url] for more information.
 
 AssetBundle assets are owned by Altfuture and are included with permission, for the purpose of having Read/Write protection on them removed, which is necessary for this mod to function.
