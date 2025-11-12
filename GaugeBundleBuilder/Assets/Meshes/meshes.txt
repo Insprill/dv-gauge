@@ -37,6 +37,11 @@ diesel_bogie_frame_LOD3.obj
 diesel_bogie_LOD4.obj
 diesel_bogie_wheels.obj
 diesel_bogie_wheels_LOD1.obj
+dm1u-150_bogie_brakes.obj
+dm1u-150_bogie_frame.obj
+dm1u-150_bogie_frame_LOD1.obj
+dm1u-150_bogie_wheel.obj
+dm1u-150_bogie_wheel_LOD1.obj
 dm3_brake_shoes.obj
 dm3_brake_shoes.obj
 dm3_exterior_body.obj
@@ -47,6 +52,8 @@ dm3_wheel_03_LOD1.obj
 dm3_wheel_01.obj
 dm3_wheel_02.obj
 dm3_wheel_03.obj
+microshunter_axle_F.obj
+microshunter_axle_R.obj
 rails_moving.obj
 rails_static.obj
 s060_body.obj
