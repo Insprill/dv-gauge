@@ -22,21 +22,7 @@ namespace Gauge.Patches
                 s_defaultMat = __instance.railMat;
             }
 
-            switch (Gauge.Settings.railMaterial)
-            {
-                case RailMaterial.New:
-                    __instance.railMat = s_newMat;
-                    break;
-                case RailMaterial.Medium:
-                    __instance.railMat = s_medMat;
-                    break;
-                case RailMaterial.Old:
-                    __instance.railMat = s_oldMat;
-                    break;
-                default:
-                    __instance.railMat = s_defaultMat;
-                    break;
-            }
+            __instance.railMat = GetRailMaterial();
 
             if (Gauge.Settings.RailGauge.IsStandard() && Gauge.Settings.RailQuality.IsVanilla())
             {
@@ -54,6 +40,17 @@ namespace Gauge.Patches
 
             // Clear the cache so it can be run again on the next load.
             RailTrackPatch.ClearCache();
+        }
+
+        public static Material GetRailMaterial()
+        {
+            return Gauge.Settings.railMaterial switch
+            {
+                RailMaterial.New => s_newMat,
+                RailMaterial.Medium => s_medMat,
+                RailMaterial.Old => s_oldMat,
+                _ => s_defaultMat
+            };
         }
     }
 }
