@@ -8,9 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.0] - Unreleased
 
+### Added
+- Support for B99.7.
+- Added support for the DM1U and Microshunter.
+- An option to change rail quality (how squiggly they are) ([#5] by [@WhistleWiz]).
+- An option to change rail material (how rusty they are) ([#6] by [@WhistleWiz]).
+- Support for [CCL](https://github.com/derail-valley-modding/custom-car-loader) ([#7] by [@WhistleWiz]).
+
 ### Fixed
 - Fixed some mesh issues with the S060 and S282.
 - Fixed the DE2's traction motors and brake shoes not being regauged.
+- Fixed rail anchors not being regauged;
+- Fixed DH4 wheels clipping through the center of the bogie on narrower gauges.
 
 
 ## [1.3.0] - 2023-07-22
@@ -77,8 +86,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release.
 
 <!-- Users -->
+[@WhistleWiz]: https://github.com/WhistleWiz
 
 <!-- Pull Requests -->
+[#7]: https://github.com/Insprill/dv-gauge/pull/7
+[#6]: https://github.com/Insprill/dv-gauge/pull/6
+[#5]: https://github.com/Insprill/dv-gauge/pull/5
 
 <!-- Diffs -->
 [1.4.0]: https://github.com/Insprill/dv-gauge/compare/v1.3.0...HEAD
