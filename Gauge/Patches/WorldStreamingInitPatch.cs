@@ -1,3 +1,4 @@
+using System;
 using DV.Utils;
 using Gauge.Meshes;
 using Gauge.MeshModifiers;
@@ -19,7 +20,14 @@ namespace Gauge.Patches
 
         private static void OnLoadingFinished()
         {
-            SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
+            try
+            {
+                SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
+            }
+            catch (Exception e)
+            {
+                Gauge.Logger.LogException(e);
+            }
         }
 
         private static void HandleMesh(string name, Mesh mesh, Component component)
