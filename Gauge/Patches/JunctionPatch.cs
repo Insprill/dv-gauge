@@ -24,7 +24,7 @@ namespace Gauge.Patches
         static void UpdateBaseType(Transform meshTransform)
         {
             var renderer = meshTransform.GetComponent<MeshRenderer>();
-            renderer.sharedMaterial = RailwayMeshGenerator_Start_Patch.GetRailMaterial();
+            renderer.sharedMaterial = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
         }
     }
 }
