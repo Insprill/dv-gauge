@@ -88,6 +88,27 @@ namespace Gauge.Patches
                 case "buffer_stop_holders":
                     renderer.sharedMaterial = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
                     break;
+                case "RailwayMuseumTurntable_LOD0":
+                {
+                    var sharedMats = renderer.sharedMaterials;
+                    sharedMats[2] = RailMaterials.GetSelectedRailMaterial(sharedMats[2]);
+                    renderer.sharedMaterials = sharedMats;
+                    break;
+                }
+                case "TurntableRail.002":
+                {
+                    var sharedMats = renderer.sharedMaterials;
+                    sharedMats[0] = RailMaterials.GetSelectedRailMaterial(sharedMats[0]);
+                    renderer.sharedMaterials = sharedMats;
+                    break;
+                }
+                case "TurntableRail":
+                {
+                    var sharedMats = renderer.sharedMaterials;
+                    sharedMats[1] = RailMaterials.GetSelectedRailMaterial(sharedMats[1]);
+                    renderer.sharedMaterials = sharedMats;
+                    break;
+                }
             }
         }
     }

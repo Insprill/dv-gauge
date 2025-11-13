@@ -17,21 +17,11 @@ namespace Gauge.Patches
         [HarmonyPrefix, HarmonyPatch("Awake")]
         static void AwakePrefix(RailTrack __instance)
         {
-            // Apply material to fixed-mesh tracks from turntables.
-            if (TryUpdateTurntableParkingTrack(__instance))
-            {
-                return;
-            }
-
-            // Apply material to fixed-mesh tracks on turntables.
-            if (TryUpdateTurntableTrack(__instance))
-            {
-                return;
-            }
-
-            // Apply material to base type for regular tracks and adjust kinks
-
             UpdateBaseType(__instance.baseType);
+
+            // Don't adjust kinks for tracks with static meshes
+            if (!__instance.generateMeshes)
+                return;
 
             __instance.railType.gauge = Gauge.Settings.RailGauge.Gauge;
 
@@ -42,54 +32,6 @@ namespace Gauge.Patches
 
             __instance.overrideDefaultJointsSpan = Gauge.Settings.customJointDistance;
             __instance.jointsSpan = Gauge.Settings.jointDistance;
-        }
-
-        static bool TryUpdateTurntableParkingTrack(RailTrack __instance)
-        {
-            if (!__instance.TryGetComponent<TurntableOutgoingTrack>(out _))
-            {
-                return false;
-            }
-
-            var visualTransform = __instance.transform.Find("visual");
-            // This component is on some buffer stops without a fixed mesh.
-            if (visualTransform == null)
-            {
-                return false;
-            }
-
-            var meshTransform = visualTransform.Find("roundhouse_railroad_track");
-            var renderer = meshTransform.GetComponent<MeshRenderer>();
-            // Museum tracks have one material, others have two. Both have the rail as the first.
-            var sharedMats = renderer.sharedMaterials;
-            sharedMats[0] = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
-            renderer.sharedMaterials = sharedMats;
-            return true;
-        }
-
-        static bool TryUpdateTurntableTrack(RailTrack __instance)
-        {
-            if (!__instance.TryGetComponent<TurntableRailTrack>(out _))
-                return false;
-            var visualTransform = __instance.transform.Find("bridge").Find("visual");
-            var railTransform = visualTransform.GetChild(0);
-            var renderer = railTransform.GetComponent<MeshRenderer>();
-            var mat = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
-            var sharedMats = renderer.sharedMaterials;
-            switch (railTransform.name)
-            {
-                case "RailwayMuseumTurntable_LOD0":
-                    sharedMats[2] = mat;
-                    break;
-                case "TurntableRail":
-                    sharedMats[1] = mat;
-                    break;
-                default:
-                    Gauge.Logger.Warning($"Unknown turntable '{railTransform.name}'! It's material won't change.");
-                    break;
-            }
-            renderer.sharedMaterials = sharedMats;
-            return true;
         }
 
         static void UpdateBaseType(BaseType baseType)
