@@ -6,9 +6,6 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(Junction))]
     static class JunctionPatch
     {
-        // Point sets are generated and cached on Awake, which means when RailwayMeshGenerator
-        // accesses them to change params it's already too late.
-        // Instead of nullifying that cache it's easier to just apply it here.
         [HarmonyPostfix, HarmonyPatch("Awake")]
         static void AwakePrefix(Junction __instance)
         {
