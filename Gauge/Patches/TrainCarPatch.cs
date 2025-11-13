@@ -9,19 +9,24 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(TrainCar), "Start")]
     public static class TrainCar_Start_Patch
     {
-        private static void Postfix(TrainCar __instance)
+        static void Postfix(TrainCar __instance)
         {
             if (__instance.IsCorrectGauge())
                 return;
 
-            foreach (Transform t in __instance.GetComponentsInChildren<Transform>())
+            using (var children = TempList<Transform>.Get)
             {
-                if (t.name != "[wheel sparks]") continue;
-                Symmetrical.ScaleToGauge(t, __instance.GetGauge());
+                __instance.GetComponentsInChildren(children.List);
+                foreach (var child in children.List)
+                {
+                    if (child.name != "[wheel sparks]")
+                        continue;
+                    Symmetrical.ScaleToGauge(child, __instance.GetGauge());
+                }
             }
 
             // DE2, S282A and S060 only have modifications when narrow.
-            bool narrow = Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge;
+            var narrow = Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge;
 
             switch (__instance.carLivery.id)
             {
@@ -46,29 +51,28 @@ namespace Gauge.Patches
             }
         }
 
-        private static void HandleDM3(Component trainCar)
+        static void HandleDM3(Component trainCar)
         {
             trainCar.gameObject.ModifyMeshes(DM3.ModifyMesh, trainCar);
-            Vector3 pos;
-            foreach (Transform child in trainCar.GetComponentsInChildren<Transform>())
-                switch (child.name)
-                {
-                    case "crank_pivot_L":
-                        pos = child.localPosition;
-                        pos.x += Gauge.Settings.RailGauge.DiffToStandard;
-                        child.localPosition = pos;
-                        break;
-                    case "crank_pivot_R":
-                        pos = child.localPosition;
-                        pos.x += -Gauge.Settings.RailGauge.DiffToStandard;
-                        child.localPosition = pos;
-                        break;
-                }
+
+            using var children = TempList<Transform>.Get;
+            trainCar.GetComponentsInChildren(children.List);
+            foreach (var child in children.List)
+            {
+                var childName = child.name;
+                if (childName is not ("crank_pivot_L" or "crank_pivot_R"))
+                    continue;
+                var pos = child.localPosition;
+                var diff = Gauge.Settings.RailGauge.DiffToStandard;
+                pos.x += childName.EndsWith("L") ? diff : -diff;
+                child.localPosition = pos;
+            }
         }
 
-        private static void TryHandleCustom(TrainCar car)
+        static void TryHandleCustom(TrainCar car)
         {
-            if (!CCL.IsActive) return;
+            if (!CCL.IsActive)
+                return;
 
             CCL.HandleCustomMeshes(car);
         }

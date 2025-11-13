@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Gauge.Utils;
 using UnityEngine;
 
 namespace Gauge.Meshes
@@ -15,6 +17,14 @@ namespace Gauge.Meshes
             mesh.UploadMeshData(true);
         }
 
+        /// <inheritdoc cref="ApplyVerts(Mesh, Vector3[])"/>
+        public static void ApplyVerts(this Mesh mesh, List<Vector3> vertices)
+        {
+            mesh.SetVertices(vertices);
+            mesh.RecalculateBounds();
+            mesh.UploadMeshData(true);
+        }
+
         public static void ModifyMeshes(this GameObject gameObject, HandleMesh func, Component component = null)
         {
             gameObject.transform.ModifyMeshes(func, component);
@@ -22,7 +32,9 @@ namespace Gauge.Meshes
 
         public static void ModifyMeshes(this Transform transform, HandleMesh func, Component component = null)
         {
-            foreach (MeshFilter filter in transform.GetComponentsInChildren<MeshFilter>())
+            using var filters = TempList<MeshFilter>.Get;
+            transform.GetComponentsInChildren(filters.List);
+            foreach (var filter in filters.List)
             {
                 if (component is TrainCar && filter.GetComponentInParent<Bogie>())
                     continue; // Prevents the body modifier from locking the bogie's mesh preventing the bogie modifier from modifying it

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using Gauge.MeshModifiers;
+using Gauge.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -107,14 +107,19 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(baseType.baseShape.transform);
             }
 
-            foreach (var filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
+            foreach (var obj in baseType.sleeperPrefabs)
             {
+                using var filters = TempList<MeshFilter>.Get;
+                obj.GetComponentsInChildren(filters.List);
+                foreach (var filter in filters.List)
+                {
                     if (!Assets.GetMesh(filter).IsSome(out var mesh))
                         continue;
                     if (!mesh.isReadable)
                         continue;
                     filter.sharedMesh = mesh;
                     Symmetrical.ScaleToGauge(mesh);
+                }
             }
 
             s_updatedBaseTypes.Add(baseType);

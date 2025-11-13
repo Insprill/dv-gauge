@@ -1,17 +1,21 @@
 ﻿using System;
 using Gauge.Meshes;
+using Gauge.Utils;
 using UnityEngine;
 
 namespace Gauge.MeshModifiers
 {
     public static class Symmetrical
     {
-        private const float BASE_THRESHOLD_METERS = 0.05f;
+        const float BASE_THRESHOLD_METERS = 0.05f;
 
         public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null, ushort[] skipVerts = null, ushort[] includeVerts = null)
         {
-            Vector3[] verts = mesh.vertices;
-            for (int i = 0; i < verts.Length; i++)
+            using var vertList = TempList<Vector3>.Get;
+            var verts = vertList.List;
+            mesh.GetVertices(verts);
+
+            for (int i = 0; i < verts.Count; i++)
             {
                 if (skipVerts != null && i < ushort.MaxValue && Array.BinarySearch(skipVerts, (ushort)i) >= 0) continue;
                 if (includeVerts != null && i < ushort.MaxValue && Array.BinarySearch(includeVerts, (ushort)i) < 0) continue;

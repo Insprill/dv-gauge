@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using CCL.Importer.Types;
 using CCL.Types.Components;
 using Gauge.MeshModifiers;
+using Gauge.Utils;
 using UnityEngine;
 
 using static UnityModManagerNet.UnityModManager;
@@ -59,7 +61,7 @@ namespace Gauge
             return HasCustomGauge(bogie.Car, out gauge);
         }
 
-        private static void ModifySpecificMeshes(MeshFilter[] meshes, float? gauge = null)
+        private static void ModifySpecificMeshes(List<MeshFilter> meshes, float? gauge = null)
         {
             foreach (MeshFilter filter in meshes)
             {
@@ -84,7 +86,9 @@ namespace Gauge
         {
             foreach (var go in gos)
             {
-                ModifySpecificMeshes(go.GetComponentsInChildren<MeshFilter>(), gauge);
+                using var filters = TempList<MeshFilter>.Get;
+                go.GetComponentsInChildren(filters.List);
+                ModifySpecificMeshes(filters, gauge);
             }
         }
 
@@ -95,7 +99,7 @@ namespace Gauge
                 var gauge = custom.UseCustomGauge ? custom.Gauge / 1000.0f : (float?)null;
 
                 ModifyChildMeshes(meshes.Objects, gauge);
-                ModifySpecificMeshes(meshes.Meshes, gauge);
+                ModifySpecificMeshes([..meshes.Meshes], gauge);
             }
         }
     }
