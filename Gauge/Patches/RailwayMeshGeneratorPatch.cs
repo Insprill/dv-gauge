@@ -1,6 +1,5 @@
 using Gauge.MeshModifiers;
 using HarmonyLib;
-using UnityEngine;
 
 namespace Gauge.Patches
 {
@@ -17,17 +16,14 @@ namespace Gauge.Patches
                 return;
             }
 
-            Mesh anchorMesh = Assets.GetMesh(__instance.anchorMesh);
-            if (anchorMesh == null)
+            if (Assets.GetMesh(__instance.anchorMesh).IsSome(out var aMesh))
             {
-                return;
+                __instance.anchorMesh = aMesh;
+                Symmetrical.ScaleToGauge(aMesh);
             }
-            __instance.anchorMesh = anchorMesh;
-            Symmetrical.ScaleToGauge(anchorMesh);
 
             // Clear the cache so it can be run again on the next load.
             RailTrackPatch.ClearCache();
         }
-
     }
 }

@@ -69,8 +69,8 @@ namespace Gauge
 
                 if (!mesh.isReadable)
                 {
-                    Mesh m = Assets.GetMesh(mesh.name);
-                    if (m == null) continue;
+                    if (!Assets.GetMesh(mesh.name).IsSome(out var m))
+                        continue;
                     filter.sharedMesh = mesh = m;
                     if (!m.isReadable)
                         continue; // Already modified.

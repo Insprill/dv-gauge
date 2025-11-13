@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using DV;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -32,21 +33,24 @@ namespace Gauge
             return true;
         }
 
-        [CanBeNull]
-        public static Mesh GetMesh([CanBeNull] Mesh mesh)
+        public static Option<Mesh> GetMesh([NotNull] MeshFilter filter)
+        {
+            return GetMesh(filter.sharedMesh.name);
+        }
+
+        public static Option<Mesh> GetMesh([CanBeNull] Mesh mesh)
         {
             return mesh == null ? null : GetMesh(mesh.name);
         }
 
-        [CanBeNull]
-        public static Mesh GetMesh([NotNull] string name)
+        public static Option<Mesh> GetMesh([NotNull] string name)
         {
             switch (name)
             {
                 case "TurntableRail":
                 case "TurntableRail.002":
-                    if (Meshes.TryGetValue(name, out Mesh railMesh))
-                        return railMesh;
+                    if (Meshes.TryGetValue(name, out var railMesh))
+                        return Option<Mesh>.Some(railMesh);
 
                     if (!Meshes.TryGetValue($"{name}_0", out Mesh mesh1))
                         return null;
@@ -67,10 +71,10 @@ namespace Gauge
                     }, false);
 
                     Meshes.Add(name, combinedMesh);
-                    return combinedMesh;
+                    return Option<Mesh>.Some(combinedMesh);
                 default:
-                    bool foundMesh = Meshes.TryGetValue($"{name.Replace(' ', '_')}_0", out Mesh mesh);
-                    return foundMesh ? mesh : null;
+                    var foundMesh = Meshes.TryGetValue($"{name.Replace(' ', '_')}_0", out var mesh);
+                    return foundMesh ? Option<Mesh>.Some(mesh) : Option<Mesh>.None;
             }
         }
     }

@@ -109,11 +109,12 @@ namespace Gauge.Patches
 
             foreach (var filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
-                var mesh = Assets.GetMesh(filter.sharedMesh);
-                if (mesh == null || !mesh.isReadable)
-                    continue;
-                filter.sharedMesh = mesh;
-                Symmetrical.ScaleToGauge(mesh);
+                    if (!Assets.GetMesh(filter).IsSome(out var mesh))
+                        continue;
+                    if (!mesh.isReadable)
+                        continue;
+                    filter.sharedMesh = mesh;
+                    Symmetrical.ScaleToGauge(mesh);
             }
 
             s_updatedBaseTypes.Add(baseType);
