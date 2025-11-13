@@ -9,17 +9,44 @@ namespace Gauge.MeshModifiers
     {
         const float BASE_THRESHOLD_METERS = 0.05f;
 
-        public static void ScaleToGauge(Mesh mesh, bool useGaugeAsThreshold = false, float? baseGauge = null, ushort[] skipVerts = null, ushort[] includeVerts = null)
+        public static void ScaleToGauge(
+            Mesh mesh,
+            bool useGaugeAsThreshold = false,
+            float? baseGauge = null,
+            ushort[] skipVerts = null,
+            ushort[] includeVerts = null,
+            float rotationDegrees = 0f
+        )
         {
             using var vertList = TempList<Vector3>.Get;
             var verts = vertList.List;
             mesh.GetVertices(verts);
 
-            for (int i = 0; i < verts.Count; i++)
+            var hasRotation = Mathf.Abs(rotationDegrees) > Mathf.Epsilon;
+            var inverseRotation = Quaternion.identity;
+            var rotation = Quaternion.identity;
+            if (hasRotation)
             {
-                if (skipVerts != null && i < ushort.MaxValue && Array.BinarySearch(skipVerts, (ushort)i) >= 0) continue;
-                if (includeVerts != null && i < ushort.MaxValue && Array.BinarySearch(includeVerts, (ushort)i) < 0) continue;
-                verts[i] = ScaleToGauge(verts[i], useGaugeAsThreshold, baseGauge);
+                inverseRotation = Quaternion.Inverse(Quaternion.Euler(0f, rotationDegrees, 0f));
+                rotation = Quaternion.Euler(0f, rotationDegrees, 0f);
+            }
+
+            for (var i = 0; i < verts.Count; i++)
+            {
+                if (skipVerts != null && i < ushort.MaxValue && Array.BinarySearch(skipVerts, (ushort)i) >= 0)
+                    continue;
+                if (includeVerts != null && i < ushort.MaxValue && Array.BinarySearch(includeVerts, (ushort)i) < 0)
+                    continue;
+
+                var v = verts[i];
+
+                if (hasRotation)
+                    v = inverseRotation * v;
+                v = ScaleToGauge(v, useGaugeAsThreshold, baseGauge);
+                if (hasRotation)
+                    v = rotation * v;
+
+                verts[i] = v;
             }
 
             mesh.ApplyVerts(verts);
@@ -34,7 +61,7 @@ namespace Gauge.MeshModifiers
             }
         }
 
-        private static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null)
+        static Vector3 ScaleToGauge(Vector3 vert, bool useGaugeAsThreshold = false, float? baseGauge = null)
         {
             float threshold = useGaugeAsThreshold
                 ? baseGauge.GetValueOrDefault(RailGaugePreset.Standard.RailGauge().Gauge) / 2f - BASE_THRESHOLD_METERS

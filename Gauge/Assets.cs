@@ -8,9 +8,9 @@ namespace Gauge
 {
     public static class Assets
     {
-        private const string ASSET_BUNDLE_NAME = "gauge.assetbundle";
-        private static readonly Dictionary<string, Mesh> Meshes = new Dictionary<string, Mesh>();
-        private static AssetBundle assetBundle;
+        const string ASSET_BUNDLE_NAME = "gauge.assetbundle";
+        static readonly Dictionary<string, Mesh> Meshes = new();
+        static AssetBundle assetBundle;
 
         public static bool Init(string modPath)
         {
@@ -47,35 +47,35 @@ namespace Gauge
         {
             switch (name)
             {
+                case "RailwayMuseumTurntable_LOD0":
+                    return CombineMeshes(name, 5);
                 case "TurntableRail":
                 case "TurntableRail.002":
-                    if (Meshes.TryGetValue(name, out var railMesh))
-                        return Option<Mesh>.Some(railMesh);
-
-                    if (!Meshes.TryGetValue($"{name}_0", out Mesh mesh1))
-                        return null;
-                    if (!Meshes.TryGetValue($"{name}_1", out Mesh mesh2))
-                        return null;
-
-                    Mesh combinedMesh = new Mesh();
-                    // Rails must go first
-                    combinedMesh.CombineMeshes(new[] {
-                        new CombineInstance {
-                            mesh = mesh1,
-                            transform = Matrix4x4.identity
-                        },
-                        new CombineInstance {
-                            mesh = mesh2,
-                            transform = Matrix4x4.identity
-                        }
-                    }, false);
-
-                    Meshes.Add(name, combinedMesh);
-                    return Option<Mesh>.Some(combinedMesh);
+                    return CombineMeshes(name, 2);
                 default:
                     var foundMesh = Meshes.TryGetValue($"{name.Replace(' ', '_')}_0", out var mesh);
                     return foundMesh ? Option<Mesh>.Some(mesh) : Option<Mesh>.None;
             }
+        }
+
+        static Option<Mesh> CombineMeshes(string name, int count)
+        {
+            if (Meshes.TryGetValue(name, out var railMesh))
+                return Option<Mesh>.Some(railMesh);
+
+            var instances = new CombineInstance[count];
+            for (var i = 0; i < count; i++)
+            {
+                if (!Meshes.TryGetValue($"{name}_{i}", out var m))
+                    return Option<Mesh>.None;
+                instances[i] = new CombineInstance { mesh = m, transform = Matrix4x4.identity };
+            }
+
+            var combinedMesh = new Mesh();
+            combinedMesh.CombineMeshes(instances, false);
+
+            Meshes.Add(name, combinedMesh);
+            return Option<Mesh>.Some(combinedMesh);
         }
     }
 }

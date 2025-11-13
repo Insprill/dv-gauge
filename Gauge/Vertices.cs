@@ -66,5 +66,11 @@ namespace Gauge
         public ushort switch_moving_curve_end_broad;
 
         #endregion
+
+        #region Turntables
+
+        public ushort[] museum_turntable_include;
+
+        #endregion
     }
 }

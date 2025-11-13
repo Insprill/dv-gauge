@@ -31,7 +31,8 @@ namespace Gauge.GaugeBundleBuilder
                     importer.SaveAndReimport();
             }
 
-            FixAnchor();
+            FixDuplicate("Anchor");
+            FixDuplicate("RailwayMuseumTurntable_LOD0");
 
             AssetBundleBuild build = new AssetBundleBuild {
                 assetBundleName = ASSET_BUNDLE_NAME,
@@ -104,30 +105,29 @@ namespace Gauge.GaugeBundleBuilder
         }
 
         /// <summary>
-        ///     Finds all meshes with the name "Anchor" and deletes all but the one with the most vertices.
-        ///     This is due to Derail Valley having two meshes named 'Anchor'. One is a pair of anchors, and the other is a single anchor.
+        ///     Finds all meshes with the provided and deletes all but the one with the most vertices.
+        ///     This is due to Derail Valley having two of some meshes with the same name.
         /// </summary>
-        private static void FixAnchor()
+        static void FixDuplicate(string meshName)
         {
-            const string anchor = "Anchor";
-            Mesh[] anchorMeshes = AssetDatabase.FindAssets(anchor)
+            Mesh[] meshes = AssetDatabase.FindAssets(meshName)
                 .Select(AssetDatabase.GUIDToAssetPath)
                 .Distinct()
-                .Where(assetPath => Path.GetFileName(assetPath).StartsWith(anchor))
+                .Where(assetPath => Path.GetFileName(assetPath).StartsWith(meshName))
                 .Select(AssetDatabase.LoadAssetAtPath<Mesh>)
                 .OrderByDescending(mesh => mesh.vertices.Length)
                 .ToArray();
 
-            if (anchorMeshes.Length < 2)
+            if (meshes.Length < 2)
             {
-                Debug.LogWarning($"Only found {anchorMeshes.Length} anchor mesh(s)! If this is your second time building the bundle without dumping again, this is fine.");
+                Debug.LogWarning($"Only found {meshes.Length} {meshName} mesh(s)! If this is your second time building the bundle without dumping again, this is fine.");
                 return;
             }
 
-            for (var i = anchorMeshes.Length - 1; i >= 1; i--)
-                AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(anchorMeshes[i]));
+            for (var i = meshes.Length - 1; i >= 1; i--)
+                AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(meshes[i]));
 
-            AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(anchorMeshes[0]), anchor);
+            AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(meshes[0]), meshName);
 
             AssetDatabase.Refresh();
         }

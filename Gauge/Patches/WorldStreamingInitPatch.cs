@@ -42,6 +42,10 @@ namespace Gauge.Patches
                 case "sleepers-outersign":
                     Symmetrical.ScaleToGauge(mesh, skipVerts: Vertices.Verts.switch_sleeper_skip);
                     break;
+                // Museum turntable rails
+                case "RailwayMuseumTurntable_LOD0":
+                    Symmetrical.ScaleToGauge(mesh, includeVerts: Vertices.Verts.museum_turntable_include, rotationDegrees: 5f);
+                    break;
                 // Roundhouse rails
                 case "TurntableRail.002":
                 // Turntable rails
