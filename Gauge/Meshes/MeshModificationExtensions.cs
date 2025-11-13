@@ -25,12 +25,12 @@ namespace Gauge.Meshes
             mesh.UploadMeshData(true);
         }
 
-        public static void ModifyMeshes(this GameObject gameObject, HandleMesh func, Component component = null)
+        public static void ModifyMeshes(this GameObject gameObject, HandleMesh scaleFunc, Component component = null)
         {
-            gameObject.transform.ModifyMeshes(func, component);
+            gameObject.transform.ModifyMeshes(scaleFunc, null, component);
         }
 
-        public static void ModifyMeshes(this Transform transform, HandleMesh func, Component component = null)
+        public static void ModifyMeshes(this Transform transform, HandleMesh scaleFunc, HandleMesh otherFunc = null, Component component = null)
         {
             using var filters = TempList<MeshFilter>.Get;
             transform.GetComponentsInChildren(filters.List);
@@ -44,7 +44,9 @@ namespace Gauge.Meshes
                     continue;
 
                 // The new mesh's name usually has a suffix, so we save the original to make switching easier.
-                string name = mesh.name;
+                var name = mesh.name;
+
+                otherFunc?.Invoke(name, mesh, component ?? filter.transform);
 
                 if (!mesh.isReadable)
                 {
@@ -55,7 +57,7 @@ namespace Gauge.Meshes
                         continue; // Already modified.
                 }
 
-                func(name, mesh, component);
+                scaleFunc(name, mesh, component ?? filter.transform);
             }
         }
 

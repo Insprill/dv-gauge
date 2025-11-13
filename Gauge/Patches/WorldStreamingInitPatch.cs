@@ -10,19 +10,20 @@ namespace Gauge.Patches
     [HarmonyPatch(typeof(WorldStreamingInit), "Awake")]
     public static class WorldStreamingInit_Awake_Patch
     {
-        private static void Postfix()
+        static void Postfix()
         {
-            if (Gauge.Settings.RailGauge.IsStandard())
-                return;
             if (Assets.Init(Gauge.ModEntry.Path))
                 WorldStreamingInit.LoadingFinished += OnLoadingFinished;
         }
 
-        private static void OnLoadingFinished()
+        static void OnLoadingFinished()
         {
             try
             {
-                SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(HandleMesh);
+                SingletonBehaviour<WorldStreamingInit>.Instance.originShiftParent.ModifyMeshes(
+                    HandleMesh,
+                    UpdateMaterials
+                );
             }
             catch (Exception e)
             {
@@ -30,7 +31,7 @@ namespace Gauge.Patches
             }
         }
 
-        private static void HandleMesh(string name, Mesh mesh, Component component)
+        static void HandleMesh(string name, Mesh mesh, Component component)
         {
             switch (name)
             {
@@ -52,7 +53,11 @@ namespace Gauge.Patches
                     break;
                 // Museum turntable rails
                 case "RailwayMuseumTurntable_LOD0":
-                    Symmetrical.ScaleToGauge(mesh, includeVerts: Vertices.Verts.museum_turntable_include, rotationDegrees: 5f);
+                    Symmetrical.ScaleToGauge(
+                        mesh,
+                        includeVerts: Vertices.Verts.museum_turntable_include,
+                        rotationDegrees: 5f
+                    );
                     break;
                 // Roundhouse rails
                 case "TurntableRail.002":
@@ -66,6 +71,22 @@ namespace Gauge.Patches
                 case "buffer_stop_rails_LOD1":
                 case "buffer_stop_holders":
                     Symmetrical.ScaleToGauge(mesh);
+                    break;
+            }
+        }
+
+        static void UpdateMaterials(string name, Mesh mesh, Component component)
+        {
+            var renderer = component.GetComponent<MeshRenderer>();
+
+            // Set materials
+            switch (name)
+            {
+                // Buffer stops
+                case "buffer_stop_rails":
+                case "buffer_stop_rails_LOD1":
+                case "buffer_stop_holders":
+                    renderer.sharedMaterial = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
                     break;
             }
         }
