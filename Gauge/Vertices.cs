@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 namespace Gauge
 {
     [Serializable]
-    public struct Vertices
+    public class Vertices
     {
-        private const string FILE_NAME = "vertices.json";
+        const string FILE_NAME = "vertices.json";
         public static Vertices Verts { get; private set; }
 
         public static void Load(string directory)
