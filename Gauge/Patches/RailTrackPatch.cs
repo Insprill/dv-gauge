@@ -1,22 +1,36 @@
-using Gauge.MeshModifiers;
-using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
+using Gauge.MeshModifiers;
+using HarmonyLib;
 using UnityEngine;
 
 namespace Gauge.Patches
 {
     [HarmonyPatch(typeof(RailTrack))]
-    internal static class RailTrackPatch
+    static class RailTrackPatch
     {
-        private static HashSet<BaseType> s_updatedBaseTypes = new HashSet<BaseType>();
+        static readonly HashSet<BaseType> s_updatedBaseTypes = [];
 
         // Point sets are generated and cached on Awake, which means when RailwayMeshGenerator
         // accesses them to change params it's already too late.
         // Instead of nullifying that cache it's easier to just apply it here.
         [HarmonyPrefix, HarmonyPatch("Awake")]
-        private static void AwakePrefix(RailTrack __instance)
+        static void AwakePrefix(RailTrack __instance)
         {
+            // Apply material to fixed-mesh tracks from turntables.
+            if (TryUpdateTurntableParkingTrack(__instance))
+            {
+                return;
+            }
+
+            // Apply material to fixed-mesh tracks on turntables.
+            if (TryUpdateTurntableTrack(__instance))
+            {
+                return;
+            }
+
+            // Apply material to base type for regular tracks and adjust kinks
+
             UpdateBaseType(__instance.baseType);
 
             __instance.railType.gauge = Gauge.Settings.RailGauge.Gauge;
@@ -30,7 +44,55 @@ namespace Gauge.Patches
             __instance.jointsSpan = Gauge.Settings.jointDistance;
         }
 
-        private static void UpdateBaseType(BaseType baseType)
+        static bool TryUpdateTurntableParkingTrack(RailTrack __instance)
+        {
+            if (!__instance.TryGetComponent<TurntableOutgoingTrack>(out _))
+            {
+                return false;
+            }
+
+            var visualTransform = __instance.transform.Find("visual");
+            // This component is on some buffer stops without a fixed mesh.
+            if (visualTransform == null)
+            {
+                return false;
+            }
+
+            var meshTransform = visualTransform.Find("roundhouse_railroad_track");
+            var renderer = meshTransform.GetComponent<MeshRenderer>();
+            // Museum tracks have one material, others have two. Both have the rail as the first.
+            var sharedMats = renderer.sharedMaterials;
+            sharedMats[0] = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
+            renderer.sharedMaterials = sharedMats;
+            return true;
+        }
+
+        static bool TryUpdateTurntableTrack(RailTrack __instance)
+        {
+            if (!__instance.TryGetComponent<TurntableRailTrack>(out _))
+                return false;
+            var visualTransform = __instance.transform.Find("bridge").Find("visual");
+            var railTransform = visualTransform.GetChild(0);
+            var renderer = railTransform.GetComponent<MeshRenderer>();
+            var mat = RailMaterials.GetSelectedRailMaterial(renderer.sharedMaterial);
+            var sharedMats = renderer.sharedMaterials;
+            switch (railTransform.name)
+            {
+                case "RailwayMuseumTurntable_LOD0":
+                    sharedMats[2] = mat;
+                    break;
+                case "TurntableRail":
+                    sharedMats[1] = mat;
+                    break;
+                default:
+                    Gauge.Logger.Warning($"Unknown turntable '{railTransform.name}'! It's material won't change.");
+                    break;
+            }
+            renderer.sharedMaterials = sharedMats;
+            return true;
+        }
+
+        static void UpdateBaseType(BaseType baseType)
         {
             // Since this step is a bit more costly than the rest, cache to avoid repeating it.
             if (s_updatedBaseTypes.Contains(baseType))
@@ -45,9 +107,9 @@ namespace Gauge.Patches
                 Symmetrical.ScaleToGauge(baseType.baseShape.transform);
             }
 
-            foreach (MeshFilter filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
+            foreach (var filter in baseType.sleeperPrefabs.SelectMany(obj => obj.GetComponentsInChildren<MeshFilter>()))
             {
-                Mesh mesh = Assets.GetMesh(filter.sharedMesh);
+                var mesh = Assets.GetMesh(filter.sharedMesh);
                 if (mesh == null || !mesh.isReadable)
                     continue;
                 filter.sharedMesh = mesh;
