@@ -28,7 +28,7 @@ namespace Gauge.Patches
             // DE2, S282A and S060 only have modifications when narrow.
             var narrow = Gauge.Settings.RailGauge.Gauge < RailGaugePreset.Standard.RailGauge().Gauge;
 
-            switch (__instance.carLivery.id)
+            switch (__instance.carLivery.parentType.id)
             {
                 case "LocoDE2":
                     if (narrow)
