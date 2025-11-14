@@ -6,11 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [1.4.0] - Unreleased
+## [1.4.0] - 2025-11-14
 
 ### Added
 - Support for B99.7.
-- Added support for the DM1U and Microshunter.
+- Added support for the DM1U, Microshunter, and Handcar.
 - An option to change rail quality (how squiggly they are) ([#5] by [@WhistleWiz]).
 - An option to change rail material (how rusty they are) ([#6] by [@WhistleWiz]).
 - Support for [CCL](https://github.com/derail-valley-modding/custom-car-loader) ([#7] by [@WhistleWiz]).
@@ -18,8 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed some mesh issues with the S060 and S282.
 - Fixed the DE2's traction motors and brake shoes not being regauged.
-- Fixed rail anchors not being regauged;
+- Fixed rail anchors not being regauged.
 - Fixed DH4 wheels clipping through the center of the bogie on narrower gauges.
+- Fixed S282 brake release handle not being moved to match the frame.
 
 
 ## [1.3.0] - 2023-07-22
@@ -94,7 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#5]: https://github.com/Insprill/dv-gauge/pull/5
 
 <!-- Diffs -->
-[1.4.0]: https://github.com/Insprill/dv-gauge/compare/v1.3.0...HEAD
+[1.4.0]: https://github.com/Insprill/dv-gauge/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/Insprill/dv-gauge/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/Insprill/dv-gauge/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/Insprill/dv-gauge/compare/v1.1.2...v1.2.0
