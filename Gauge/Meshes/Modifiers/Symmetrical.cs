@@ -52,7 +52,12 @@ namespace Gauge.MeshModifiers
             mesh.ApplyVerts(verts);
         }
 
-        public static void ScaleToGauge(Transform parent, float? baseGauge = null)
+        public static void ScaleToGauge(Transform transform, float? baseGauge = null)
+        {
+            transform.localPosition = ScaleToGauge(transform.localPosition, baseGauge: baseGauge);
+        }
+
+        public static void ScaleChildrenToGauge(Transform parent, float? baseGauge = null)
         {
             for (int i = 0; i < parent.childCount; ++i)
             {

@@ -46,7 +46,7 @@ namespace Gauge.Patches
 
             if (baseType.baseShape != null && Gauge.Settings.adjustBallastWidth)
             {
-                Symmetrical.ScaleToGauge(baseType.baseShape.transform);
+                Symmetrical.ScaleChildrenToGauge(baseType.baseShape.transform);
             }
 
             foreach (var obj in baseType.sleeperPrefabs)

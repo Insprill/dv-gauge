@@ -21,7 +21,7 @@ namespace Gauge.Patches
                 {
                     if (child.name != "[wheel sparks]")
                         continue;
-                    Symmetrical.ScaleToGauge(child, __instance.GetGauge());
+                    Symmetrical.ScaleChildrenToGauge(child, __instance.GetGauge());
                 }
             }
 
