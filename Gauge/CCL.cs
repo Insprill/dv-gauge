@@ -74,9 +74,9 @@ namespace Gauge
                     if (!Assets.GetMesh(mesh.name).IsSome(out var m))
                         continue;
                     filter.sharedMesh = mesh = m;
-                    if (!m.isReadable)
-                        continue; // Already modified.
                 }
+                if (Assets.IsMeshModified(mesh))
+                    continue;
 
                 Symmetrical.ScaleToGauge(mesh, baseGauge: gauge);
             }

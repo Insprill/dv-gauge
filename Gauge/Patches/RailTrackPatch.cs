@@ -57,7 +57,7 @@ namespace Gauge.Patches
                 {
                     if (!Assets.GetMesh(filter).IsSome(out var mesh))
                         continue;
-                    if (!mesh.isReadable)
+                    if (Assets.IsMeshModified(mesh))
                         continue;
                     filter.sharedMesh = mesh;
                     Symmetrical.ScaleToGauge(mesh);

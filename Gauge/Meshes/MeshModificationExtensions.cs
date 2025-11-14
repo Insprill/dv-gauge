@@ -13,16 +13,30 @@ namespace Gauge.Meshes
         public static void ApplyVerts(this Mesh mesh, Vector3[] vertices)
         {
             mesh.vertices = vertices;
-            mesh.RecalculateBounds();
-            mesh.UploadMeshData(true);
+            FinishApplyingVerts(mesh);
         }
 
         /// <inheritdoc cref="ApplyVerts(Mesh, Vector3[])"/>
         public static void ApplyVerts(this Mesh mesh, List<Vector3> vertices)
         {
             mesh.SetVertices(vertices);
+            FinishApplyingVerts(mesh);
+        }
+
+        static void FinishApplyingVerts(Mesh mesh)
+        {
             mesh.RecalculateBounds();
-            mesh.UploadMeshData(true);
+            mesh.UploadMeshData(EnableReadWrite(mesh));
+            Assets.MarkMeshModified(mesh);
+        }
+
+        static bool EnableReadWrite(Mesh mesh)
+        {
+            return mesh.name switch
+            {
+                "s282_locomotive_body_LOD2" => true,
+                _ => false
+            };
         }
 
         public static void ModifyMeshes(this GameObject gameObject, HandleMesh scaleFunc, Component component = null)
@@ -53,9 +67,9 @@ namespace Gauge.Meshes
                     if (!Assets.GetMesh(mesh.name).IsSome(out var m))
                         continue;
                     filter.sharedMesh = mesh = m;
-                    if (!m.isReadable)
-                        continue; // Already modified.
                 }
+                if (Assets.IsMeshModified(mesh))
+                    continue;
 
                 scaleFunc(name, mesh, component ?? filter.transform);
             }

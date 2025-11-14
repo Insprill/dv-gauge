@@ -10,6 +10,7 @@ namespace Gauge
     {
         const string ASSET_BUNDLE_NAME = "gauge.assetbundle";
         static readonly Dictionary<string, Mesh> Meshes = new();
+        static readonly HashSet<Mesh> ModifiedMeshes = [];
         static AssetBundle assetBundle;
 
         public static bool Init(string modPath)
@@ -31,6 +32,16 @@ namespace Gauge
             assetBundle.Unload(false);
 
             return true;
+        }
+
+        public static void MarkMeshModified(Mesh mesh)
+        {
+            ModifiedMeshes.Add(mesh);
+        }
+
+        public static bool IsMeshModified(Mesh mesh)
+        {
+            return ModifiedMeshes.Contains(mesh);
         }
 
         public static Option<Mesh> GetMesh([NotNull] MeshFilter filter)
