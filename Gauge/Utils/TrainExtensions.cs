@@ -23,10 +23,5 @@ namespace Gauge.Utils
         {
             return Mathf.Abs(Gauge.Settings.RailGauge.Gauge - bogie.GetGauge()) < 0.001f;
         }
-
-        public static bool IsFront(this Bogie bogie)
-        {
-            return bogie.Car.Bogies[0] == bogie;
-        }
     }
 }
