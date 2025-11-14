@@ -25,6 +25,10 @@ namespace Gauge.Patches
                 case "ext axle_R":
                     Symmetrical.ScaleToGauge(mesh, true, skipVerts: Vertices.Verts.de2_axle_skip);
                     break;
+                case "wheels01":
+                case "wheels01_LOD2":
+                case "wheels02":
+                case "wheels02_LOD2":
                 case "dh4_bogie_frame":
                     Symmetrical.ScaleToGauge(mesh, false, ((Bogie)component).GetGauge());
                     break;
