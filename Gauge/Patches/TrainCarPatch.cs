@@ -1,3 +1,4 @@
+using DV.Wheels;
 using Gauge.Meshes;
 using Gauge.MeshModifiers;
 using Gauge.Utils;
@@ -14,15 +15,10 @@ namespace Gauge.Patches
             if (__instance.IsCorrectGauge())
                 return;
 
-            using (var children = TempList<Transform>.Get)
+            var sparkAnchors = __instance.GetComponentInChildren<WheelSlideSparksController>().sparkAnchors;
+            foreach (var anchor in sparkAnchors)
             {
-                __instance.GetComponentsInChildren(children.List);
-                foreach (var child in children.List)
-                {
-                    if (child.name != "[wheel sparks]")
-                        continue;
-                    Symmetrical.ScaleChildrenToGauge(child, __instance.GetGauge());
-                }
+                Symmetrical.ScaleToGauge(anchor, __instance.GetGauge());
             }
 
             // DE2, S282A and S060 only have modifications when narrow.
