@@ -30,6 +30,7 @@
     <ItemGroup>
         <Reference Include="BezierCurves" />
         <Reference Include="Newtonsoft.Json" />
+        <Reference Include="AwesomeTechnologies.VegetationStudioPro.Runtime" />
     </ItemGroup>
 
     <!-- Unity -->
