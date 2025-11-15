@@ -65,7 +65,7 @@ For instructions on how to build the project, please read the [Mapify building d
 
 ## Building The Asset Bundle
 
-To build the AssetBundle for gauge, you'll need to install Unity **2019.4.40f1**.
+To build the AssetBundle for gauge, you'll need to install Unity **2019.4.41f1**.
 You can then open up the `GaugeBundleBuilder` project in this repo.
 
 Before building the asset bundle, you must dump all the required meshes into the project.
