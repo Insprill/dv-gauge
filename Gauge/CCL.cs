@@ -11,20 +11,6 @@ namespace Gauge
 {
     internal static class CCL
     {
-        private struct OrigTarget
-        {
-            public float Original;
-            public float Target;
-
-            public OrigTarget(float original, float target)
-            {
-                Original = original;
-                Target = target;
-            }
-
-            public readonly float Diff => Target - Original;
-        }
-
         private static ModEntry s_mod = null;
         public static ModEntry Entry
         {
@@ -40,8 +26,6 @@ namespace Gauge
         }
 
         public static bool IsActive => Entry != null && Entry.Active;
-
-        private static Dictionary<RegaugeableMeshes, OrigTarget> s_modifiedComps = [];
 
         public static bool IsCustomCar(TrainCar car)
         {
@@ -125,13 +109,9 @@ namespace Gauge
                 ModifyChildMeshes(meshes.Objects, gauge);
                 ModifySpecificMeshes(meshes.Meshes, meshes.Meshes.Length, gauge);
 
-                var diff = s_modifiedComps.TryGetValue(meshes, out var origTarget) ? -origTarget.Diff : 0;
-
-                origTarget = new OrigTarget(gauge, Gauge.Settings.RailGauge.Gauge);
-                diff += origTarget.Diff;
+                var diff = (gauge - Gauge.Settings.RailGauge.Gauge) * 0.5f;
                 MoveL(diff);
                 MoveR(diff);
-                s_modifiedComps[meshes] = origTarget;
             }
 
             void MoveL(float value)
