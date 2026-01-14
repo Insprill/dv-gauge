@@ -3,6 +3,7 @@ using CCL.Importer.Types;
 using CCL.Types.Components;
 using Gauge.MeshModifiers;
 using Gauge.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityModManagerNet.UnityModManager;
 
@@ -60,7 +61,7 @@ namespace Gauge
             return HasCustomGauge(bogie.Car, out gauge);
         }
 
-        static void ModifySpecificMeshes(MeshFilter[] meshes, int length, float? gauge = null)
+        private static void ModifySpecificMeshes(MeshFilter[] meshes, int length, float? gauge = null)
         {
             for (var i = 0; i < length; i++)
             {
@@ -97,10 +98,36 @@ namespace Gauge
         {
             if (IsCustomCar(car, out var custom) && car.TryGetComponent(out RegaugeableMeshes meshes))
             {
-                var gauge = custom.UseCustomGauge ? custom.Gauge / 1000.0f : (float?)null;
+                var gauge = custom.UseCustomGauge ? custom.Gauge / 1000.0f : RailGaugePreset.Standard.RailGauge().Gauge;
+
+                if ((Gauge.Settings.RailGauge.Gauge < gauge && !meshes.RegaugeForSmaller) ||
+                    (Gauge.Settings.RailGauge.Gauge > gauge && !meshes.RegaugeForBigger))
+                {
+                    return;
+                }
 
                 ModifyChildMeshes(meshes.Objects, gauge);
                 ModifySpecificMeshes(meshes.Meshes, meshes.Meshes.Length, gauge);
+
+                var diff = (gauge - Gauge.Settings.RailGauge.Gauge) * 0.5f;
+                MoveL(diff);
+                MoveR(diff);
+            }
+
+            void MoveL(float value)
+            {
+                foreach (var item in meshes.MoveLeft)
+                {
+                    item.transform.localPosition = item.transform.localPosition with { x = item.transform.localPosition.x + value };
+                }
+            }
+
+            void MoveR(float value)
+            {
+                foreach (var item in meshes.MoveRight)
+                {
+                    item.transform.localPosition = item.transform.localPosition with { x = item.transform.localPosition.x - value };
+                }
             }
         }
     }
